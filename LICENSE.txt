@@ -26,3 +26,5 @@ NON-COMMERCIAL: You may not use the material for commercial purposes. For
     a commercial license contact the copyright holder using the contact
     information provided in this file.
 NO ADDITIONAL RESTRICTIONS: You may not apply legal terms or technological
+    measures that legally restrict others from doing anything the license
+    permits.
