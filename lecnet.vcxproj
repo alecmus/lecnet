@@ -146,12 +146,12 @@
       <AdditionalLibraryDirectories>C:\local\libs\boost_1_70_0\lib32-msvc-14.2;C:\local\libs\openssl\lib;</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\..\lib\" /F /R /Y /I
-xcopy "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\bin\" /F /R /Y /I
-xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\..\include\$(SolutionName)\" /F /R /Y /I
-xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I</Command>
+      <Command>xcopy "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\lib\" /F /R /Y /I
+xcopy "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\bin\" /F /R /Y /I
+xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\include\$(SolutionName)\" /F /R /Y /I
+xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -171,12 +171,12 @@ xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(Projec
       <AdditionalLibraryDirectories>C:\local\libs\boost_1_70_0\lib64-msvc-14.2;C:\local\libs\openssl\lib;</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\..\lib\" /F /R /Y /I
-xcopy "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\bin\" /F /R /Y /I
-xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\..\include\$(SolutionName)\" /F /R /Y /I
-xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I</Command>
+      <Command>xcopy "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\lib\" /F /R /Y /I
+xcopy "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\bin\" /F /R /Y /I
+xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\include\$(SolutionName)\" /F /R /Y /I
+xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -200,12 +200,12 @@ xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(Projec
       <AdditionalLibraryDirectories>C:\local\libs\boost_1_70_0\lib32-msvc-14.2;C:\local\libs\openssl\lib;</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\..\lib\" /F /R /Y /I
-xcopy "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\bin\" /F /R /Y /I
-xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\..\include\$(SolutionName)\" /F /R /Y /I
-xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I</Command>
+      <Command>xcopy "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\lib\" /F /R /Y /I
+xcopy "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\bin\" /F /R /Y /I
+xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\include\$(SolutionName)\" /F /R /Y /I
+xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -229,12 +229,12 @@ xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(Projec
       <AdditionalLibraryDirectories>C:\local\libs\boost_1_70_0\lib64-msvc-14.2;C:\local\libs\openssl\lib;</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\..\lib\" /F /R /Y /I
-xcopy "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\bin\" /F /R /Y /I
-xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\..\include\$(SolutionName)\" /F /R /Y /I
-xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I</Command>
+      <Command>xcopy "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\lib\" /F /R /Y /I
+xcopy "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\bin\" /F /R /Y /I
+xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\include\$(SolutionName)\" /F /R /Y /I
+xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
