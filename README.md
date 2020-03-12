@@ -9,6 +9,8 @@ The lecnet library is a networking library designed for the rapid development of
 ### OpenSSL
 This library uses OpenSSL (https://www.openssl.org/) for various functions, e.g. SSL encryption and making digital certificates. The user is free to compile OpenSSL on their own, but for convenience, OpenSSL binaries that I have compiled can be obtained from https://github.com/alecmus/files/tree/master/openssl. Kindly note that I prefer compiling OpenSSL so that the 32 and 64 bit binaries have different names to avoid ambiguity and deployment mistakes and,a also for other advantages that I won't get into here.
 
+By default, the lecnet project is configured to look for OpenSSL in C:\local\libs\openssl. Placing the OpenSSL files I compiled into this location will enable building without modifications; placing them (or differently named variants) elsewhere will require appropriate modification of the project properties and source files.
+
 ## BUILDING
 Create a folder '\liblec' and clone the repository into it such that it resides in 'liblec\lecnet'. Open the Microsoft Visual Studio Solution file liblec\lecnet\lecnet.sln. Select Build -> Batch Build, then select the desired configurations of the given four:
 1. Debug x86
