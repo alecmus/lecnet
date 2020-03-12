@@ -4,6 +4,9 @@ lecnet C++ network library
 ## ABOUT THE LIBRARY
 The lecnet library is a networking library designed for the rapid development of modern, efficient and easy to maintain C++ networking applications. It is part of the liblec libraries (https://github.com/alecmus/liblec).
 
+## PREBUILT BINARIES
+Prebuild binaries of the library can be found under releases: https://github.com/alecmus/lecnet/releases.
+
 ## DEPENDENCIES
 
 ### OpenSSL
