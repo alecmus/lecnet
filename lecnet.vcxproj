@@ -148,10 +148,10 @@
     <PostBuildEvent>
       <Command>xcopy "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\lib\" /F /R /Y /I
 xcopy "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\bin\" /F /R /Y /I
-xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\include\$(SolutionName)\" /F /R /Y /I
-xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I</Command>
+xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\include\liblec\" /F /R /Y /I
+xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\include\liblec\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\include\liblec\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\liblec\$(ProjectName)\" /F /R /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -173,10 +173,10 @@ xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectNa
     <PostBuildEvent>
       <Command>xcopy "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\lib\" /F /R /Y /I
 xcopy "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\bin\" /F /R /Y /I
-xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\include\$(SolutionName)\" /F /R /Y /I
-xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I</Command>
+xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\include\liblec\" /F /R /Y /I
+xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\include\liblec\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\include\liblec\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\liblec\$(ProjectName)\" /F /R /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -202,10 +202,10 @@ xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectNa
     <PostBuildEvent>
       <Command>xcopy "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\lib\" /F /R /Y /I
 xcopy "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\bin\" /F /R /Y /I
-xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\include\$(SolutionName)\" /F /R /Y /I
-xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I</Command>
+xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\include\liblec\" /F /R /Y /I
+xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\include\liblec\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\include\liblec\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\liblec\$(ProjectName)\" /F /R /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -231,10 +231,10 @@ xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectNa
     <PostBuildEvent>
       <Command>xcopy "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\lib\" /F /R /Y /I
 xcopy "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\bin\" /F /R /Y /I
-xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\include\$(SolutionName)\" /F /R /Y /I
-xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I
-xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\$(SolutionName)\$(ProjectName)\" /F /R /Y /I</Command>
+xcopy "$(ProjectDir)$(ProjectName).h" "$(ProjectDir)..\include\liblec\" /F /R /Y /I
+xcopy "$(ProjectDir)udp.h" "$(ProjectDir)..\include\liblec\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)tcp.h" "$(ProjectDir)..\include\liblec\$(ProjectName)\" /F /R /Y /I
+xcopy "$(ProjectDir)cert.h" "$(ProjectDir)..\include\liblec\$(ProjectName)\" /F /R /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
