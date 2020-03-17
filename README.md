@@ -50,6 +50,7 @@ Now you can use the required functions by calling #include <liblec/lecnet/...>
 Build.
 
 ## USING THE LIBRARY
+Usage guidelines are available in-code in the respective header files. Below are minimalistic example programs.
 
 ### TCP/IP Server
 Below is sample code for implementing a TCP/IP server (with default parameters):
