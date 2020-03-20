@@ -13,29 +13,26 @@
 
 #pragma once
 
-#ifdef LECNET_EXPORTS
-#define lecnet_api __declspec(dllexport)
+#if defined(LECNET_EXPORTS)
+	#define lecnet_api __declspec(dllexport)
+	#include "lecnet.h"
 #else
-#define lecnet_api __declspec(dllimport)
+	#define lecnet_api __declspec(dllimport)
+	#include <liblec/lecnet.h>
 
-#ifdef _WIN64
-
-#ifdef _DEBUG
-#pragma comment(lib, "lecnet64d.lib")
-#else
-#pragma comment(lib, "lecnet64.lib")
-#endif // _DEBUG
-
-#else
-
-#ifdef _DEBUG
-#pragma comment(lib, "lecnet32d.lib")
-#else
-#pragma comment(lib, "lecnet32.lib")
-#endif // _DEBUG
-
-#endif // _WIN64
-
+	#if defined(_WIN64)
+		#if defined(_DEBUG)
+			#pragma comment(lib, "lecnet64d.lib")
+		#else
+			#pragma comment(lib, "lecnet64.lib")
+		#endif
+	#else
+		#if defined(_DEBUG)
+			#pragma comment(lib, "lecnet32d.lib")
+		#else
+			#pragma comment(lib, "lecnet32.lib")
+		#endif
+	#endif
 #endif
 
 #include <string>
@@ -45,7 +42,7 @@ namespace liblec {
 		/// <summary>
 		/// Get the version of the lecnet library.
 		/// </summary>
-		/// 
+		///
 		/// <returns>
 		/// Returns the version number as a string in the form "lecnet 1.0.0 07 Nov 2018"
 		/// </returns>
@@ -62,7 +59,7 @@ namespace liblec {
 		/// <summary>
 		/// Format data size in B, KB, MB, GB or TB.
 		/// </summary>
-		/// 
+		///
 		/// <returns>
 		/// Returns a formatted string in the form 5B, 45KB, 146MB, 52GB, 9TB etc.
 		/// </returns>

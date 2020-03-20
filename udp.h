@@ -13,31 +13,10 @@
 
 #pragma once
 
-#ifdef LECNET_EXPORTS
-#define udp_api __declspec(dllexport)
-#include "lecnet.h"
+#if defined(LECNET_EXPORTS)
+	#include "lecnet.h"
 #else
-#define udp_api __declspec(dllimport)
-#include <liblec/lecnet.h>
-
-#ifdef _WIN64
-
-#ifdef _DEBUG
-#pragma comment(lib, "lecnet64d.lib")
-#else
-#pragma comment(lib, "lecnet64.lib")
-#endif // _DEBUG
-
-#else
-
-#ifdef _DEBUG
-#pragma comment(lib, "lecnet32d.lib")
-#else
-#pragma comment(lib, "lecnet32.lib")
-#endif // _DEBUG
-
-#endif // _WIN64
-
+	#include <liblec/lecnet.h>
 #endif
 
 #include <string>
@@ -99,14 +78,14 @@ namespace liblec {
 				/// <summary>
 				/// For sending UDP broadcasts.
 				/// </summary>
-				class udp_api sender {
+				class lecnet_api sender {
 				public:
 					/// <summary>
 					/// Constructor for the udp_broadcast sender class.
 					/// </summary>
-					/// 
+					///
 					/// <param name="broadcast_port">
-					/// The broadcast port. Range is 0 to 65535, e.g. 30001. 
+					/// The broadcast port. Range is 0 to 65535, e.g. 30001.
 					/// </param>
 					sender(unsigned short broadcast_port);
 
@@ -119,27 +98,27 @@ namespace liblec {
 					/// <param name="message">
 					/// The message to be sent.
 					/// </param>
-					/// 
+					///
 					/// <param name="max_count">
 					/// The maximum number of times the message is to be sent.
 					/// </param>
-					/// 
+					///
 					/// <param name="timeout_milliseconds">
 					/// The timeout between consecutive send operations.
 					/// </param>
-					/// 
+					///
 					/// <param name="actual_count">
 					/// The actual number of times the message has been sent.
 					/// </param>
-					/// 
+					///
 					/// <param name="error">
 					/// Error information.
 					/// </param>
-					/// 
+					///
 					/// <returns>
 					/// Returns true if successful, else false.
 					/// </returns>
-					/// 
+					///
 					/// <remarks>
 					/// This is a blocking function and will only return when either the sending
 					/// operation is complete or when an error occurs.
@@ -153,27 +132,27 @@ namespace liblec {
 					/// <summary>
 					/// Send a broadcast message (asynchronously)
 					/// </summary>
-					/// 
+					///
 					/// <param name="message">
 					/// The message to be sent.
 					/// </param>
-					/// 
+					///
 					/// <param name="max_count">
 					/// The maximum number of times the message is to be sent.
 					/// </param>
-					/// 
+					///
 					/// <param name="timeout_milliseconds">
 					/// The timeout between consecutive send operations.
 					/// </param>
-					/// 
+					///
 					/// <param name="error">
 					/// Error information.
 					/// </param>
-					/// 
+					///
 					/// <returns>
 					/// Returns true if successful, else false.
 					/// </returns>
-					/// 
+					///
 					/// <remarks>
 					/// This is a non-blocking function and returns almost immediately. The actual
 					/// sending is done on a seperate thread. The status of the message sending can
@@ -188,12 +167,12 @@ namespace liblec {
 					/// <summary>
 					/// Check if the attempt to send the message is currently underway.
 					/// </summary>
-					/// 
+					///
 					/// <returns>
 					/// Returns true if the message sending attempt is currently underway, else
 					/// false.
 					/// </returns>
-					/// 
+					///
 					/// <remarks>
 					/// This function only works with <see cref="send_async"/>
 					/// </remarks>
@@ -202,19 +181,19 @@ namespace liblec {
 					/// <summary>
 					/// Check the result of the sending operation.
 					/// </summary>
-					/// 
+					///
 					/// <param name="actual_count">
 					/// The actual number of times the message has been sent.
 					/// </param>
-					/// 
+					///
 					/// <param name="error">
 					/// Error information.
 					/// </param>
-					/// 
+					///
 					/// <returns>
 					/// Returns true if sending the message was successful, else false.
 					/// </returns>
-					/// 
+					///
 					/// <remarks>
 					/// Calling this function only makes sense after a successful call to
 					/// <see cref="send_async"/> followed by waiting for <see cref="sending"/> to
@@ -234,16 +213,16 @@ namespace liblec {
 				/// <summary>
 				/// For receiving UDP broadcasts.
 				/// </summary>
-				class udp_api receiver {
+				class lecnet_api receiver {
 				public:
 					/// <summary>
 					/// Constructor for the udp_broadcast receiver class.
 					/// </summary>
-					/// 
+					///
 					/// <param name="broadcast_port">
 					/// The broadcast port. Range is 0 to 65535, e.g. 30001.
 					/// </param>
-					/// 
+					///
 					/// <param name="listen_address">
 					/// The address to use for listening, e.g. 0.0.0.0.
 					/// </param>
@@ -254,19 +233,19 @@ namespace liblec {
 					/// <summary>
 					/// Run the thread that checks for a UDP Broadcast message.
 					/// </summary>
-					/// 
+					///
 					/// <param name="timeout_milliseconds">
 					/// The timeout for a receive operation.
 					/// </param>
-					/// 
+					///
 					/// <param name="error">
 					/// Error information.
 					/// </param>
-					/// 
+					///
 					/// <returns>
 					/// Returns true if successful, else false.
 					/// </returns>
-					/// 
+					///
 					/// <remarks>
 					/// This function will return almost immediately to avoid blocking for
 					/// <paramref name="timeout_milliseconds"/>. The results of the actual
@@ -281,7 +260,7 @@ namespace liblec {
 					/// Check if the receiving thread is running, i.e. waiting to receive a
 					/// message.
 					/// </summary>
-					/// 
+					///
 					/// <returns>
 					/// Returns true if the receiver thread is running, else false.
 					/// </returns>
@@ -290,20 +269,20 @@ namespace liblec {
 					/// <summary>
 					/// Get UDP broadcast message obtained by the last call to <see cref="run"/>.
 					/// </summary>
-					/// 
+					///
 					/// <param name="message">
 					/// The message will be written here, if available. A maximum of 1024
 					/// characters will be acquired.
 					/// </param>
-					/// 
+					///
 					/// <param name="error">
 					/// Error information.
 					/// </param>
-					/// 
+					///
 					/// <returns>
 					/// Returns true if successful, else false.
 					/// </returns>
-					/// 
+					///
 					/// <remarks>
 					/// A call to <see cref="run"/>, and then checking for the status of
 					/// <see cref="running"/> is important for this call to make sense. After a
@@ -318,7 +297,7 @@ namespace liblec {
 					/// <summary>
 					/// Stop the runner.
 					/// </summary>
-					/// 
+					///
 					/// <remarks>
 					/// This function returns almost immediately because all it does it request for
 					/// the stop. The internal thread will not be able to respond the same moment.
@@ -393,16 +372,16 @@ namespace liblec {
 				/// <summary>
 				/// For sending UDP multicasts.
 				/// </summary>
-				class udp_api sender {
+				class lecnet_api sender {
 				public:
 					/// <summary>
 					/// Constructor for the udp_multicast sender class.
 					/// </summary>
-					/// 
+					///
 					/// <param name="multicast_port">
-					/// The multicast port. Range is 0 to 65535, e.g. 30001. 
+					/// The multicast port. Range is 0 to 65535, e.g. 30001.
 					/// </param>
-					/// 
+					///
 					/// <param name="multicast_address">
 					/// The multicast address, e.g. 239.255.0.1 for IPv4 or ff31::8000:1234 for
 					/// IPv6.
@@ -418,27 +397,27 @@ namespace liblec {
 					/// <param name="message">
 					/// The message to be sent.
 					/// </param>
-					/// 
+					///
 					/// <param name="max_count">
 					/// The maximum number of times the message is to be sent.
 					/// </param>
-					/// 
+					///
 					/// <param name="timeout_milliseconds">
 					/// The timeout between consecutive send operations.
 					/// </param>
-					/// 
+					///
 					/// <param name="actual_count">
 					/// The actual number of times the message has been sent.
 					/// </param>
-					/// 
+					///
 					/// <param name="error">
 					/// Error information.
 					/// </param>
-					/// 
+					///
 					/// <returns>
 					/// Returns true if successful, else false.
 					/// </returns>
-					/// 
+					///
 					/// <remarks>
 					/// This is a blocking function and will only return when either the sending
 					/// operation is complete or when an error occurs.
@@ -452,27 +431,27 @@ namespace liblec {
 					/// <summary>
 					/// Send a multicast message (asynchronously)
 					/// </summary>
-					/// 
+					///
 					/// <param name="message">
 					/// The message to be sent.
 					/// </param>
-					/// 
+					///
 					/// <param name="max_count">
 					/// The maximum number of times the message is to be sent.
 					/// </param>
-					/// 
+					///
 					/// <param name="timeout_milliseconds">
 					/// The timeout between consecutive send operations.
 					/// </param>
-					/// 
+					///
 					/// <param name="error">
 					/// Error information.
 					/// </param>
-					/// 
+					///
 					/// <returns>
 					/// Returns true if successful, else false.
 					/// </returns>
-					/// 
+					///
 					/// <remarks>
 					/// This is a non-blocking function and returns almost immediately. The actual
 					/// sending is done on a seperate thread. The status of the message sending can
@@ -487,12 +466,12 @@ namespace liblec {
 					/// <summary>
 					/// Check if the attempt to send the message is currently underway.
 					/// </summary>
-					/// 
+					///
 					/// <returns>
 					/// Returns true if the message sending attempt is currently underway, else
 					/// false.
 					/// </returns>
-					/// 
+					///
 					/// <remarks>
 					/// This function only works with <see cref="send_async"/>
 					/// </remarks>
@@ -501,19 +480,19 @@ namespace liblec {
 					/// <summary>
 					/// Check the result of the sending operation.
 					/// </summary>
-					/// 
+					///
 					/// <param name="actual_count">
 					/// The actual number of times the message has been sent.
 					/// </param>
-					/// 
+					///
 					/// <param name="error">
 					/// Error information.
 					/// </param>
-					/// 
+					///
 					/// <returns>
 					/// Returns true if sending the message was successful, else false.
 					/// </returns>
-					/// 
+					///
 					/// <remarks>
 					/// Calling this function only makes sense after a successful call to
 					/// <see cref="send_async"/> followed by waiting for <see cref="sending"/> to
@@ -554,7 +533,7 @@ namespace liblec {
 				//			// error
 				//		}
 				// }
-				// 
+				//
 				// if (p_receiver) {
 				//		delete p_receiver;
 				//		p_receiver = nullptr;
@@ -564,21 +543,21 @@ namespace liblec {
 				/// <summary>
 				/// For receiving UDP multicasts.
 				/// </summary>
-				class udp_api receiver {
+				class lecnet_api receiver {
 				public:
 					/// <summary>
 					/// Constructor for the udp_multicast receiver class.
 					/// </summary>
-					/// 
+					///
 					/// <param name="multicast_port">
 					/// The multicast port. Range is 0 to 65535, e.g. 30001.
 					/// </param>
-					/// 
+					///
 					/// <param name="multicast_address">
 					/// The multicast address, e.g. 239.255.0.1 for IPv4 or ff31::8000:1234 for
 					/// IPv6.
 					/// </param>
-					/// 
+					///
 					/// <param name="listen_address">
 					/// The address to use for listening, e.g. 0.0.0.0.
 					/// </param>
@@ -590,19 +569,19 @@ namespace liblec {
 					/// <summary>
 					/// Run the thread that checks for a UDP Broadcast message.
 					/// </summary>
-					/// 
+					///
 					/// <param name="timeout_milliseconds">
 					/// The timeout for a receive operation.
 					/// </param>
-					/// 
+					///
 					/// <param name="error">
 					/// Error information.
 					/// </param>
-					/// 
+					///
 					/// <returns>
 					/// Returns true if successful, else false.
 					/// </returns>
-					/// 
+					///
 					/// <remarks>
 					/// This function will return almost immediately to avoid blocking for
 					/// <paramref name="timeout_milliseconds"/>. The results of the actual
@@ -617,7 +596,7 @@ namespace liblec {
 					/// Check if the receiving thread is running, i.e. waiting to receive a
 					/// message.
 					/// </summary>
-					/// 
+					///
 					/// <returns>
 					/// Returns true if the receiver thread is running, else false.
 					/// </returns>
@@ -626,20 +605,20 @@ namespace liblec {
 					/// <summary>
 					/// Get UDP broadcast message obtained by the last call to <see cref="run"/>.
 					/// </summary>
-					/// 
+					///
 					/// <param name="message">
 					/// The message will be written here, if available. A maximum of 1024
 					/// characters will be acquired.
 					/// </param>
-					/// 
+					///
 					/// <param name="error">
 					/// Error information.
 					/// </param>
-					/// 
+					///
 					/// <returns>
 					/// Returns true if successful, else false.
 					/// </returns>
-					/// 
+					///
 					/// <remarks>
 					/// A call to <see cref="run"/>, and then checking for the status of
 					/// <see cref="running"/> is important for this call to make sense. After a
@@ -654,7 +633,7 @@ namespace liblec {
 					/// <summary>
 					/// Stop the runner.
 					/// </summary>
-					/// 
+					///
 					/// <remarks>
 					/// This function returns almost immediately because all it does it request for
 					/// the stop. The internal thread will not be able to respond the same moment.

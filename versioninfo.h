@@ -19,9 +19,9 @@
 #define lecnetcopyright		"(c) 2019 Alec T. Musasa"
 #define lecnetfilename		"lecnet.dll"
 
-#define lecnetversion		"1.0.0"
+#define lecnetversion		"1.0.1 alpha"
 #define lecnetmajor			1
 #define lecnetminor			0
-#define lecnetrevision		0
+#define lecnetrevision		1
 
-#define lecnetdate			"22 Jun 2019"
+#define lecnetdate			"20 Mar 2020"

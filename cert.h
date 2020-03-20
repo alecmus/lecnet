@@ -13,31 +13,10 @@
 
 #pragma once
 
-#ifdef LECNET_EXPORTS
-#define cert_api __declspec(dllexport)
-#include "lecnet.h"
+#if defined(LECNET_EXPORTS)
+	#include "lecnet.h"
 #else
-#define cert_api __declspec(dllimport)
-#include <liblec/lecnet.h>
-
-#ifdef _WIN64
-
-#ifdef _DEBUG
-#pragma comment(lib, "lecnet64d.lib")
-#else
-#pragma comment(lib, "lecnet64.lib")
-#endif // _DEBUG
-
-#else
-
-#ifdef _DEBUG
-#pragma comment(lib, "lecnet32d.lib")
-#else
-#pragma comment(lib, "lecnet32.lib")
-#endif // _DEBUG
-
-#endif // _WIN64
-
+	#include <liblec/lecnet.h>
 #endif
 
 #include <string>
@@ -61,7 +40,7 @@ namespace liblec {
 		// }
 		//
 		// 2. Make Server certificate request
-		// 
+		//
 		// liblec::lecnet::cert::certificate_request server_cert_request;
 		// server_cert_request.file_name = "server.csr";
 		//
@@ -75,7 +54,7 @@ namespace liblec {
 		//
 		// 3. Sign the server certificate request using the CA certificate
 		// (this creates the server certificate)
-		// 
+		//
 		// if (!liblec::lecnet::cert::sign_csr("ca.crt",
 		//		"ca_password123", "server.csr", "server.crt")) {
 		//		// error
@@ -83,7 +62,7 @@ namespace liblec {
 		//
 		// 4. Append the contents of server.key to server.crt then delete server.key
 		// 5. Delete the server certificate request
-		// 
+		//
 		// The file ca.crt is used by the tcp client while server.crt together with the password
 		// to the embedded server private key "server_password123" are used by the tcp server.
 		//
@@ -121,24 +100,24 @@ namespace liblec {
 			/// <summary>
 			/// Generate RSA key and x509 Certificate, and save them to disk.
 			/// </summary>
-			/// 
+			///
 			/// <param name="key">
 			/// The private key, as defined in the private_key struct. The password to this
 			/// private key is required when signing a certificate request using this certificate.
 			/// </param>
-			/// 
+			///
 			/// <param name="cert">
 			/// The digital certificate, as defined in the certificate struct.
 			/// </param>
-			/// 
+			///
 			/// <param name="error">
 			/// Error information.
 			/// </param>
-			/// 
+			///
 			/// <returns>
 			/// Returns true if successful, else false.
 			/// </returns>
-			/// 
+			///
 			/// <remarks>
 			/// Key is saved to private_key.file_name and certificate is saved to
 			/// certificate.file_name. If these two values are the same one file is saved,
@@ -151,25 +130,25 @@ namespace liblec {
 			/// <summary>
 			/// Generate RSA key and Certificate Request, and save them to disk.
 			/// </summary>
-			/// 
+			///
 			/// <param name="key">
 			/// The private key, as defined in the private_key struct.
 			/// </param>
-			/// 
+			///
 			/// <param name="csr_req">
 			/// The certificate request, as defined in the certificate_request struct.
 			/// </param>
-			/// 
+			///
 			/// <param name="error">
 			/// Error information.
 			/// </param>
-			/// 
+			///
 			/// <returns>
 			/// Returns true if successful, else false.
 			/// </returns>
-			/// 
+			///
 			/// <remarks>
-			/// Key is saved to private_key.file_name and certificate request is saved to 
+			/// Key is saved to private_key.file_name and certificate request is saved to
 			/// certificate_request.file_name
 			/// </remarks>
 			bool lecnet_api gen_rsa_and_csr(const private_key& key,
@@ -179,39 +158,39 @@ namespace liblec {
 			/// <summary>
 			/// Sign Certificate Request, and save the certificate to disk.
 			/// </summary>
-			/// 
+			///
 			/// <param name="ca_cert_file">
 			/// CA Certificate file.
 			/// </param>
-			/// 
+			///
 			/// <param name="ca_key_file">
 			/// CA Certificate private key file.
 			/// </param>
-			/// 
+			///
 			/// <param name="ca_key_password">
 			/// CA Certificate private key password.
 			/// </param>
-			/// 
+			///
 			/// <param name="csr_file">
 			/// Certificate request file.
 			/// </param>
-			/// 
+			///
 			/// <param name="certificate_file">
 			/// The file to save the certificate to.
 			/// </param>
-			/// 
+			///
 			/// <param name="days">
 			/// Number of days for which certificate is valid.
 			/// </param>
-			/// 
+			///
 			/// <param name="error">
 			/// Error information.
 			/// </param>
-			/// 
+			///
 			/// <returns>
 			/// Returns true if successful, else false.
 			/// </returns>
-			/// 
+			///
 			/// <remarks>
 			/// After the certificate is made successfully, it is highly recommended that the
 			/// <see cref="csr_file"/> file be deleted.

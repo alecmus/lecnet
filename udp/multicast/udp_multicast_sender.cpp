@@ -11,8 +11,8 @@
 ** for full license details.
 */
 
-#ifndef _WINSOCKAPI_
-#define _WINSOCKAPI_	// prevent winsock 1 from being defined
+#if not defined(_WINSOCKAPI_)
+	#define _WINSOCKAPI_	// prevent winsock 1 from being defined
 #endif
 
 #include "../../udp.h"
@@ -22,20 +22,20 @@
 
 #define ASIO_STANDALONE
 
-#ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x0601
+#if not defined(_WIN32_WINNT)
+	#define _WIN32_WINNT 0x0601
 #endif
 
-#ifdef _WINSOCKAPI_
-#undef _WINSOCKAPI_
-#include <boost/asio.hpp>
-#include <boost/bind.hpp>
-#include <boost/date_time/posix_time/posix_time_types.hpp>
-#define _WINSOCKAPI_
+#if defined(_WINSOCKAPI_)
+	#undef _WINSOCKAPI_
+	#include <boost/asio.hpp>
+	#include <boost/bind.hpp>
+	#include <boost/date_time/posix_time/posix_time_types.hpp>
+	#define _WINSOCKAPI_
 #else
-#include <boost/asio.hpp>
-#include <boost/bind.hpp>
-#include <boost/date_time/posix_time/posix_time_types.hpp>
+	#include <boost/asio.hpp>
+	#include <boost/bind.hpp>
+	#include <boost/date_time/posix_time/posix_time_types.hpp>
 #endif
 
 class sender_ {

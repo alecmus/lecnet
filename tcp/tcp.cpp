@@ -11,8 +11,8 @@
 ** for full license details.
 */
 
-#ifndef _WINSOCKAPI_
-#define _WINSOCKAPI_	// prevent winsock 1 from being defined
+#if not defined(_WINSOCKAPI_)
+	#define _WINSOCKAPI_	// prevent winsock 1 from being defined
 #endif
 
 #include "../tcp.h"
@@ -21,25 +21,25 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define ASIO_STANDALONE
 
-#ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x0601
+#if not defined(_WIN32_WINNT)
+	#define _WIN32_WINNT 0x0601
 #endif
 
-#ifdef _WINSOCKAPI_
-#undef _WINSOCKAPI_
-#include <boost/asio.hpp>
-#define _WINSOCKAPI_
+#if defined(_WINSOCKAPI_)
+	#undef _WINSOCKAPI_
+	#include <boost/asio.hpp>
+	#define _WINSOCKAPI_
 #else
-#include <boost/asio.hpp>
+	#include <boost/asio.hpp>
 #endif
 
-#ifdef _WIN64
-#pragma comment(lib, "libeay64.lib")
-#pragma comment(lib, "ssleay64.lib")
+#if defined(_WIN64)
+	#pragma comment(lib, "libeay64.lib")
+	#pragma comment(lib, "ssleay64.lib")
 #else
-#pragma comment(lib, "libeay32.lib")
-#pragma comment(lib, "ssleay32.lib")
-#endif // _WIN64
+	#pragma comment(lib, "libeay32.lib")
+	#pragma comment(lib, "ssleay32.lib")
+#endif
 
 #undef _CRT_SECURE_NO_WARNINGS
 
