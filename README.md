@@ -49,5 +49,86 @@ Now you can use the required functions by calling #include <liblec/lecnet/...>
 
 Build.
 
+## USING THE LIBRARY
+Usage guidelines are available in-code in the respective header files. Below are minimalistic example programs.
+
+### TCP/IP Server
+Below is sample code for implementing a TCP/IP server (with default parameters):
+
+```
+#include <liblec/lecnet/tcp.h>
+#include <thread>
+#include <chrono>
+#include <iostream>
+
+class tcp_server : public liblec::lecnet::tcp::server_async {
+public:
+    void log(const std::string& time_stamp, const std::string& event) override {
+        std::cout << time_stamp + ": " << event << std::endl;
+    }
+
+    std::string on_receive(const client_address& address,
+        const std::string& data_received) override {
+        return data_received;
+    }
+};
+
+int main() {
+    liblec::lecnet::tcp::server::server_params params;
+    
+    tcp_server server;
+    if (server.start(params)) {
+        while (server.starting())
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+        while (server.running())
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+        server.stop();
+    }
+
+    return 0;
+}
+```
+The code above results in the following output:
+![](https://github.com/alecmus/files/blob/master/liblec/lecnet/screenshots/lecnet_1.0.0_screenshot_01.PNG?raw=true)
+
+### TCP/IP Client
+Below is sample code for implementing a TCP/IP client (with default parameters):
+
+```
+#include <liblec/lecnet/tcp.h>
+#include <thread>
+#include <chrono>
+#include <iostream>
+
+int main() {
+    liblec::lecnet::tcp::client::client_params params;
+    params.use_ssl = false;
+    liblec::lecnet::tcp::client client;
+    std::string error;
+    if (client.connect(params, error)) {
+        while (client.connecting())
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+        if (client.connected(error)) {
+            while (client.running()) {
+                std::string received;
+                if (client.send_data("Sample message", received, 10, nullptr, error))
+                    std::cout << "Reply from server: " << received << std::endl;
+
+                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            }
+        }
+        else
+            std::cout << error << std::endl;
+    }
+    
+    return 0;
+}
+```
+The code above results in the following output:
+![](https://github.com/alecmus/files/blob/master/liblec/lecnet/screenshots/lecnet_1.0.0_screenshot_02.PNG?raw=true)
+
 ## DEPLOYING YOUR APPLICATION
 If it's a 32 bit build you will need to deploy it with lecnet32.dll in the same folder, together with libeay32.dll (32bit build of OpenSSL). If it's a 64 bit build use the lecnet64.dll, together with libeay64.dll (64 bit build of OpenSSL).
