@@ -359,14 +359,14 @@ namespace liblec {
 				void traffic(liblec::lecnet::network_traffic& traffic);
 
 			private:
-				class client_impl;
-				client_impl* d_;
+				class impl;
+				impl& d_;
 
 				class client_async;
 				class client_async_ssl;
 
-				client(const client&);
-				client& operator=(const client&);
+				client(const client&) = delete;
+				client& operator=(const client&) = delete;
 			};
 
 			// Correct usage of the liblec::lecnet::tcp::server class is as follows:
@@ -629,8 +629,8 @@ namespace liblec {
 					const std::string& data_received) = 0;
 
 			private:
-				server(const server&);
-				server& operator=(const server&);
+				server(const server&) = delete;
+				server& operator=(const server&) = delete;
 			};
 
 			/// <summary>
@@ -777,14 +777,14 @@ namespace liblec {
 					const std::string& data_received) { return std::string(); };
 
 			private:
-				class server_async_impl;
-				server_async_impl* d_;
+				class impl;
+				impl& d_;
 
 				class session_async_;
 				class server_async_;
 
-				server_async(const server_async&);
-				server_async& operator=(const server_async&);
+				server_async(const server_async&) = delete;
+				server_async& operator=(const server_async&) = delete;
 			};
 
 			/// <summary>
@@ -930,14 +930,14 @@ namespace liblec {
 					const std::string& data_received) { return std::string(); };
 
 			private:
-				class server_async_ssl_impl;
-				server_async_ssl_impl* d_;
+				class impl;
+				impl& d_;
 
 				class session_async_ssl_;
 				class server_async_ssl_;
 
-				server_async_ssl(const server_async_ssl&);
-				server_async_ssl& operator=(const server_async_ssl&);
+				server_async_ssl(const server_async_ssl&) = delete;
+				server_async_ssl& operator=(const server_async_ssl&) = delete;
 			};
 		}
 	}

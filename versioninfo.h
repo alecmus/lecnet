@@ -24,4 +24,4 @@
 #define lecnetminor			0
 #define lecnetrevision		1
 
-#define lecnetdate			"20 Mar 2020"
+#define lecnetdate			"09 Aug 2020"

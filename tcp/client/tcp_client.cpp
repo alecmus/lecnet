@@ -89,10 +89,10 @@ struct send_info {
 	std::string error;
 };
 
-class liblec::lecnet::tcp::client::client_impl {
+class liblec::lecnet::tcp::client::impl {
 public:
-	client_impl() {};
-	~client_impl() {};
+	impl() {};
+	~impl() {};
 
 	static void client_func(liblec::lecnet::tcp::client* p_current);
 
@@ -172,7 +172,7 @@ public:
 			if (socket().is_open())
 				socket().close();
 
-			p_this_client_->d_->p_socket_ = nullptr;
+			p_this_client_->d_.p_socket_ = nullptr;
 		}
 		catch (const std::exception&) {}
 	}
@@ -195,12 +195,12 @@ public:
 
 	void handle_connect(const boost::system::error_code& error) {
 		if (!error) {
-			long time_out = p_this_client_->d_->timeout_seconds_;
+			long time_out = p_this_client_->d_.timeout_seconds_;
 
 			if (time_out > 0) {
 				// Set a deadline for the connect operation.
 				deadline_.expires_from_now(
-					boost::posix_time::seconds(p_this_client_->d_->timeout_seconds_));
+					boost::posix_time::seconds(p_this_client_->d_.timeout_seconds_));
 			}
 
 			socket_.async_handshake(boost::asio::ssl::stream_base::client,
@@ -209,8 +209,8 @@ public:
 		}
 		else {
 			{
-				liblec::auto_mutex lock(p_this_client_->d_->error_lock_);
-				p_this_client_->d_->error_ = "Connect failed: " + error.message();
+				liblec::auto_mutex lock(p_this_client_->d_.error_lock_);
+				p_this_client_->d_.error_ = "Connect failed: " + error.message();
 			}
 
 			stopped_ = true;
@@ -226,27 +226,27 @@ public:
 			// infinity so that the actor takes no action until a new deadline is set.
 			deadline_.expires_at(boost::posix_time::pos_infin);
 
-			p_this_client_->d_->p_socket_ = &socket_;
+			p_this_client_->d_.p_socket_ = &socket_;
 
 			// it's essential to limit the scope of this mutex
 			{
-				liblec::auto_mutex lock(p_this_client_->d_->result_lock_);
-				p_this_client_->d_->result_.connected = true;
-				p_this_client_->d_->result_.error.clear();
+				liblec::auto_mutex lock(p_this_client_->d_.result_lock_);
+				p_this_client_->d_.result_.connected = true;
+				p_this_client_->d_.result_.error.clear();
 			}
 
 			// it's essential to limit the scope of this mutex
 			{
-				liblec::auto_mutex lock(p_this_client_->d_->connecting_lock_);
-				p_this_client_->d_->connecting_ = false;
+				liblec::auto_mutex lock(p_this_client_->d_.connecting_lock_);
+				p_this_client_->d_.connecting_ = false;
 			}
 
 			execute();
 		}
 		else {
 			{
-				liblec::auto_mutex lock(p_this_client_->d_->error_lock_);
-				p_this_client_->d_->error_ = "Handshake failed: " + error.message();
+				liblec::auto_mutex lock(p_this_client_->d_.error_lock_);
+				p_this_client_->d_.error_ = "Handshake failed: " + error.message();
 			}
 
 			stopped_ = true;
@@ -263,15 +263,15 @@ public:
 				error);
 
 			{
-				liblec::auto_mutex lock(p_this_client_->d_->traffic_lock_);
-				p_this_client_->d_->traffic_.in += bytes_transferred;
+				liblec::auto_mutex lock(p_this_client_->d_.traffic_lock_);
+				p_this_client_->d_.traffic_.in += bytes_transferred;
 			}
 
 			if (!error) {
 				received_ += std::string(buffer_, bytes_transferred);
 
 				// retrieve magic number
-				if (get_ul_prefix(received_, 1) == p_this_client_->d_->magic_number_) {
+				if (get_ul_prefix(received_, 1) == p_this_client_->d_.magic_number_) {
 					// retrieve embedded length
 					unsigned long length = get_ul_prefix(received_, 3);
 
@@ -293,23 +293,23 @@ public:
 						}
 						else {
 							// invalid data received
-							liblec::auto_mutex lock(p_this_client_->d_->error_lock_);
-							p_this_client_->d_->error_ = "Invalid data received";
+							liblec::auto_mutex lock(p_this_client_->d_.error_lock_);
+							p_this_client_->d_.error_ = "Invalid data received";
 							break;
 						}
 					}
 				}
 				else {
 					// invalid data received
-					liblec::auto_mutex lock(p_this_client_->d_->error_lock_);
-					p_this_client_->d_->error_ = "Invalid data received";
+					liblec::auto_mutex lock(p_this_client_->d_.error_lock_);
+					p_this_client_->d_.error_ = "Invalid data received";
 					break;
 				}
 			}
 			else {
 				// client disconnected
-				liblec::auto_mutex lock(p_this_client_->d_->error_lock_);
-				p_this_client_->d_->error_ = "Client disconnected from server: " + error.message();
+				liblec::auto_mutex lock(p_this_client_->d_.error_lock_);
+				p_this_client_->d_.error_ = "Client disconnected from server: " + error.message();
 				break;
 			}
 		}
@@ -330,19 +330,19 @@ private:
 		// skip embedded length
 		get_ul_prefix(data);
 
-		liblec::auto_mutex lock(p_this_client_->d_->data_lock_);
+		liblec::auto_mutex lock(p_this_client_->d_.data_lock_);
 
 		try {
-			if (p_this_client_->d_->data_.find(message_id) !=
-				p_this_client_->d_->data_.end()) {
-				p_this_client_->d_->data_.at(message_id).data = data;
-				p_this_client_->d_->data_.at(message_id).received = true;
+			if (p_this_client_->d_.data_.find(message_id) !=
+				p_this_client_->d_.data_.end()) {
+				p_this_client_->d_.data_.at(message_id).data = data;
+				p_this_client_->d_.data_.at(message_id).received = true;
 			}
 		}
 		catch (std::exception& e) {
 			// probably already deleted from map
-			liblec::auto_mutex lock(p_this_client_->d_->error_lock_);
-			p_this_client_->d_->error_ = "Exception: " + std::string(e.what());
+			liblec::auto_mutex lock(p_this_client_->d_.error_lock_);
+			p_this_client_->d_.error_ = "Exception: " + std::string(e.what());
 		}
 	}
 
@@ -409,12 +409,12 @@ public:
 		*/
 		deadline_.async_wait(boost::bind(&client_async::check_deadline, this));
 
-		long time_out = p_this_client_->d_->timeout_seconds_;
+		long time_out = p_this_client_->d_.timeout_seconds_;
 
 		if (time_out > 0) {
 			// Set a deadline for the connect operation.
 			deadline_.expires_from_now(
-				boost::posix_time::seconds(p_this_client_->d_->timeout_seconds_));
+				boost::posix_time::seconds(p_this_client_->d_.timeout_seconds_));
 		}
 	}
 
@@ -423,7 +423,7 @@ public:
 			if (socket_.is_open())
 				socket_.close();
 
-			p_this_client_->d_->p_socket_ = nullptr;
+			p_this_client_->d_.p_socket_ = nullptr;
 		}
 		catch (const std::exception&) {}
 	}
@@ -435,27 +435,27 @@ public:
 			// infinity so that the actor takes no action until a new deadline is set.
 			deadline_.expires_at(boost::posix_time::pos_infin);
 
-			p_this_client_->d_->p_socket_ = &socket_;
+			p_this_client_->d_.p_socket_ = &socket_;
 
 			// it's essential to limit the scope of this mutex
 			{
-				liblec::auto_mutex lock(p_this_client_->d_->result_lock_);
-				p_this_client_->d_->result_.connected = true;
-				p_this_client_->d_->result_.error.clear();
+				liblec::auto_mutex lock(p_this_client_->d_.result_lock_);
+				p_this_client_->d_.result_.connected = true;
+				p_this_client_->d_.result_.error.clear();
 			}
 
 			// it's essential to limit the scope of this mutex
 			{
-				liblec::auto_mutex lock(p_this_client_->d_->connecting_lock_);
-				p_this_client_->d_->connecting_ = false;
+				liblec::auto_mutex lock(p_this_client_->d_.connecting_lock_);
+				p_this_client_->d_.connecting_ = false;
 			}
 
 			execute();
 		}
 		else {
 			{
-				liblec::auto_mutex lock(p_this_client_->d_->error_lock_);
-				p_this_client_->d_->error_ = "Connect failed: " + error.message();
+				liblec::auto_mutex lock(p_this_client_->d_.error_lock_);
+				p_this_client_->d_.error_ = "Connect failed: " + error.message();
 			}
 
 			stopped_ = true;
@@ -472,15 +472,15 @@ public:
 				error);
 
 			{
-				liblec::auto_mutex lock(p_this_client_->d_->traffic_lock_);
-				p_this_client_->d_->traffic_.in += bytes_transferred;
+				liblec::auto_mutex lock(p_this_client_->d_.traffic_lock_);
+				p_this_client_->d_.traffic_.in += bytes_transferred;
 			}
 
 			if (!error) {
 				received_ += std::string(buffer_, bytes_transferred);
 
 				// retrieve magic number
-				if (get_ul_prefix(received_, 1) == p_this_client_->d_->magic_number_) {
+				if (get_ul_prefix(received_, 1) == p_this_client_->d_.magic_number_) {
 					// retrieve embedded length
 					unsigned long length = get_ul_prefix(received_, 3);
 
@@ -502,23 +502,23 @@ public:
 						}
 						else {
 							// invalid data received
-							liblec::auto_mutex lock(p_this_client_->d_->error_lock_);
-							p_this_client_->d_->error_ = "Invalid data received";
+							liblec::auto_mutex lock(p_this_client_->d_.error_lock_);
+							p_this_client_->d_.error_ = "Invalid data received";
 							break;
 						}
 					}
 				}
 				else {
 					// invalid data received
-					liblec::auto_mutex lock(p_this_client_->d_->error_lock_);
-					p_this_client_->d_->error_ = "Invalid data received";
+					liblec::auto_mutex lock(p_this_client_->d_.error_lock_);
+					p_this_client_->d_.error_ = "Invalid data received";
 					break;
 				}
 			}
 			else {
 				// client disconnected
-				liblec::auto_mutex lock(p_this_client_->d_->error_lock_);
-				p_this_client_->d_->error_ = "Client disconnected from server: " + error.message();
+				liblec::auto_mutex lock(p_this_client_->d_.error_lock_);
+				p_this_client_->d_.error_ = "Client disconnected from server: " + error.message();
 				break;
 			}
 		}
@@ -539,9 +539,9 @@ private:
 		// skip embedded length
 		get_ul_prefix(data);
 
-		liblec::auto_mutex lock(p_this_client_->d_->data_lock_);
-		p_this_client_->d_->data_[message_id].data = data;
-		p_this_client_->d_->data_[message_id].received = true;
+		liblec::auto_mutex lock(p_this_client_->d_.data_lock_);
+		p_this_client_->d_.data_[message_id].data = data;
+		p_this_client_->d_.data_[message_id].received = true;
 	}
 
 	void check_deadline() {
@@ -582,89 +582,87 @@ private:
 	bool stopped_;
 };
 
-liblec::lecnet::tcp::client::client() {
-	d_ = new client_impl;
+liblec::lecnet::tcp::client::client() :
+	d_(*new impl) {
+	d_.address_ = "127.0.0.1";
+	d_.port_ = 2000;
+	d_.use_ssl_ = true;
+	d_.p_socket_ = nullptr;
 
-	d_->address_ = "127.0.0.1";
-	d_->port_ = 2000;
-	d_->use_ssl_ = true;
-	d_->p_socket_ = nullptr;
-
-	d_->data_.clear();
-	d_->result_.connected = false;
-	d_->result_.error.clear();
+	d_.data_.clear();
+	d_.result_.connected = false;
+	d_.result_.error.clear();
 }
 
 liblec::lecnet::tcp::client::~client() {
 	disconnect();
 
 	// ensure the async operation is completed before deleting
-	if (d_->fut_.valid())
-		d_->fut_.get();
+	if (d_.fut_.valid())
+		d_.fut_.get();
 
-	delete d_;
-	d_ = nullptr;
+	delete& d_;
 }
 
-void liblec::lecnet::tcp::client::client_impl::client_func(
+void liblec::lecnet::tcp::client::impl::client_func(
 	liblec::lecnet::tcp::client* p_current) {
 	try {
-		std::string sHost = p_current->d_->address_;
-		std::string sPort = std::to_string(p_current->d_->port_);
+		std::string sHost = p_current->d_.address_;
+		std::string sPort = std::to_string(p_current->d_.port_);
 
 		try {
 			// Create io service
-			p_current->d_->p_io_service_ = new boost::asio::io_service;
+			p_current->d_.p_io_service_ = new boost::asio::io_service;
 
-			boost::asio::ip::tcp::resolver resolver(*p_current->d_->p_io_service_);
+			boost::asio::ip::tcp::resolver resolver(*p_current->d_.p_io_service_);
 			boost::asio::ip::tcp::resolver::query query(sHost, sPort);
 			tcp_iterator iterator = resolver.resolve(query);
 
-			if (p_current->d_->use_ssl_) {
+			if (p_current->d_.use_ssl_) {
 				boost::asio::ssl::context ctx(boost::asio::ssl::context::sslv23);
-				ctx.load_verify_file(p_current->d_->ca_cert_path_);
+				ctx.load_verify_file(p_current->d_.ca_cert_path_);
 
 				liblec::lecnet::tcp::client::client_async_ssl c(p_current,
-					p_current->d_->p_io_service_, ctx, iterator);
+					p_current->d_.p_io_service_, ctx, iterator);
 
-				p_current->d_->p_io_service_->run();
+				p_current->d_.p_io_service_->run();
 			}
 			else {
 				liblec::lecnet::tcp::client::client_async c(p_current,
-					p_current->d_->p_io_service_, iterator);
+					p_current->d_.p_io_service_, iterator);
 
-				p_current->d_->p_io_service_->run();
+				p_current->d_.p_io_service_->run();
 			}
 		}
 		catch (std::exception& e) {
-			auto_mutex lock(p_current->d_->error_lock_);
-			p_current->d_->error_ = "Exception: " + std::string(e.what());
+			auto_mutex lock(p_current->d_.error_lock_);
+			p_current->d_.error_ = "Exception: " + std::string(e.what());
 		}
 
 		// client thread exiting
 	}
 	catch (std::exception& e) {
-		auto_mutex lock(p_current->d_->error_lock_);
-		p_current->d_->error_ = "Exception: " + std::string(e.what());
+		auto_mutex lock(p_current->d_.error_lock_);
+		p_current->d_.error_ = "Exception: " + std::string(e.what());
 	}
 
 	// it's essential to limit the scope of this mutex
 	{
-		liblec::auto_mutex lock(p_current->d_->result_lock_);
-		p_current->d_->result_.connected = false;
-		p_current->d_->result_.error = p_current->d_->error_;
+		liblec::auto_mutex lock(p_current->d_.result_lock_);
+		p_current->d_.result_.connected = false;
+		p_current->d_.result_.error = p_current->d_.error_;
 	}
 
 	// it's essential to limit the scope of this mutex
 	{
-		liblec::auto_mutex lock(p_current->d_->connecting_lock_);
-		p_current->d_->connecting_ = false;
+		liblec::auto_mutex lock(p_current->d_.connecting_lock_);
+		p_current->d_.connecting_ = false;
 	}
 
 	// delete io service
-	if (p_current->d_->p_io_service_) {
-		delete p_current->d_->p_io_service_;
-		p_current->d_->p_io_service_ = nullptr;
+	if (p_current->d_.p_io_service_) {
+		delete p_current->d_.p_io_service_;
+		p_current->d_.p_io_service_ = nullptr;
 	}
 }
 
@@ -675,20 +673,20 @@ bool liblec::lecnet::tcp::client::connect(const client_params& params,
 		return true;
 	}
 
-	d_->timeout_seconds_ = params.timeout_seconds;
-	d_->address_ = params.address;
-	d_->port_ = params.port;
-	d_->use_ssl_ = params.use_ssl;
-	d_->ca_cert_path_ = params.ca_cert_path;
-	d_->magic_number_ = params.magic_number;
+	d_.timeout_seconds_ = params.timeout_seconds;
+	d_.address_ = params.address;
+	d_.port_ = params.port;
+	d_.use_ssl_ = params.use_ssl;
+	d_.ca_cert_path_ = params.ca_cert_path;
+	d_.magic_number_ = params.magic_number;
 
 	try {
 		// run client task asynchronously
-		d_->fut_ = std::async(std::launch::async,
-			d_->client_func, this);
+		d_.fut_ = std::async(std::launch::async,
+			d_.client_func, this);
 
-		liblec::auto_mutex lock(d_->connecting_lock_);
-		d_->connecting_ = true;
+		liblec::auto_mutex lock(d_.connecting_lock_);
+		d_.connecting_ = true;
 	}
 	catch (std::exception& e) {
 		error = e.what();
@@ -699,29 +697,29 @@ bool liblec::lecnet::tcp::client::connect(const client_params& params,
 }
 
 bool liblec::lecnet::tcp::client::connecting() {
-	liblec::auto_mutex lock(d_->connecting_lock_);
-	return d_->connecting_;
+	liblec::auto_mutex lock(d_.connecting_lock_);
+	return d_.connecting_;
 }
 
 bool liblec::lecnet::tcp::client::connected(std::string& error) {
 	error.clear();
 
-	liblec::auto_mutex lock(d_->result_lock_);
+	liblec::auto_mutex lock(d_.result_lock_);
 
-	if (!d_->result_.connected)
-		error = d_->result_.error;
+	if (!d_.result_.connected)
+		error = d_.result_.error;
 
-	return d_->result_.connected;
+	return d_.result_.connected;
 }
 
 bool liblec::lecnet::tcp::client::running() {
-	if (d_->fut_.valid())
-		return d_->fut_.wait_for(std::chrono::seconds{ 0 }) != std::future_status::ready;
+	if (d_.fut_.valid())
+		return d_.fut_.wait_for(std::chrono::seconds{ 0 }) != std::future_status::ready;
 	else
 		return false;
 }
 
-void liblec::lecnet::tcp::client::client_impl::do_send_data(const std::string& raw_to_send,
+void liblec::lecnet::tcp::client::impl::do_send_data(const std::string& raw_to_send,
 	unsigned long id) {
 	std::string to_send;
 
@@ -776,8 +774,8 @@ bool liblec::lecnet::tcp::client::send_data(const std::string& data,
 	}
 
 	try {
-		if (d_->p_io_service_)
-			p_deadline = new boost::asio::deadline_timer(*d_->p_io_service_);
+		if (d_.p_io_service_)
+			p_deadline = new boost::asio::deadline_timer(*d_.p_io_service_);
 
 		// Set a deadline for the send/receive operation.
 		long time_out = 10;	// default to 10 seconds
@@ -790,28 +788,28 @@ bool liblec::lecnet::tcp::client::send_data(const std::string& data,
 
 		received.clear();
 
-		if (d_->p_socket_) {
-			if (d_->message_id_ < max_prefix_size())
-				d_->message_id_++;
+		if (d_.p_socket_) {
+			if (d_.message_id_ < max_prefix_size())
+				d_.message_id_++;
 			else
-				d_->message_id_ = 1;
+				d_.message_id_ = 1;
 
-			message_id = d_->message_id_;
+			message_id = d_.message_id_;
 
 			{
-				auto_mutex lock(d_->data_lock_);
+				auto_mutex lock(d_.data_lock_);
 				received_data data;
-				d_->data_.insert(
+				d_.data_.insert(
 					std::pair<unsigned long, received_data>(message_id, data));
 			}
 
-			d_->do_send_data(data, message_id);
+			d_.do_send_data(data, message_id);
 
 			// wait until data has been sent, and response is received from server
 			while (running()) {
 				{
-					auto_mutex lock(d_->data_lock_);
-					if (d_->data_[message_id].received)
+					auto_mutex lock(d_.data_lock_);
+					if (d_.data_[message_id].received)
 						break;
 				}
 
@@ -822,8 +820,8 @@ bool liblec::lecnet::tcp::client::send_data(const std::string& data,
 					if (p_deadline->expires_at() <=
 						boost::asio::deadline_timer::traits_type::now()) {
 						// timeout_seconds has passed
-						auto_mutex lock(d_->data_lock_);
-						d_->data_[message_id].error = "Send/Receive timeout";
+						auto_mutex lock(d_.data_lock_);
+						d_.data_[message_id].error = "Send/Receive timeout";
 						p_deadline->cancel();
 						break;
 					}
@@ -832,8 +830,8 @@ bool liblec::lecnet::tcp::client::send_data(const std::string& data,
 		}
 	}
 	catch (std::exception& e) {
-		auto_mutex lock(d_->data_lock_);
-		d_->data_[message_id].error = "Exception: " + std::string(e.what());
+		auto_mutex lock(d_.data_lock_);
+		d_.data_[message_id].error = "Exception: " + std::string(e.what());
 	}
 
 	if (p_deadline) {
@@ -843,39 +841,39 @@ bool liblec::lecnet::tcp::client::send_data(const std::string& data,
 			p_deadline = nullptr;
 		}
 		catch (std::exception& e) {
-			auto_mutex lock(d_->data_lock_);
-			d_->data_[message_id].error = "Exception: " + std::string(e.what());
+			auto_mutex lock(d_.data_lock_);
+			d_.data_[message_id].error = "Exception: " + std::string(e.what());
 		}
 	}
 
-	auto_mutex lock(d_->data_lock_);
+	auto_mutex lock(d_.data_lock_);
 
-	if (d_->data_[message_id].data.empty()) {
-		if (d_->data_[message_id].error.empty()) {
-			auto_mutex lock(d_->error_lock_);
-			if (!d_->error_.empty()) {
-				error = d_->error_;
-				d_->error_.clear();
+	if (d_.data_[message_id].data.empty()) {
+		if (d_.data_[message_id].error.empty()) {
+			auto_mutex lock(d_.error_lock_);
+			if (!d_.error_.empty()) {
+				error = d_.error_;
+				d_.error_.clear();
 			}
 			else
 				error = "Not connected to server";	// what else could have happened?
 		}
 		else {
-			error = d_->data_[message_id].error;
-			d_->data_[message_id].error.clear();
+			error = d_.data_[message_id].error;
+			d_.data_[message_id].error.clear();
 		}
 
-		d_->data_.erase(message_id);
+		d_.data_.erase(message_id);
 		return false;
 	}
 
-	received = d_->data_[message_id].data;
-	d_->data_.erase(message_id);
+	received = d_.data_[message_id].data;
+	d_.data_.erase(message_id);
 
 	return true;
 }
 
-void liblec::lecnet::tcp::client::client_impl::send_func(unsigned long data_id,
+void liblec::lecnet::tcp::client::impl::send_func(unsigned long data_id,
 	client* p_current) {
 	try {
 		bool result = true;
@@ -883,21 +881,21 @@ void liblec::lecnet::tcp::client::client_impl::send_func(unsigned long data_id,
 		std::string error;
 
 		// send data (blocking call)
-		result = p_current->send_data(p_current->d_->send_queue_.at(data_id).data, received,
-			p_current->d_->send_queue_.at(data_id).timeout_seconds, nullptr, error);
+		result = p_current->send_data(p_current->d_.send_queue_.at(data_id).data, received,
+			p_current->d_.send_queue_.at(data_id).timeout_seconds, nullptr, error);
 
-		liblec::auto_mutex lock(p_current->d_->send_queue_lock_);
+		liblec::auto_mutex lock(p_current->d_.send_queue_lock_);
 
-		p_current->d_->send_queue_.at(data_id).result = result;
-		p_current->d_->send_queue_.at(data_id).received = received;
-		p_current->d_->send_queue_.at(data_id).error = error;
+		p_current->d_.send_queue_.at(data_id).result = result;
+		p_current->d_.send_queue_.at(data_id).received = received;
+		p_current->d_.send_queue_.at(data_id).error = error;
 	}
 	catch (std::exception& e) {
-		liblec::auto_mutex lock(p_current->d_->send_queue_lock_);
+		liblec::auto_mutex lock(p_current->d_.send_queue_lock_);
 
-		p_current->d_->send_queue_.at(data_id).result = false;
-		p_current->d_->send_queue_.at(data_id).received.clear();
-		p_current->d_->send_queue_.at(data_id).error = e.what();
+		p_current->d_.send_queue_.at(data_id).result = false;
+		p_current->d_.send_queue_.at(data_id).received.clear();
+		p_current->d_.send_queue_.at(data_id).error = e.what();
 	}
 }
 
@@ -905,23 +903,23 @@ bool liblec::lecnet::tcp::client::send_data_async(const std::string& data,
 	const long& timeout_seconds,
 	unsigned long& data_id,
 	std::string& error) {
-	if (d_->data_id_ < max_prefix_size())
-		d_->data_id_++;
+	if (d_.data_id_ < max_prefix_size())
+		d_.data_id_++;
 	else
-		d_->data_id_ = 1;
+		d_.data_id_ = 1;
 
-	data_id = d_->data_id_;
+	data_id = d_.data_id_;
 
-	liblec::auto_mutex lock(d_->send_queue_lock_);
+	liblec::auto_mutex lock(d_.send_queue_lock_);
 
-	d_->send_queue_[data_id].data_id = data_id;
-	d_->send_queue_[data_id].data = data;
-	d_->send_queue_[data_id].timeout_seconds = timeout_seconds;
+	d_.send_queue_[data_id].data_id = data_id;
+	d_.send_queue_[data_id].data = data;
+	d_.send_queue_[data_id].timeout_seconds = timeout_seconds;
 
 	try {
 		// run send task asynchronously
-		d_->send_queue_[data_id].fut = std::async(std::launch::async,
-			d_->send_func, data_id, this);
+		d_.send_queue_[data_id].fut = std::async(std::launch::async,
+			d_.send_func, data_id, this);
 	}
 	catch (std::exception& e) {
 		error = e.what();
@@ -932,11 +930,11 @@ bool liblec::lecnet::tcp::client::send_data_async(const std::string& data,
 }
 
 bool liblec::lecnet::tcp::client::sending(const unsigned long& data_id) {
-	liblec::auto_mutex lock(d_->send_queue_lock_);
+	liblec::auto_mutex lock(d_.send_queue_lock_);
 
 	try {
-		if (d_->send_queue_.at(data_id).fut.valid())
-			return d_->send_queue_.at(data_id).fut.wait_for(std::chrono::seconds{ 0 }) !=
+		if (d_.send_queue_.at(data_id).fut.valid())
+			return d_.send_queue_.at(data_id).fut.wait_for(std::chrono::seconds{ 0 }) !=
 			std::future_status::ready;
 		else
 			return false;
@@ -952,15 +950,15 @@ bool liblec::lecnet::tcp::client::get_response(const unsigned long& data_id,
 	std::string& error) {
 	received.clear();
 
-	liblec::auto_mutex lock(d_->send_queue_lock_);
+	liblec::auto_mutex lock(d_.send_queue_lock_);
 
 	try {
-		bool result = d_->send_queue_.at(data_id).result;
-		error = d_->send_queue_.at(data_id).error;
-		received = d_->send_queue_.at(data_id).received;
+		bool result = d_.send_queue_.at(data_id).result;
+		error = d_.send_queue_.at(data_id).error;
+		received = d_.send_queue_.at(data_id).received;
 
 		// remove from queue
-		d_->send_queue_.erase(data_id);
+		d_.send_queue_.erase(data_id);
 
 		return result;
 	}
@@ -972,14 +970,14 @@ bool liblec::lecnet::tcp::client::get_response(const unsigned long& data_id,
 }
 
 void liblec::lecnet::tcp::client::disconnect() {
-	if (running() && d_->p_io_service_) {
-		if (d_->p_socket_) {
+	if (running() && d_.p_io_service_) {
+		if (d_.p_socket_) {
 			try {
-				if (d_->use_ssl_)
-					((ssl_socket*)d_->p_socket_)->lowest_layer().shutdown(
+				if (d_.use_ssl_)
+					((ssl_socket*)d_.p_socket_)->lowest_layer().shutdown(
 						plain_socket::shutdown_both);
 				else
-					((plain_socket*)d_->p_socket_)->shutdown(plain_socket::shutdown_both);
+					((plain_socket*)d_.p_socket_)->shutdown(plain_socket::shutdown_both);
 			}
 			catch (std::exception&) {
 				// ignore error
@@ -994,6 +992,6 @@ void liblec::lecnet::tcp::client::disconnect() {
 }
 
 void liblec::lecnet::tcp::client::traffic(liblec::lecnet::network_traffic& traffic) {
-	liblec::auto_mutex lock(d_->traffic_lock_);
-	traffic = d_->traffic_;
+	liblec::auto_mutex lock(d_.traffic_lock_);
+	traffic = d_.traffic_;
 }
