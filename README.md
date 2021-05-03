@@ -1,6 +1,21 @@
 # lecnet
 lecnet C++ network library
 
+<p>
+  <em>Release Info</em>
+  <br>
+  <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/alecmus/lecnet">
+  <img alt="GitHub Release Date" src="https://img.shields.io/github/release-date/alecmus/lecnet">
+  <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/alecmus/lecnet/total">
+</p>
+
+<p>
+  <em>Commit Info</em>
+  <br>
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/alecmus/lecnet">
+  <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/y/alecmus/lecnet">
+</p>
+
 ## ABOUT THE LIBRARY
 The lecnet library is a networking library designed for the rapid development of modern, efficient and easy to maintain C++ networking applications. It is part of the liblec libraries (https://github.com/alecmus/liblec).
 
