@@ -2,7 +2,7 @@
 ** versioninfo.h - version information header file
 **
 ** lecnet network library
-** Copyright (c) 2018 Alec T. Musasa (alecmus at live dot com)
+** Copyright (c) 2018 Alec Musasa (alecmus at live dot com)
 **
 *******************************************************************************
 ** This file is part of the liblec library which is released under the Creative
@@ -16,7 +16,7 @@
 #define lecnetname			"lecnet"
 #define lecnetdescription	"lecnet network library"
 #define lecnetcomments		"This file is part of the liblec library"
-#define lecnetcopyright		"(c) 2019 Alec T. Musasa"
+#define lecnetcopyright		"(c) 2019 Alec Musasa"
 #define lecnetfilename		"lecnet.dll"
 
 #define lecnetversion		"1.0.1"

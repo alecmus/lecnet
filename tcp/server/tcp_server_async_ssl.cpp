@@ -2,7 +2,7 @@
 ** tcp_server_async_ssl.cpp - tcp/ip asynchronous server (with SSL encryption) implementation
 **
 ** lecnet network library
-** Copyright (c) 2018 Alec T. Musasa (alecmus at live dot com)
+** Copyright (c) 2018 Alec Musasa (alecmus at live dot com)
 **
 *******************************************************************************
 ** This file is part of the liblec library which is released under the Creative

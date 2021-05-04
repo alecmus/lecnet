@@ -1,7 +1,7 @@
 /*
 ** lecnet network library
 **
-** Copyright (c) 2019 Alec T. Musasa (alecmus@live.com)
+** Copyright (c) 2019 Alec Musasa (alecmus@live.com)
 **
 ** This code may not be copied, modified or distributed without the
 ** express written permission of the author. Any violation shall
