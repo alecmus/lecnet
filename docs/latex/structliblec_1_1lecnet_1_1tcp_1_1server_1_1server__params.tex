@@ -1,0 +1,111 @@
+\hypertarget{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params}{}\doxysection{liblec\+::lecnet\+::tcp\+::server\+::server\+\_\+params Struct Reference}
+\label{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params}\index{liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}}
+
+
+Server parameters.  
+
+
+
+
+{\ttfamily \#include $<$tcp.\+h$>$}
+
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a15010758e2f66a0796892eea2f550a56}{ip}} = \char`\"{}0.\+0.\+0.\+0\char`\"{}
+\begin{DoxyCompactList}\small\item\em Server IP address. \end{DoxyCompactList}\item 
+unsigned short \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a1ce32502dae4d3e10b2272b6737be4c5}{port}} = 50001
+\begin{DoxyCompactList}\small\item\em Server port. \end{DoxyCompactList}\item 
+unsigned short \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_abb2552fa2575ab2f6bc83f7feba57545}{max\+\_\+clients}} = 1000
+\begin{DoxyCompactList}\small\item\em The maximum number of clients that the server should accept. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a52a038131e1a95ba3e36b4c8d7b66fb9}{server\+\_\+cert}} = \char`\"{}server.\+crt\char`\"{}
+\begin{DoxyCompactList}\small\item\em The server certificate. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a2461415746c92efa09b53bc910aae7cc}{server\+\_\+cert\+\_\+key}} = \char`\"{}server.\+crt\char`\"{}
+\begin{DoxyCompactList}\small\item\em The server certificate\textquotesingle{}s private key. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a0df4502e0e07b5d88d6e369671fde8f5}{server\+\_\+cert\+\_\+key\+\_\+password}} = \char`\"{}password\char`\"{}
+\begin{DoxyCompactList}\small\item\em The server certificate\textquotesingle{}s password. \end{DoxyCompactList}\item 
+unsigned long \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a21ce9b32d10be398123fdef31368b7b1}{magic\+\_\+number}} = 0
+\begin{DoxyCompactList}\small\item\em The magic number for prefixing data (must match with client). Useful for checking data integrity. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Server parameters. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a15010758e2f66a0796892eea2f550a56}\label{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a15010758e2f66a0796892eea2f550a56}} 
+\index{liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}!ip@{ip}}
+\index{ip@{ip}!liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}}
+\doxysubsubsection{\texorpdfstring{ip}{ip}}
+{\footnotesize\ttfamily std\+::string liblec\+::lecnet\+::tcp\+::server\+::server\+\_\+params\+::ip = \char`\"{}0.\+0.\+0.\+0\char`\"{}}
+
+
+
+Server IP address. 
+
+\mbox{\Hypertarget{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a21ce9b32d10be398123fdef31368b7b1}\label{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a21ce9b32d10be398123fdef31368b7b1}} 
+\index{liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}!magic\_number@{magic\_number}}
+\index{magic\_number@{magic\_number}!liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}}
+\doxysubsubsection{\texorpdfstring{magic\_number}{magic\_number}}
+{\footnotesize\ttfamily unsigned long liblec\+::lecnet\+::tcp\+::server\+::server\+\_\+params\+::magic\+\_\+number = 0}
+
+
+
+The magic number for prefixing data (must match with client). Useful for checking data integrity. 
+
+\mbox{\Hypertarget{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_abb2552fa2575ab2f6bc83f7feba57545}\label{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_abb2552fa2575ab2f6bc83f7feba57545}} 
+\index{liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}!max\_clients@{max\_clients}}
+\index{max\_clients@{max\_clients}!liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}}
+\doxysubsubsection{\texorpdfstring{max\_clients}{max\_clients}}
+{\footnotesize\ttfamily unsigned short liblec\+::lecnet\+::tcp\+::server\+::server\+\_\+params\+::max\+\_\+clients = 1000}
+
+
+
+The maximum number of clients that the server should accept. 
+
+\mbox{\Hypertarget{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a1ce32502dae4d3e10b2272b6737be4c5}\label{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a1ce32502dae4d3e10b2272b6737be4c5}} 
+\index{liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}!port@{port}}
+\index{port@{port}!liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}}
+\doxysubsubsection{\texorpdfstring{port}{port}}
+{\footnotesize\ttfamily unsigned short liblec\+::lecnet\+::tcp\+::server\+::server\+\_\+params\+::port = 50001}
+
+
+
+Server port. 
+
+\mbox{\Hypertarget{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a52a038131e1a95ba3e36b4c8d7b66fb9}\label{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a52a038131e1a95ba3e36b4c8d7b66fb9}} 
+\index{liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}!server\_cert@{server\_cert}}
+\index{server\_cert@{server\_cert}!liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}}
+\doxysubsubsection{\texorpdfstring{server\_cert}{server\_cert}}
+{\footnotesize\ttfamily std\+::string liblec\+::lecnet\+::tcp\+::server\+::server\+\_\+params\+::server\+\_\+cert = \char`\"{}server.\+crt\char`\"{}}
+
+
+
+The server certificate. 
+
+\mbox{\Hypertarget{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a2461415746c92efa09b53bc910aae7cc}\label{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a2461415746c92efa09b53bc910aae7cc}} 
+\index{liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}!server\_cert\_key@{server\_cert\_key}}
+\index{server\_cert\_key@{server\_cert\_key}!liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}}
+\doxysubsubsection{\texorpdfstring{server\_cert\_key}{server\_cert\_key}}
+{\footnotesize\ttfamily std\+::string liblec\+::lecnet\+::tcp\+::server\+::server\+\_\+params\+::server\+\_\+cert\+\_\+key = \char`\"{}server.\+crt\char`\"{}}
+
+
+
+The server certificate\textquotesingle{}s private key. 
+
+\mbox{\Hypertarget{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a0df4502e0e07b5d88d6e369671fde8f5}\label{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params_a0df4502e0e07b5d88d6e369671fde8f5}} 
+\index{liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}!server\_cert\_key\_password@{server\_cert\_key\_password}}
+\index{server\_cert\_key\_password@{server\_cert\_key\_password}!liblec::lecnet::tcp::server::server\_params@{liblec::lecnet::tcp::server::server\_params}}
+\doxysubsubsection{\texorpdfstring{server\_cert\_key\_password}{server\_cert\_key\_password}}
+{\footnotesize\ttfamily std\+::string liblec\+::lecnet\+::tcp\+::server\+::server\+\_\+params\+::server\+\_\+cert\+\_\+key\+\_\+password = \char`\"{}password\char`\"{}}
+
+
+
+The server certificate\textquotesingle{}s password. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+tcp.\+h\end{DoxyCompactItemize}

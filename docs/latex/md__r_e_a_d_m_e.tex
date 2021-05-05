@@ -1,0 +1,138 @@
+lecnet C++ network library
+
+   \hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysubsubsection{Release Info}\label{md__r_e_a_d_m_e_autotoc_md3}
+   \hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysubsubsection{Commit Info}\label{md__r_e_a_d_m_e_autotoc_md4}
+  \hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysubsection{About the Library}\label{md__r_e_a_d_m_e_autotoc_md5}
+The lecnet library is a networking library designed for the rapid development of modern, efficient and easy to maintain C++ networking applications. It is part of the liblec libraries (\href{https://github.com/alecmus/liblec}{\texttt{ https\+://github.\+com/alecmus/liblec}}).\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysubsection{Prebuilt Binaries}\label{md__r_e_a_d_m_e_autotoc_md6}
+Prebuild binaries of the library can be found under releases\+: \href{https://github.com/alecmus/lecnet/releases}{\texttt{ https\+://github.\+com/alecmus/lecnet/releases}}.\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysubsection{Dependencies}\label{md__r_e_a_d_m_e_autotoc_md7}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxysubsubsection{Open\+SSL}\label{md__r_e_a_d_m_e_autotoc_md8}
+This library uses Open\+SSL (\href{https://www.openssl.org/}{\texttt{ https\+://www.\+openssl.\+org/}}) for various functions, e.\+g. SSL encryption and making digital certificates. The user is free to compile Open\+SSL on their own, but for convenience, Open\+SSL binaries that I have compiled can be obtained from \href{https://github.com/alecmus/files/tree/master/openssl}{\texttt{ https\+://github.\+com/alecmus/files/tree/master/openssl}}. Kindly note that I prefer compiling Open\+SSL so that the 32 and 64 bit binaries have different names to avoid ambiguity and deployment mistakes and,a also for other advantages that I won\textquotesingle{}t get into here.
+
+By default, the lecnet project is configured to look for Open\+SSL in C\+:\textbackslash{}local\textbackslash{}libs\textbackslash{}openssl. Placing the Open\+SSL files I compiled into this location will enable building without modifications; placing them (or differently named variants) elsewhere will require appropriate modification of the project properties and source files.\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysubsection{Building}\label{md__r_e_a_d_m_e_autotoc_md9}
+Create a folder \textquotesingle{}\textbackslash{}liblec\textquotesingle{} and clone the repository into it such that it resides in \textquotesingle{}liblec\textbackslash{}lecnet\textquotesingle{}. Open the Microsoft Visual Studio Solution file liblec\textbackslash{}lecnet\textbackslash{}lecnet.\+sln. Select Build -\/$>$ Batch Build, then select the desired configurations of the given four\+:
+\begin{DoxyEnumerate}
+\item Debug x86
+\item Relese x86 (32 bit Release Build)
+\item Debug x64
+\item Release x64 (64 bit Release Build)
+\end{DoxyEnumerate}
+
+Build.
+
+Three folders will be created in the \textbackslash{}liblec directory, namely bin, lib and include. Below is a description of these subdirectories.
+
+
+\begin{DoxyEnumerate}
+\item bin -\/ contains the binary files. The following files will be created\+:
+\end{DoxyEnumerate}
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ File   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ File   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description    }\\\cline{1-2}
+\endhead
+lecnet32.\+dll   &32 bit release build    \\\cline{1-2}
+lecnet64.\+dll   &64 bit release build    \\\cline{1-2}
+lecnet32d.\+dll   &32 bit debug build    \\\cline{1-2}
+lecnet64d.\+dll   &64 bit debug build   \\\cline{1-2}
+\end{longtabu}
+
+
+
+\begin{DoxyEnumerate}
+\item lib -\/ contains the static library files that accompany the dlls. The files are names after the respective dlls.
+\item include -\/ contains the include files
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md10}{}\doxysubsection{Linking to the Library}\label{md__r_e_a_d_m_e_autotoc_md10}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md11}{}\doxysubsubsection{Microsoft Visual Studio}\label{md__r_e_a_d_m_e_autotoc_md11}
+Open your project\textquotesingle{}s properties and for All Configurations and All Platforms set the following\+:
+\begin{DoxyEnumerate}
+\item C/\+C++ -\/$>$ General -\/$>$ Additional Include Directories -\/$>$ Edit -\/$>$ New Line ... add \textbackslash{}liblecLinker -\/$>$ General -\/$>$ Additional Library Directories -\/$>$ Edit -\/$>$ New Line ... add \textbackslash{}liblec\textbackslash{}lib
+\item Debugging -\/$>$ Environment -\/$>$ Edit ... add PATH=\textbackslash{}liblec\textbackslash{}bin;\textbackslash{}openssl\textbackslash{}bin;PATH\%
+\end{DoxyEnumerate}
+
+Now you can use the required functions by calling \#include $<$liblec/lecnet/...$>$
+
+Build.\hypertarget{md__r_e_a_d_m_e_autotoc_md12}{}\doxysubsection{Using the Library}\label{md__r_e_a_d_m_e_autotoc_md12}
+Usage guidelines are available in-\/code in the respective header files. Below are minimalistic example programs.\hypertarget{md__r_e_a_d_m_e_autotoc_md13}{}\doxysubsubsection{TCP/\+IP Server}\label{md__r_e_a_d_m_e_autotoc_md13}
+Below is sample code for implementing a TCP/\+IP server (with default parameters)\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#include <liblec/lecnet/tcp.h>}
+\DoxyCodeLine{\#include <thread>}
+\DoxyCodeLine{\#include <chrono>}
+\DoxyCodeLine{\#include <iostream>}
+\DoxyCodeLine{}
+\DoxyCodeLine{class tcp\_server : public liblec::lecnet::tcp::server\_async \{}
+\DoxyCodeLine{public:}
+\DoxyCodeLine{    void log(const std::string\& time\_stamp, const std::string\& event) override \{}
+\DoxyCodeLine{        std::cout << time\_stamp + "{}: "{} << event << std::endl;}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{    std::string on\_receive(const client\_address\& address,}
+\DoxyCodeLine{        const std::string\& data\_received) override \{}
+\DoxyCodeLine{        return data\_received;}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{int main() \{}
+\DoxyCodeLine{    liblec::lecnet::tcp::server::server\_params params;}
+\DoxyCodeLine{    }
+\DoxyCodeLine{    tcp\_server server;}
+\DoxyCodeLine{    if (server.start(params)) \{}
+\DoxyCodeLine{        while (server.starting())}
+\DoxyCodeLine{            std::this\_thread::sleep\_for(std::chrono::milliseconds(1));}
+\DoxyCodeLine{}
+\DoxyCodeLine{        while (server.running())}
+\DoxyCodeLine{            std::this\_thread::sleep\_for(std::chrono::milliseconds(1));}
+\DoxyCodeLine{}
+\DoxyCodeLine{        server.stop();}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{    return 0;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ The code above results in the following output\+: \hypertarget{md__r_e_a_d_m_e_autotoc_md14}{}\doxysubsubsection{TCP/\+IP Client}\label{md__r_e_a_d_m_e_autotoc_md14}
+Below is sample code for implementing a TCP/\+IP client (with default parameters)\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#include <liblec/lecnet/tcp.h>}
+\DoxyCodeLine{\#include <thread>}
+\DoxyCodeLine{\#include <chrono>}
+\DoxyCodeLine{\#include <iostream>}
+\DoxyCodeLine{}
+\DoxyCodeLine{int main() \{}
+\DoxyCodeLine{    liblec::lecnet::tcp::client::client\_params params;}
+\DoxyCodeLine{    params.use\_ssl = false;}
+\DoxyCodeLine{    liblec::lecnet::tcp::client client;}
+\DoxyCodeLine{    std::string error;}
+\DoxyCodeLine{    if (client.connect(params, error)) \{}
+\DoxyCodeLine{        while (client.connecting())}
+\DoxyCodeLine{            std::this\_thread::sleep\_for(std::chrono::milliseconds(1));}
+\DoxyCodeLine{}
+\DoxyCodeLine{        if (client.connected(error)) \{}
+\DoxyCodeLine{            while (client.running()) \{}
+\DoxyCodeLine{                std::string received;}
+\DoxyCodeLine{                if (client.send\_data("{}Sample message"{}, received, 10, nullptr, error))}
+\DoxyCodeLine{                    std::cout << "{}Reply from server: "{} << received << std::endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{                std::this\_thread::sleep\_for(std::chrono::milliseconds(1000));}
+\DoxyCodeLine{            \}}
+\DoxyCodeLine{        \}}
+\DoxyCodeLine{        else}
+\DoxyCodeLine{            std::cout << error << std::endl;}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{    }
+\DoxyCodeLine{    return 0;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ The code above results in the following output\+: \hypertarget{md__r_e_a_d_m_e_autotoc_md15}{}\doxysubsection{Deploying your Application}\label{md__r_e_a_d_m_e_autotoc_md15}
+If it\textquotesingle{}s a 32 bit build you will need to deploy it with lecnet32.\+dll in the same folder, together with libeay32.\+dll (32bit build of Open\+SSL). If it\textquotesingle{}s a 64 bit build use the lecnet64.\+dll, together with libeay64.\+dll (64 bit build of Open\+SSL). 

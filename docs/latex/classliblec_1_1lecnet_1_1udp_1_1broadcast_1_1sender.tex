@@ -1,0 +1,198 @@
+\hypertarget{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender}{}\doxysection{liblec\+::lecnet\+::udp\+::broadcast\+::sender Class Reference}
+\label{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender}\index{liblec::lecnet::udp::broadcast::sender@{liblec::lecnet::udp::broadcast::sender}}
+
+
+For sending UDP broadcasts.  
+
+
+
+
+{\ttfamily \#include $<$udp.\+h$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_1_1sender__impl}{sender\+\_\+impl}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_a44495fb1c1adb7d59d7b23179e9852fa}{sender}} (unsigned short broadcast\+\_\+port)
+\begin{DoxyCompactList}\small\item\em Constructor for the udp\+\_\+broadcast sender class. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_a1c4e4404a0a707d7aca634f4b73e810b}{send}} (const std\+::string \&message, unsigned long max\+\_\+count, long long timeout\+\_\+milliseconds, unsigned long \&actual\+\_\+count, std\+::string \&error)
+\begin{DoxyCompactList}\small\item\em Sending a broadcast message (synchronously). \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_afab1bdf05e03916abc26d886213f0e3d}{send\+\_\+async}} (const std\+::string \&message, const unsigned long \&max\+\_\+count, const long long \&timeout\+\_\+milliseconds, std\+::string \&error)
+\begin{DoxyCompactList}\small\item\em Send a broadcast message (asynchronously) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_a549d63417904801d4c41d84737c5962a}{sending}} ()
+\begin{DoxyCompactList}\small\item\em Check if the attempt to send the message is currently underway. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_ace2217e9dbc36d3bd46fa89fe46816eb}{result}} (unsigned long \&actual\+\_\+count, std\+::string \&error)
+\begin{DoxyCompactList}\small\item\em Check the result of the sending operation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+For sending UDP broadcasts. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_a44495fb1c1adb7d59d7b23179e9852fa}\label{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_a44495fb1c1adb7d59d7b23179e9852fa}} 
+\index{liblec::lecnet::udp::broadcast::sender@{liblec::lecnet::udp::broadcast::sender}!sender@{sender}}
+\index{sender@{sender}!liblec::lecnet::udp::broadcast::sender@{liblec::lecnet::udp::broadcast::sender}}
+\doxysubsubsection{\texorpdfstring{sender()}{sender()}}
+{\footnotesize\ttfamily liblec\+::lecnet\+::udp\+::broadcast\+::sender\+::sender (\begin{DoxyParamCaption}\item[{unsigned short}]{broadcast\+\_\+port }\end{DoxyParamCaption})}
+
+
+
+Constructor for the udp\+\_\+broadcast sender class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em broadcast\+\_\+port} & The broadcast port. Range is 0 to 65535, e.\+g. 30001. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_ace2217e9dbc36d3bd46fa89fe46816eb}\label{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_ace2217e9dbc36d3bd46fa89fe46816eb}} 
+\index{liblec::lecnet::udp::broadcast::sender@{liblec::lecnet::udp::broadcast::sender}!result@{result}}
+\index{result@{result}!liblec::lecnet::udp::broadcast::sender@{liblec::lecnet::udp::broadcast::sender}}
+\doxysubsubsection{\texorpdfstring{result()}{result()}}
+{\footnotesize\ttfamily bool liblec\+::lecnet\+::udp\+::broadcast\+::sender\+::result (\begin{DoxyParamCaption}\item[{unsigned long \&}]{actual\+\_\+count,  }\item[{std\+::string \&}]{error }\end{DoxyParamCaption})}
+
+
+
+Check the result of the sending operation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em actual\+\_\+count} & The actual number of times the message has been sent. \\
+\hline
+\end{DoxyParams}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & Error information. \\
+\hline
+\end{DoxyParams}
+
+
+\begin{DoxyReturn}{Returns}
+Returns true if sending the message was successful, else false. 
+\end{DoxyReturn}
+
+
+Calling this function only makes sense after a successful call to \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_afab1bdf05e03916abc26d886213f0e3d}{send\+\_\+async}} followed by waiting for \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_a549d63417904801d4c41d84737c5962a}{sending}} to return false. \mbox{\Hypertarget{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_a1c4e4404a0a707d7aca634f4b73e810b}\label{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_a1c4e4404a0a707d7aca634f4b73e810b}} 
+\index{liblec::lecnet::udp::broadcast::sender@{liblec::lecnet::udp::broadcast::sender}!send@{send}}
+\index{send@{send}!liblec::lecnet::udp::broadcast::sender@{liblec::lecnet::udp::broadcast::sender}}
+\doxysubsubsection{\texorpdfstring{send()}{send()}}
+{\footnotesize\ttfamily bool liblec\+::lecnet\+::udp\+::broadcast\+::sender\+::send (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{message,  }\item[{unsigned long}]{max\+\_\+count,  }\item[{long long}]{timeout\+\_\+milliseconds,  }\item[{unsigned long \&}]{actual\+\_\+count,  }\item[{std\+::string \&}]{error }\end{DoxyParamCaption})}
+
+
+
+Sending a broadcast message (synchronously). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to be sent. \\
+\hline
+\end{DoxyParams}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em max\+\_\+count} & The maximum number of times the message is to be sent. \\
+\hline
+\end{DoxyParams}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em timeout\+\_\+milliseconds} & The timeout between consecutive send operations. \\
+\hline
+\end{DoxyParams}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em actual\+\_\+count} & The actual number of times the message has been sent. \\
+\hline
+\end{DoxyParams}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & Error information. \\
+\hline
+\end{DoxyParams}
+
+
+\begin{DoxyReturn}{Returns}
+Returns true if successful, else false. 
+\end{DoxyReturn}
+
+
+This is a blocking function and will only return when either the sending operation is complete or when an error occurs. \mbox{\Hypertarget{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_afab1bdf05e03916abc26d886213f0e3d}\label{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_afab1bdf05e03916abc26d886213f0e3d}} 
+\index{liblec::lecnet::udp::broadcast::sender@{liblec::lecnet::udp::broadcast::sender}!send\_async@{send\_async}}
+\index{send\_async@{send\_async}!liblec::lecnet::udp::broadcast::sender@{liblec::lecnet::udp::broadcast::sender}}
+\doxysubsubsection{\texorpdfstring{send\_async()}{send\_async()}}
+{\footnotesize\ttfamily bool liblec\+::lecnet\+::udp\+::broadcast\+::sender\+::send\+\_\+async (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{message,  }\item[{const unsigned long \&}]{max\+\_\+count,  }\item[{const long long \&}]{timeout\+\_\+milliseconds,  }\item[{std\+::string \&}]{error }\end{DoxyParamCaption})}
+
+
+
+Send a broadcast message (asynchronously) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to be sent. \\
+\hline
+\end{DoxyParams}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em max\+\_\+count} & The maximum number of times the message is to be sent. \\
+\hline
+\end{DoxyParams}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em timeout\+\_\+milliseconds} & The timeout between consecutive send operations. \\
+\hline
+\end{DoxyParams}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & Error information. \\
+\hline
+\end{DoxyParams}
+
+
+\begin{DoxyReturn}{Returns}
+Returns true if successful, else false. 
+\end{DoxyReturn}
+
+
+This is a non-\/blocking function and returns almost immediately. The actual sending is done on a seperate thread. The status of the message sending can be checked by calls to \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_a549d63417904801d4c41d84737c5962a}{sending}} and the results can be obtained by a call to \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_ace2217e9dbc36d3bd46fa89fe46816eb}{result}}. \mbox{\Hypertarget{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_a549d63417904801d4c41d84737c5962a}\label{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_a549d63417904801d4c41d84737c5962a}} 
+\index{liblec::lecnet::udp::broadcast::sender@{liblec::lecnet::udp::broadcast::sender}!sending@{sending}}
+\index{sending@{sending}!liblec::lecnet::udp::broadcast::sender@{liblec::lecnet::udp::broadcast::sender}}
+\doxysubsubsection{\texorpdfstring{sending()}{sending()}}
+{\footnotesize\ttfamily bool liblec\+::lecnet\+::udp\+::broadcast\+::sender\+::sending (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Check if the attempt to send the message is currently underway. 
+
+\begin{DoxyReturn}{Returns}
+Returns true if the message sending attempt is currently underway, else false. 
+\end{DoxyReturn}
+
+
+This function only works with \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_afab1bdf05e03916abc26d886213f0e3d}{send\+\_\+async}} 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+udp.\+h\item 
+udp/broadcast/udp\+\_\+broadcast\+\_\+sender.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,149 @@
+\hypertarget{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver}{}\doxysection{liblec\+::lecnet\+::udp\+::broadcast\+::receiver Class Reference}
+\label{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver}\index{liblec::lecnet::udp::broadcast::receiver@{liblec::lecnet::udp::broadcast::receiver}}
+
+
+For receiving UDP broadcasts.  
+
+
+
+
+{\ttfamily \#include $<$udp.\+h$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_1_1receiver__impl}{receiver\+\_\+impl}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a85a8eb4fff6325c7b9ac3ebfe0d41cd5}{receiver}} (unsigned short broadcast\+\_\+port, std\+::string listen\+\_\+address)
+\begin{DoxyCompactList}\small\item\em Constructor for the udp\+\_\+broadcast receiver class. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a71f96220145fb1bb3f7b825cfcb3d505}{run}} (long long timeout\+\_\+milliseconds, std\+::string \&error)
+\begin{DoxyCompactList}\small\item\em Run the thread that checks for a UDP Broadcast message. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_aca3cf6791b83bf8e15a467dff8d0732a}{running}} ()
+\begin{DoxyCompactList}\small\item\em Check if the receiving thread is running, i.\+e. waiting to receive a message. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a07317f64597461ca9998e84650bcd862}{get}} (std\+::string \&message, std\+::string \&error)
+\begin{DoxyCompactList}\small\item\em Get UDP broadcast message obtained by the last call to \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a71f96220145fb1bb3f7b825cfcb3d505}{run}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a1db6ee28e4df5fb12b9858075ba6028a}{stop}} ()
+\begin{DoxyCompactList}\small\item\em Stop the runner. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+For receiving UDP broadcasts. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a85a8eb4fff6325c7b9ac3ebfe0d41cd5}\label{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a85a8eb4fff6325c7b9ac3ebfe0d41cd5}} 
+\index{liblec::lecnet::udp::broadcast::receiver@{liblec::lecnet::udp::broadcast::receiver}!receiver@{receiver}}
+\index{receiver@{receiver}!liblec::lecnet::udp::broadcast::receiver@{liblec::lecnet::udp::broadcast::receiver}}
+\doxysubsubsection{\texorpdfstring{receiver()}{receiver()}}
+{\footnotesize\ttfamily liblec\+::lecnet\+::udp\+::broadcast\+::receiver\+::receiver (\begin{DoxyParamCaption}\item[{unsigned short}]{broadcast\+\_\+port,  }\item[{std\+::string}]{listen\+\_\+address }\end{DoxyParamCaption})}
+
+
+
+Constructor for the udp\+\_\+broadcast receiver class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em broadcast\+\_\+port} & The broadcast port. Range is 0 to 65535, e.\+g. 30001. \\
+\hline
+\end{DoxyParams}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em listen\+\_\+address} & The address to use for listening, e.\+g. 0.\+0.\+0.\+0. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a07317f64597461ca9998e84650bcd862}\label{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a07317f64597461ca9998e84650bcd862}} 
+\index{liblec::lecnet::udp::broadcast::receiver@{liblec::lecnet::udp::broadcast::receiver}!get@{get}}
+\index{get@{get}!liblec::lecnet::udp::broadcast::receiver@{liblec::lecnet::udp::broadcast::receiver}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily bool liblec\+::lecnet\+::udp\+::broadcast\+::receiver\+::get (\begin{DoxyParamCaption}\item[{std\+::string \&}]{message,  }\item[{std\+::string \&}]{error }\end{DoxyParamCaption})}
+
+
+
+Get UDP broadcast message obtained by the last call to \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a71f96220145fb1bb3f7b825cfcb3d505}{run}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message will be written here, if available. A maximum of 1024 characters will be acquired. \\
+\hline
+\end{DoxyParams}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & Error information. \\
+\hline
+\end{DoxyParams}
+
+
+\begin{DoxyReturn}{Returns}
+Returns true if successful, else false. 
+\end{DoxyReturn}
+
+
+A call to \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a71f96220145fb1bb3f7b825cfcb3d505}{run}}, and then checking for the status of \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_aca3cf6791b83bf8e15a467dff8d0732a}{running}} is important for this call to make sense. After a successful call to \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a71f96220145fb1bb3f7b825cfcb3d505}{run}}, wait until \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_aca3cf6791b83bf8e15a467dff8d0732a}{running}} returns false, then call this function. After a message is retrieved using this function it is immediately deleted from memory. A new call to \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a71f96220145fb1bb3f7b825cfcb3d505}{run}} can then be used to check for a new message. \mbox{\Hypertarget{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a71f96220145fb1bb3f7b825cfcb3d505}\label{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a71f96220145fb1bb3f7b825cfcb3d505}} 
+\index{liblec::lecnet::udp::broadcast::receiver@{liblec::lecnet::udp::broadcast::receiver}!run@{run}}
+\index{run@{run}!liblec::lecnet::udp::broadcast::receiver@{liblec::lecnet::udp::broadcast::receiver}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily bool liblec\+::lecnet\+::udp\+::broadcast\+::receiver\+::run (\begin{DoxyParamCaption}\item[{long long}]{timeout\+\_\+milliseconds,  }\item[{std\+::string \&}]{error }\end{DoxyParamCaption})}
+
+
+
+Run the thread that checks for a UDP Broadcast message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em timeout\+\_\+milliseconds} & The timeout for a receive operation. \\
+\hline
+\end{DoxyParams}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & Error information. \\
+\hline
+\end{DoxyParams}
+
+
+\begin{DoxyReturn}{Returns}
+Returns true if successful, else false. 
+\end{DoxyReturn}
+
+
+This function will return almost immediately to avoid blocking for {\itshape timeout\+\_\+milliseconds} . The results of the actual receiving, which will be executed asynchronously, can be obtained by calling \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a07317f64597461ca9998e84650bcd862}{get}}. The status of the receiver thread can be checked by a call to \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_aca3cf6791b83bf8e15a467dff8d0732a}{running}} \mbox{\Hypertarget{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_aca3cf6791b83bf8e15a467dff8d0732a}\label{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_aca3cf6791b83bf8e15a467dff8d0732a}} 
+\index{liblec::lecnet::udp::broadcast::receiver@{liblec::lecnet::udp::broadcast::receiver}!running@{running}}
+\index{running@{running}!liblec::lecnet::udp::broadcast::receiver@{liblec::lecnet::udp::broadcast::receiver}}
+\doxysubsubsection{\texorpdfstring{running()}{running()}}
+{\footnotesize\ttfamily bool liblec\+::lecnet\+::udp\+::broadcast\+::receiver\+::running (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Check if the receiving thread is running, i.\+e. waiting to receive a message. 
+
+\begin{DoxyReturn}{Returns}
+Returns true if the receiver thread is running, else false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a1db6ee28e4df5fb12b9858075ba6028a}\label{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a1db6ee28e4df5fb12b9858075ba6028a}} 
+\index{liblec::lecnet::udp::broadcast::receiver@{liblec::lecnet::udp::broadcast::receiver}!stop@{stop}}
+\index{stop@{stop}!liblec::lecnet::udp::broadcast::receiver@{liblec::lecnet::udp::broadcast::receiver}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void liblec\+::lecnet\+::udp\+::broadcast\+::receiver\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stop the runner. 
+
+This function returns almost immediately because all it does it request for the stop. The internal thread will not be able to respond the same moment. The caller should check if there was success by calls to \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_aca3cf6791b83bf8e15a467dff8d0732a}{running}}. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+udp.\+h\item 
+udp/broadcast/udp\+\_\+broadcast\+\_\+receiver.\+cpp\end{DoxyCompactItemize}

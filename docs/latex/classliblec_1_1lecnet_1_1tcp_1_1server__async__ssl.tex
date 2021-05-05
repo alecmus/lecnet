@@ -1,0 +1,277 @@
+\hypertarget{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl}{}\doxysection{liblec\+::lecnet\+::tcp\+::server\+\_\+async\+\_\+ssl Class Reference}
+\label{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl}\index{liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}}
+
+
+Asynchronous (event driven) TCP server class WITH SSL encryption.  
+
+
+
+
+{\ttfamily \#include $<$tcp.\+h$>$}
+
+Inheritance diagram for liblec\+::lecnet\+::tcp\+::server\+\_\+async\+\_\+ssl\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_1_1impl}{impl}}
+\item 
+class \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_1_1server__async__ssl__}{server\+\_\+async\+\_\+ssl\+\_\+}}
+\item 
+class \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_1_1session__async__ssl__}{session\+\_\+async\+\_\+ssl\+\_\+}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_ab8b5f63c3c220085569a39c2cb254b8a}{start}} (const \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params}{server\+\_\+params}} \&params)
+\begin{DoxyCompactList}\small\item\em Start server. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_aba8d1174d0bd13d40e750400ba5aa3a2}{starting}} ()
+\begin{DoxyCompactList}\small\item\em Check if the server is currently in the process of starting. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_ab73ec38efb67abfbad18f6f8f5a653ea}{running}} ()
+\begin{DoxyCompactList}\small\item\em Check whether this server is running. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_acfb5d5a7898ce8cf0d954153aa367974}{close}} (const \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_aa93e1f7ad96c217b115062fd714a8c3e}{client\+\_\+address}} \&address)
+\begin{DoxyCompactList}\small\item\em Close a connection. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a34f6dffd7e9ce84b7d649574b44e2f9f}{close}} ()
+\begin{DoxyCompactList}\small\item\em Close all connections. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a20c6f42140cfca10820ff70c1b41ead7}{stop}} ()
+\begin{DoxyCompactList}\small\item\em Stop server. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_af6a9dfc4dad946168309265464444c1b}{get\+\_\+client\+\_\+info}} (std\+::vector$<$ \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1client__info}{client\+\_\+info}} $>$ \&\mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1client__info}{client\+\_\+info}})
+\begin{DoxyCompactList}\small\item\em Get information of currently connected clients. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a96d4b22f5f501e5f836474d9335866cf}{traffic}} (\mbox{\hyperlink{structliblec_1_1lecnet_1_1network__traffic}{liblec\+::lecnet\+::network\+\_\+traffic}} \&traffic)
+\begin{DoxyCompactList}\small\item\em Get total network traffic. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a7c13f990066231598dffd599d9c36214}{log}} (const std\+::string \&time\+\_\+stamp, const std\+::string \&event)
+\begin{DoxyCompactList}\small\item\em Called whenever an event is logged. \end{DoxyCompactList}\item 
+virtual std\+::string \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a11f7541ab36431fb02287ee8d5c41eb3}{on\+\_\+receive}} (const \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_aa93e1f7ad96c217b115062fd714a8c3e}{client\+\_\+address}} \&address, const std\+::string \&data\+\_\+received)
+\begin{DoxyCompactList}\small\item\em Called whenever data is received. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Asynchronous (event driven) TCP server class WITH SSL encryption. 
+
+Based on boost asio. Uses a single thread (event driven). 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a34f6dffd7e9ce84b7d649574b44e2f9f}\label{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a34f6dffd7e9ce84b7d649574b44e2f9f}} 
+\index{liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}!close@{close}}
+\index{close@{close}!liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void liblec\+::lecnet\+::tcp\+::server\+\_\+async\+\_\+ssl\+::close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Close all connections. 
+
+Clients can re-\/connect because the server is still running. 
+
+Implements \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_acad2de891b0a5326c124fd98eac29fb7}{liblec\+::lecnet\+::tcp\+::server}}.
+
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_acfb5d5a7898ce8cf0d954153aa367974}\label{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_acfb5d5a7898ce8cf0d954153aa367974}} 
+\index{liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}!close@{close}}
+\index{close@{close}!liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void liblec\+::lecnet\+::tcp\+::server\+\_\+async\+\_\+ssl\+::close (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_aa93e1f7ad96c217b115062fd714a8c3e}{client\+\_\+address}} \&}]{address }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Close a connection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & The address of the client to disconnect. \\
+\hline
+\end{DoxyParams}
+
+
+Client can re-\/connect because the server is still running. 
+
+Implements \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a8fe725d7708253ca16a24e910d95931a}{liblec\+::lecnet\+::tcp\+::server}}.
+
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_af6a9dfc4dad946168309265464444c1b}\label{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_af6a9dfc4dad946168309265464444c1b}} 
+\index{liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}!get\_client\_info@{get\_client\_info}}
+\index{get\_client\_info@{get\_client\_info}!liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}}
+\doxysubsubsection{\texorpdfstring{get\_client\_info()}{get\_client\_info()}}
+{\footnotesize\ttfamily void liblec\+::lecnet\+::tcp\+::server\+\_\+async\+\_\+ssl\+::get\+\_\+client\+\_\+info (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1client__info}{client\+\_\+info}} $>$ \&}]{client\+\_\+info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get information of currently connected clients. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em clients\+\_\+info} & The list of client information. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a25e4f306ecd176f03ffb5d90896b725a}{liblec\+::lecnet\+::tcp\+::server}}.
+
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a7c13f990066231598dffd599d9c36214}\label{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a7c13f990066231598dffd599d9c36214}} 
+\index{liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}!log@{log}}
+\index{log@{log}!liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}}
+\doxysubsubsection{\texorpdfstring{log()}{log()}}
+{\footnotesize\ttfamily virtual void liblec\+::lecnet\+::tcp\+::server\+\_\+async\+\_\+ssl\+::log (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{time\+\_\+stamp,  }\item[{const std\+::string \&}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Called whenever an event is logged. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time\+\_\+stamp} & The event\textquotesingle{}s timestamp. \\
+\hline
+\end{DoxyParams}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em event} & A description of the event. \\
+\hline
+\end{DoxyParams}
+
+
+Make sure the code is non-\/blocking. The function should return almost immediately. 
+
+Implements \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a5c6d19a09c209babe559fcf5c2285287}{liblec\+::lecnet\+::tcp\+::server}}.
+
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a11f7541ab36431fb02287ee8d5c41eb3}\label{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a11f7541ab36431fb02287ee8d5c41eb3}} 
+\index{liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}!on\_receive@{on\_receive}}
+\index{on\_receive@{on\_receive}!liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}}
+\doxysubsubsection{\texorpdfstring{on\_receive()}{on\_receive()}}
+{\footnotesize\ttfamily virtual std\+::string liblec\+::lecnet\+::tcp\+::server\+\_\+async\+\_\+ssl\+::on\+\_\+receive (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_aa93e1f7ad96c217b115062fd714a8c3e}{client\+\_\+address}} \&}]{address,  }\item[{const std\+::string \&}]{data\+\_\+received }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Called whenever data is received. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & The address of the client. \\
+\hline
+\end{DoxyParams}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em data\+\_\+received} & The data received from the client. \\
+\hline
+\end{DoxyParams}
+
+
+\begin{DoxyReturn}{Returns}
+The data to send back to the client. 
+\end{DoxyReturn}
+
+
+The sooner this function returns the faster the asynchronous server. 
+
+Implements \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a7e50e52a836724c8a63fd301d7a92991}{liblec\+::lecnet\+::tcp\+::server}}.
+
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_ab73ec38efb67abfbad18f6f8f5a653ea}\label{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_ab73ec38efb67abfbad18f6f8f5a653ea}} 
+\index{liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}!running@{running}}
+\index{running@{running}!liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}}
+\doxysubsubsection{\texorpdfstring{running()}{running()}}
+{\footnotesize\ttfamily bool liblec\+::lecnet\+::tcp\+::server\+\_\+async\+\_\+ssl\+::running (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Check whether this server is running. 
+
+\begin{DoxyReturn}{Returns}
+Returns true if the server is running, else false. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a124e5ac8841f2d4f6a88e0ab939d838a}{liblec\+::lecnet\+::tcp\+::server}}.
+
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_ab8b5f63c3c220085569a39c2cb254b8a}\label{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_ab8b5f63c3c220085569a39c2cb254b8a}} 
+\index{liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}!start@{start}}
+\index{start@{start}!liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily bool liblec\+::lecnet\+::tcp\+::server\+\_\+async\+\_\+ssl\+::start (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params}{server\+\_\+params}} \&}]{params }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Start server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Server parameters, as defined in the Server\+Params struct. \\
+\hline
+\end{DoxyParams}
+
+
+\begin{DoxyReturn}{Returns}
+Returns true if successful or if server is already running, else false. 
+\end{DoxyReturn}
+
+
+If server\+\_\+cert\+\_\+key is not specified key file is sought in server\+\_\+cert 
+
+Implements \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a17f6621d1db6d3ccec37be90dc58346e}{liblec\+::lecnet\+::tcp\+::server}}.
+
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_aba8d1174d0bd13d40e750400ba5aa3a2}\label{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_aba8d1174d0bd13d40e750400ba5aa3a2}} 
+\index{liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}!starting@{starting}}
+\index{starting@{starting}!liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}}
+\doxysubsubsection{\texorpdfstring{starting()}{starting()}}
+{\footnotesize\ttfamily bool liblec\+::lecnet\+::tcp\+::server\+\_\+async\+\_\+ssl\+::starting (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Check if the server is currently in the process of starting. 
+
+\begin{DoxyReturn}{Returns}
+Returns true if server is starting, else false. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a7c87d9a229204e40c9078dc0eeaf7083}{liblec\+::lecnet\+::tcp\+::server}}.
+
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a20c6f42140cfca10820ff70c1b41ead7}\label{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a20c6f42140cfca10820ff70c1b41ead7}} 
+\index{liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}!stop@{stop}}
+\index{stop@{stop}!liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily bool liblec\+::lecnet\+::tcp\+::server\+\_\+async\+\_\+ssl\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Stop server. 
+
+\begin{DoxyReturn}{Returns}
+Returns true if successful, else false. 
+\end{DoxyReturn}
+
+
+Clients cannot reconnect until the server is restarted by a fresh call to \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_ab8b5f63c3c220085569a39c2cb254b8a}{start}}. 
+
+Implements \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a73c7bf5ff992bc89727a3c517b4d4cf3}{liblec\+::lecnet\+::tcp\+::server}}.
+
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a96d4b22f5f501e5f836474d9335866cf}\label{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a96d4b22f5f501e5f836474d9335866cf}} 
+\index{liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}!traffic@{traffic}}
+\index{traffic@{traffic}!liblec::lecnet::tcp::server\_async\_ssl@{liblec::lecnet::tcp::server\_async\_ssl}}
+\doxysubsubsection{\texorpdfstring{traffic()}{traffic()}}
+{\footnotesize\ttfamily void liblec\+::lecnet\+::tcp\+::server\+\_\+async\+\_\+ssl\+::traffic (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structliblec_1_1lecnet_1_1network__traffic}{liblec\+::lecnet\+::network\+\_\+traffic}} \&}]{traffic }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get total network traffic. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em traffic} & The total traffic. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_ae16d27512800603c2bf9f5f4ab6ac7b0}{liblec\+::lecnet\+::tcp\+::server}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+tcp.\+h\item 
+tcp/server/tcp\+\_\+server\+\_\+async\+\_\+ssl.\+cpp\end{DoxyCompactItemize}
