@@ -1,15 +1,12 @@
-/*
-** udp_broadcast_sender.cpp - udp broadcast sender implementation
-**
-** lecnet network library
-** Copyright (c) 2018 Alec Musasa (alecmus at live dot com)
-**
-*******************************************************************************
-** This file is part of the liblec library which is released under the Creative
-** Commons Attribution Non-Commercial 2.0 license (CC-BY-NC 2.0). See the file
-** LICENSE.txt or go to https://github.com/alecmus/liblec/blob/master/LICENSE.md
-** for full license details.
-*/
+//
+// udp_broadcast_sender.cpp - udp broadcast sender implementation
+//
+// lecnet network library, part of the liblec library
+// Copyright (c) 2018 Alec Musasa (alecmus at live dot com)
+//
+// Released under the CC-BY-NC 2.0 license. For full details see the file
+// LICENSE.txt or go to https://github.com/alecmus/liblec/blob/master/LICENSE.md
+//
 
 #if not defined(_WINSOCKAPI_)
 	#define _WINSOCKAPI_	// prevent winsock 1 from being defined

@@ -1,15 +1,12 @@
-/*
-** lecnet network library
-**
-** Copyright (c) 2019 Alec Musasa (alecmus@live.com)
-**
-** This code may not be copied, modified or distributed without the
-** express written permission of the author. Any violation shall
-** be prosecuted to the maximum extent possible under law.
-**
-*************************************************************************
-** OpenSSL helper implementation
-*/
+//
+// openssl_helper.cpp - openssl helper implementation
+//
+// lecnet network library, part of the liblec library
+// Copyright (c) 2018 Alec Musasa (alecmus at live dot com)
+//
+// Released under the CC-BY-NC 2.0 license. For full details see the file
+// LICENSE.txt or go to https://github.com/alecmus/liblec/blob/master/LICENSE.md
+//
 
 #include "openssl_helper.h"
 
