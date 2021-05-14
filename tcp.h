@@ -186,12 +186,12 @@ namespace liblec {
 				/// Error information. Note: do not assume this contains any error information
 				/// just because the client is not connected, e.g. when this function is called
 				/// immediately after <see cref="connect"/> but before the actual connection is
-				/// established (in this case false will be returned but <see cref="error"/>
-				/// will be empty). If this function is called immediately after false is returned
-				/// from <see cref="connecting"/> and it returns false as well, then
-				/// <see cref="error"/> is guaranteed to have some information about why the
-				/// connection attempt failed. Error information is erased from memory immediately
-				/// after a call to this function.
+				/// established (in this case false will be returned but error will be empty).
+				/// If this function is called immediately after false is returned from
+				/// <see cref="connecting"/> and it returns false as well, then error is
+				/// guaranteed to have some information about why the connection attempt failed.
+				/// Error information is erased from memory immediately after a call to this
+				/// function.
 				/// </param>
 				///
 				/// <returns>
