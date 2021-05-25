@@ -14,6 +14,7 @@
 #define lecnetdescription	"lecnet network library"
 #define lecnetcomments		"This file is part of the liblec library"
 #define lecnetcopyright		"(c) 2019 Alec Musasa"
+#define lecnetcompany		"Alec Musasa"
 #define lecnetfilename		"lecnet.dll"
 
 #define lecnetversion		"1.0.1"
