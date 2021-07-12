@@ -34,10 +34,10 @@ bool write_to_disk(EVP_PKEY* pkey,
 	{
 		error = "Unable to open PEM key file for writing";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (!error_.empty())
-			error += ": " + error_;
+		if (!_error.empty())
+			error += ": " + _error;
 
 		BIO_free_all(pkey_file);
 		return false;
@@ -48,10 +48,10 @@ bool write_to_disk(EVP_PKEY* pkey,
 		{
 			error = "Unable to open PEM key file for writing";
 
-			std::string error_ = openssl_error();
+			std::string _error = openssl_error();
 
-			if (!error_.empty())
-				error += ": " + error_;
+			if (!_error.empty())
+				error += ": " + _error;
 
 			BIO_free_all(pkey_file);
 			return false;
@@ -74,12 +74,12 @@ bool write_to_disk(EVP_PKEY* pkey,
 	{
 		error = "Unable to write private key to disk";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (error_.empty())
+		if (_error.empty())
 			error += ".";
 		else
-			error += ": " + error_;
+			error += ": " + _error;
 
 		BIO_free_all(pkey_file);
 		return false;
@@ -93,10 +93,10 @@ bool write_to_disk(EVP_PKEY* pkey,
 	{
 		error = "Unable to open PEM certificate request file for writing.";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (!error_.empty())
-			error += ": " + error_;
+		if (!_error.empty())
+			error += ": " + _error;
 
 		BIO_free_all(pkey_file);
 		BIO_free_all(csr_file);
@@ -108,10 +108,10 @@ bool write_to_disk(EVP_PKEY* pkey,
 		{
 			error = "Unable to open PEM certificate request file for writing.";
 
-			std::string error_ = openssl_error();
+			std::string _error = openssl_error();
 
-			if (!error_.empty())
-				error += ": " + error_;
+			if (!_error.empty())
+				error += ": " + _error;
 
 			BIO_free_all(pkey_file);
 			BIO_free_all(csr_file);
@@ -126,10 +126,10 @@ bool write_to_disk(EVP_PKEY* pkey,
 	{
 		error = "Unable to write certificate request to disk";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (!error_.empty())
-			error += ": " + error_;
+		if (!_error.empty())
+			error += ": " + _error;
 
 		BIO_free_all(pkey_file);
 		BIO_free_all(csr_file);

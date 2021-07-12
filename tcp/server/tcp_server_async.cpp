@@ -46,92 +46,92 @@ public:
 
 	static void server_func(liblec::lecnet::tcp::server_async* p_current);
 
-	std::string host_address_;
-	unsigned short port_;
-	unsigned short max_clients_;
-	network_traffic total_traffic_;
+	std::string _host_address;
+	unsigned short _port;
+	unsigned short _max_clients;
+	network_traffic _total_traffic;
 
 	struct client_info_internal {
 		liblec::lecnet::tcp::server::client_info client_info;
 		void* p_socket_internal = nullptr;
 	};
 
-	std::map<client_address, client_info_internal> clients_;
+	std::map<client_address, client_info_internal> _clients;
 
-	std::future<void> fut_;
-	boost::asio::io_service* p_io_service_ = nullptr;
+	std::future<void> _fut;
+	boost::asio::io_service* _p_io_service = nullptr;
 
 	// critical section lockers
-	static liblec::mutex clients_lock_;
+	static liblec::mutex _clients_lock;
 	static liblec::mutex log_locker;
 
-	friend class session_async_;
-	friend class server_async_;
+	friend class _session_async;
+	friend class _server_async;
 
-	liblec::lecnet::tcp::server_async* p_tcp_server_;
+	liblec::lecnet::tcp::server_async* _p_tcp_server;
 
-	bool starting_ = false;
-	liblec::mutex starting_lock_;
+	bool _starting = false;
+	liblec::mutex _starting_lock;
 
-	unsigned long magic_number_ = 0;
+	unsigned long _magic_number = 0;
 };
 
 void liblec::lecnet::tcp::server_async::impl::log(const std::string& event) {
 	liblec::auto_mutex lock(log_locker);
-	p_tcp_server_->log(time_stamp(), event);
+	_p_tcp_server->log(time_stamp(), event);
 }
 
 unsigned short liblec::lecnet::tcp::server_async::impl::get_max_clients() {
-	return max_clients_;
+	return _max_clients;
 }
 
 size_t liblec::lecnet::tcp::server_async::impl::get_number_of_clients() {
-	liblec::auto_mutex lock(clients_lock_);
-	return clients_.size();
+	liblec::auto_mutex lock(_clients_lock);
+	return _clients.size();
 }
 
-class liblec::lecnet::tcp::server_async::session_async_ :
-	public std::enable_shared_from_this<session_async_> {
+class liblec::lecnet::tcp::server_async::_session_async :
+	public std::enable_shared_from_this<_session_async> {
 public:
-	session_async_(boost::asio::ip::tcp::socket socket, liblec::lecnet::tcp::server_async* p_this)
-		: socket_(std::move(socket)),
-		denied_(false),
-		p_this_(p_this) {
+	_session_async(boost::asio::ip::tcp::socket socket, liblec::lecnet::tcp::server_async* p_this)
+		: _socket(std::move(socket)),
+		_denied(false),
+		_p_this(p_this) {
 
-		liblec::auto_mutex lock(impl::clients_lock_);
+		liblec::auto_mutex lock(impl::_clients_lock);
 
 		impl::client_info_internal this_client;
-		this_client.client_info.address = socket_.remote_endpoint().address().to_string() + ":" +
-			std::to_string(socket_.remote_endpoint().port());
-		address_ = this_client.client_info.address;
+		this_client.client_info.address = _socket.remote_endpoint().address().to_string() + ":" +
+			std::to_string(_socket.remote_endpoint().port());
+		_address = this_client.client_info.address;
 		this_client.client_info.traffic.in = 0;
 		this_client.client_info.traffic.out = 0;
-		this_client.p_socket_internal = (void*)& socket_;
+		this_client.p_socket_internal = (void*)& _socket;
 
 		// add this client to the clients map
-		p_this_->d_.clients_[this_client.client_info.address] = this_client;
+		_p_this->_d._clients[this_client.client_info.address] = this_client;
 	}
 
-	~session_async_() {
+	~_session_async() {
 		// remove this client to the clients map
-		liblec::auto_mutex lock(impl::clients_lock_);
-		p_this_->d_.clients_.erase(address_);
+		liblec::auto_mutex lock(impl::_clients_lock);
+		_p_this->_d._clients.erase(_address);
 
 		// client has disconnected
-		if (!denied_)
-			p_this_->d_.log(server_log::client_disconnected(std::string(address_), last_error_));
+		if (!_denied)
+			_p_this->_d.log(server_log::client_disconnected(std::string(_address), _last_error));
 	}
 
 	void start(bool deny) {
-		denied_ = deny;
+		_denied = deny;
 
 		if (deny) {
-			socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
-			//p_this_->log(std::string(address_) + " - connection declined");
+			_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
+			//_p_this->log(std::string(_address) + " - connection declined");
 		}
 		else {
-			liblec::auto_mutex lock(impl::clients_lock_);
-			p_this_->d_.log(server_log::client_connected(std::string(address_)));
+			liblec::auto_mutex lock(impl::_clients_lock);
+			_p_this->_d.log(server_log::client_connected(std::string(_address)));
 		}
 
 		do_read();
@@ -141,44 +141,44 @@ private:
 	void do_read() {
 		auto self(shared_from_this());
 
-		socket_.async_read_some(boost::asio::buffer(buffer_, buffer_size),
+		_socket.async_read_some(boost::asio::buffer(_buffer, buffer_size),
 			[this, self](boost::system::error_code ec, std::size_t length) {
 				if (!ec) {
-					received_ += std::string(buffer_, length);
+					_received += std::string(_buffer, length);
 
 					// append data received to client traffic
 					append_traffic_in(length);
 
 					// retrieve magic number
-					if (get_ul_prefix(received_, 1) == p_this_->d_.magic_number_) {
+					if (get_ul_prefix(_received, 1) == _p_this->_d._magic_number) {
 						// retrieve embedded length
-						unsigned long length = get_ul_prefix(received_, 3);
+						unsigned long length = get_ul_prefix(_received, 3);
 
-						if (length == received_.length()) {
+						if (length == _received.length()) {
 							// all data has been received
 
 							// retrieve message ID
-							unsigned long message_id = get_ul_prefix(received_, 2);
+							unsigned long message_id = get_ul_prefix(_received, 2);
 
-							process_received_data(received_, message_id);
-							received_.clear();
+							process_received_data(_received, message_id);
+							_received.clear();
 						}
 						else {
-							if (length > received_.length())
+							if (length > _received.length())
 								do_write(false);	// essential to stay connected
 							else {
-								last_error_ = "Invalid data received";
+								_last_error = "Invalid data received";
 								do_write(false);	// essential to stay connected
 							}
 						}
 					}
 					else {
-						last_error_ = "Invalid data received";
+						_last_error = "Invalid data received";
 						do_write(false);	// essential to stay connected
 					}
 				}
 				else
-					last_error_ = ec.message();
+					_last_error = ec.message();
 			}
 		);
 	}
@@ -189,31 +189,31 @@ private:
 		std::size_t length = 0;
 
 		if (write_all)
-			length = data_to_send_.length();
+			length = _data_to_send.length();
 
-		socket_.async_write_some(
-			boost::asio::buffer(data_to_send_.c_str(), length),
+		_socket.async_write_some(
+			boost::asio::buffer(_data_to_send.c_str(), length),
 			[this, self](boost::system::error_code ec, std::size_t /*length*/) {
 				if (!ec)
 					do_read();
 				else
-					last_error_ = ec.message();
+					_last_error = ec.message();
 			}
 		);
 	}
 
 	void append_traffic_in(size_t iLen) {
 		// append data received to client traffic
-		liblec::auto_mutex lock(impl::clients_lock_);
-		p_this_->d_.clients_[address_].client_info.traffic.in += iLen;
-		p_this_->d_.total_traffic_.in += iLen;
+		liblec::auto_mutex lock(impl::_clients_lock);
+		_p_this->_d._clients[_address].client_info.traffic.in += iLen;
+		_p_this->_d._total_traffic.in += iLen;
 	}
 
 	void append_traffic_out(size_t iLen) {
 		// append data received to client traffic
-		liblec::auto_mutex lock(impl::clients_lock_);
-		p_this_->d_.clients_[address_].client_info.traffic.out += iLen;
-		p_this_->d_.total_traffic_.out += iLen;
+		liblec::auto_mutex lock(impl::_clients_lock);
+		_p_this->_d._clients[_address].client_info.traffic.out += iLen;
+		_p_this->_d._total_traffic.out += iLen;
 	}
 
 	void process_received_data(std::string& data, unsigned long id) {
@@ -231,23 +231,23 @@ private:
 		** received the function will return data to be sent back to the client, if the server so
 		** desires
 		*/
-		data_to_send_ = p_this_->on_receive(address_, data);
+		_data_to_send = _p_this->on_receive(_address, data);
 
-		if (!data_to_send_.empty()) {
+		if (!_data_to_send.empty()) {
 			unsigned long length = static_cast<unsigned long>
-				(data_to_send_.length() * sizeof(char))	// space for the actual message
+				(_data_to_send.length() * sizeof(char))	// space for the actual message
 				+ sizeof(unsigned long)					// space for data length
 				+ sizeof(unsigned long)					// space for message ID
 				+ sizeof(unsigned long);				// space magic number
 
 			// prefix data with it's length
-			prefix_with_ul(length, data_to_send_);
+			prefix_with_ul(length, _data_to_send);
 
 			// prefix with message ID
-			prefix_with_ul(id, data_to_send_);
+			prefix_with_ul(id, _data_to_send);
 
 			// prefix with magic number
-			prefix_with_ul(p_this_->d_.magic_number_, data_to_send_);
+			prefix_with_ul(_p_this->_d._magic_number, _data_to_send);
 
 			// send data to client
 			do_write(true);
@@ -259,71 +259,71 @@ private:
 			do_write(false);	// essential to stay connected
 	}
 
-	boost::asio::ip::tcp::socket socket_;
+	boost::asio::ip::tcp::socket _socket;
 
 	enum { buffer_size = 1024 * 64 };
-	char buffer_[buffer_size];
+	char _buffer[buffer_size];
 
-	liblec::lecnet::tcp::server_async::client_address address_;
-	std::string received_;
-	std::string data_to_send_;
-	bool denied_;
-	std::string last_error_;
-	liblec::lecnet::tcp::server_async* p_this_;
+	liblec::lecnet::tcp::server_async::client_address _address;
+	std::string _received;
+	std::string _data_to_send;
+	bool _denied;
+	std::string _last_error;
+	liblec::lecnet::tcp::server_async* _p_this;
 };
 
-class liblec::lecnet::tcp::server_async::server_async_ {
+class liblec::lecnet::tcp::server_async::_server_async {
 public:
-	server_async_(boost::asio::ip::address ip,
+	_server_async(boost::asio::ip::address ip,
 		short port,
 		liblec::lecnet::tcp::server_async* p_this) :
-		acceptor_(*p_this->d_.p_io_service_,
+		_acceptor(*p_this->_d._p_io_service,
 			boost::asio::ip::tcp::endpoint(ip, port)),
-		socket_(*p_this->d_.p_io_service_),
-		p_this_(p_this) {
+		_socket(*p_this->_d._p_io_service),
+		_p_this(p_this) {
 
 		do_accept();
 
-		p_this->d_.log(server_log::start(acceptor_.local_endpoint().address().to_string(),
-			acceptor_.local_endpoint().port(),
+		p_this->_d.log(server_log::start(_acceptor.local_endpoint().address().to_string(),
+			_acceptor.local_endpoint().port(),
 			"Async"));
-		p_this->d_.log(server_log::start_info(std::to_string(p_this->d_.get_max_clients())));
+		p_this->_d.log(server_log::start_info(std::to_string(p_this->_d.get_max_clients())));
 
-		liblec::auto_mutex lock(p_this_->d_.starting_lock_);
-		p_this_->d_.starting_ = false;
+		liblec::auto_mutex lock(_p_this->_d._starting_lock);
+		_p_this->_d._starting = false;
 	}
 
 private:
 	void do_accept() {
-		acceptor_.async_accept(socket_,
+		_acceptor.async_accept(_socket,
 			[this](boost::system::error_code ec) {
 				if (!ec) {
 					bool deny = false;
 
 					{ // failsafe
-						if (p_this_->d_.get_number_of_clients() >= p_this_->d_.get_max_clients())
+						if (_p_this->_d.get_number_of_clients() >= _p_this->_d.get_max_clients())
 							deny = true;
 					}
 
-					std::make_shared<session_async_>(std::move(socket_), p_this_)->start(deny);
+					std::make_shared<_session_async>(std::move(_socket), _p_this)->start(deny);
 				}
 
 				do_accept();
 			});
 	}
 
-	boost::asio::ip::tcp::acceptor acceptor_;
-	boost::asio::ip::tcp::socket socket_;
-	liblec::lecnet::tcp::server_async* p_this_;
+	boost::asio::ip::tcp::acceptor _acceptor;
+	boost::asio::ip::tcp::socket _socket;
+	liblec::lecnet::tcp::server_async* _p_this;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 liblec::mutex liblec::lecnet::tcp::server_async::impl::log_locker;
-liblec::mutex liblec::lecnet::tcp::server_async::impl::clients_lock_;
+liblec::mutex liblec::lecnet::tcp::server_async::impl::_clients_lock;
 
 liblec::lecnet::tcp::server_async::server_async() :
-	d_(*(new impl)) {
-	d_.p_tcp_server_ = this;
+	_d(*(new impl)) {
+	_d._p_tcp_server = this;
 }
 
 liblec::lecnet::tcp::server_async::~server_async() {
@@ -331,59 +331,59 @@ liblec::lecnet::tcp::server_async::~server_async() {
 	stop();
 
 	// ensure the async operation is completed before deleting
-	if (d_.fut_.valid())
-		d_.fut_.get();
+	if (_d._fut.valid())
+		_d._fut.get();
 
-	delete& d_;
+	delete& _d;
 }
 
 void liblec::lecnet::tcp::server_async::impl::server_func(
 	server_async* p_current) {
 	try {
 		boost::asio::ip::address ip = boost::asio::ip::address::from_string(
-			p_current->d_.host_address_);
+			p_current->_d._host_address);
 
-		server_async_ s(ip, p_current->d_.port_, p_current);
-		p_current->d_.p_io_service_->run();
+		_server_async s(ip, p_current->_d._port, p_current);
+		p_current->_d._p_io_service->run();
 	}
 	catch (std::exception& e) {
-		p_current->d_.log(e.what());
+		p_current->_d.log(e.what());
 	}
 
-	liblec::auto_mutex lock(p_current->d_.starting_lock_);
-	p_current->d_.starting_ = false;
+	liblec::auto_mutex lock(p_current->_d._starting_lock);
+	p_current->_d._starting = false;
 
 	// delete io service
-	delete p_current->d_.p_io_service_;
-	p_current->d_.p_io_service_ = nullptr;
+	delete p_current->_d._p_io_service;
+	p_current->_d._p_io_service = nullptr;
 }
 
 bool liblec::lecnet::tcp::server_async::start(const server_params& params) {
 	if (running()) {
 		// allow only one instance
-		d_.log(server_log::server_already_running());
+		_d.log(server_log::server_already_running());
 		return true;
 	}
 
 	// server_params.server_cert and server_cert_key NOT used in this version
-	d_.host_address_ = params.ip;
-	d_.port_ = params.port;
-	d_.max_clients_ = params.max_clients;
-	d_.magic_number_ = params.magic_number;
+	_d._host_address = params.ip;
+	_d._port = params.port;
+	_d._max_clients = params.max_clients;
+	_d._magic_number = params.magic_number;
 
 	try {
 		// Create io service.
-		d_.p_io_service_ = new boost::asio::io_service;
+		_d._p_io_service = new boost::asio::io_service;
 
 		// run server task asynchronously
-		d_.fut_ = std::async(std::launch::async
-			, d_.server_func, this);
+		_d._fut = std::async(std::launch::async
+			, _d.server_func, this);
 
-		liblec::auto_mutex lock(d_.starting_lock_);
-		d_.starting_ = true;
+		liblec::auto_mutex lock(_d._starting_lock);
+		_d._starting = true;
 	}
 	catch (std::exception& e) {
-		d_.log(e.what());
+		_d.log(e.what());
 		return false;
 	}
 
@@ -391,33 +391,33 @@ bool liblec::lecnet::tcp::server_async::start(const server_params& params) {
 }
 
 bool liblec::lecnet::tcp::server_async::starting() {
-	liblec::auto_mutex lock(d_.starting_lock_);
-	return d_.starting_;
+	liblec::auto_mutex lock(_d._starting_lock);
+	return _d._starting;
 }
 
 bool liblec::lecnet::tcp::server_async::running() {
-	if (d_.fut_.valid())
-		return d_.fut_.wait_for(std::chrono::seconds{ 0 }) != std::future_status::ready;
+	if (_d._fut.valid())
+		return _d._fut.wait_for(std::chrono::seconds{ 0 }) != std::future_status::ready;
 	else
 		return false;
 }
 
 void liblec::lecnet::tcp::server_async::close(const client_address& address) {
-	liblec::auto_mutex lock(d_.clients_lock_);
+	liblec::auto_mutex lock(_d._clients_lock);
 
 	try {
-		if (!(d_.clients_.find(address) == d_.clients_.end())) {
-			d_.log(server_log::close(std::string(address)));
+		if (!(_d._clients.find(address) == _d._clients.end())) {
+			_d.log(server_log::close(std::string(address)));
 			boost::asio::ip::tcp::socket* p_socket =
-				(boost::asio::ip::tcp::socket*)(d_.clients_[address].p_socket_internal);
+				(boost::asio::ip::tcp::socket*)(_d._clients[address].p_socket_internal);
 			p_socket->shutdown(boost::asio::ip::tcp::socket::shutdown_both);
 			p_socket->close();
 		}
 		else
-			d_.log(server_log::close_error(std::string(address)));
+			_d.log(server_log::close_error(std::string(address)));
 	}
 	catch (std::exception& e) {
-		d_.log(e.what());
+		_d.log(e.what());
 	}
 }
 
@@ -425,24 +425,24 @@ void liblec::lecnet::tcp::server_async::close() {
 	bool log_this = false;
 
 	try {
-		liblec::auto_mutex lock(d_.clients_lock_);
+		liblec::auto_mutex lock(_d._clients_lock);
 
-		if (!d_.clients_.empty())
+		if (!_d._clients.empty())
 			log_this = true;
 
 		if (log_this)
-			d_.log(server_log::close());
+			_d.log(server_log::close());
 
 		// iterate through map and close client sockets
-		for (auto const& it : d_.clients_) {
+		for (auto const& it : _d._clients) {
 			boost::asio::ip::tcp::socket* p_socket =
-				(boost::asio::ip::tcp::socket*)(d_.clients_[it.first].p_socket_internal);
+				(boost::asio::ip::tcp::socket*)(_d._clients[it.first].p_socket_internal);
 			p_socket->shutdown(boost::asio::ip::tcp::socket::shutdown_both);
 			p_socket->close();
 		}
 	}
 	catch (std::exception& e) {
-		d_.log(e.what());
+		_d.log(e.what());
 		return;
 	}
 
@@ -450,13 +450,13 @@ void liblec::lecnet::tcp::server_async::close() {
 	while (true) {
 		boost::this_thread::sleep(boost::posix_time::milliseconds(1));
 
-		liblec::auto_mutex lock(d_.clients_lock_);
-		if (!d_.clients_.size())
+		liblec::auto_mutex lock(_d._clients_lock);
+		if (!_d._clients.size())
 			break;
 	}
 
 	if (log_this)
-		d_.log(server_log::closed());
+		_d.log(server_log::closed());
 }
 
 bool liblec::lecnet::tcp::server_async::stop() {
@@ -465,31 +465,31 @@ bool liblec::lecnet::tcp::server_async::stop() {
 
 		if (running()) {
 			// stop the io_service
-			d_.p_io_service_->stop();
+			_d._p_io_service->stop();
 
 			// wait for server to stop running
 			while (running())
 				boost::this_thread::sleep(boost::posix_time::milliseconds(1));
 
-			d_.log(server_log::stop());
+			_d.log(server_log::stop());
 		}
 	}
 	catch (std::exception& e) {
-		d_.log(e.what());
+		_d.log(e.what());
 	}
 
 	return true;
 }
 
 void liblec::lecnet::tcp::server_async::get_client_info(std::vector<client_info>& client_info) {
-	liblec::auto_mutex lock(d_.clients_lock_);
+	liblec::auto_mutex lock(_d._clients_lock);
 	client_info.clear();
-	client_info.reserve(d_.clients_.size());
-	for (auto const& it : d_.clients_)
+	client_info.reserve(_d._clients.size());
+	for (auto const& it : _d._clients)
 		client_info.push_back(it.second.client_info);
 }
 
 void liblec::lecnet::tcp::server_async::traffic(liblec::lecnet::network_traffic& traffic) {
-	liblec::auto_mutex lock(d_.clients_lock_);
-	traffic = d_.total_traffic_;
+	liblec::auto_mutex lock(_d._clients_lock);
+	traffic = _d._total_traffic;
 }

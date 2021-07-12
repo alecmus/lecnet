@@ -22,49 +22,49 @@ public:
 	~mutex_impl() {}
 
 	void lock() {
-		mtx_.lock();
+		_mtx.lock();
 	}
 
 	void unlock() {
-		mtx_.unlock();
+		_mtx.unlock();
 	}
 
-	std::mutex mtx_;
+	std::mutex _mtx;
 };
 
 liblec::mutex::mutex() {
-	d_ = new mutex_impl;
+	_d = new mutex_impl;
 }
 
 liblec::mutex::~mutex() {
-	if (d_) {
-		delete d_;
-		d_ = nullptr;
+	if (_d) {
+		delete _d;
+		_d = nullptr;
 	}
 }
 
 class liblec::auto_mutex::auto_mutex_impl {
 public:
 	auto_mutex_impl(mutex& mtx) :
-		p_mtx_(&mtx) {
-		p_mtx_->d_->lock();
+		_p_mtx(&mtx) {
+		_p_mtx->_d->lock();
 	}
 
 	~auto_mutex_impl() {
-		p_mtx_->d_->unlock();
+		_p_mtx->_d->unlock();
 	}
 
 private:
-	mutex* p_mtx_;
+	mutex* _p_mtx;
 };
 
 liblec::auto_mutex::auto_mutex(mutex& mtx) {
-	d_ = new auto_mutex_impl(mtx);
+	_d = new auto_mutex_impl(mtx);
 }
 
 liblec::auto_mutex::~auto_mutex() {
-	if (d_) {
-		delete d_;
-		d_ = nullptr;
+	if (_d) {
+		delete _d;
+		_d = nullptr;
 	}
 }

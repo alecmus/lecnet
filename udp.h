@@ -201,7 +201,7 @@ namespace liblec {
 
 				private:
 					class sender_impl;
-					sender_impl* d_;
+					sender_impl* _d;
 
 					sender(const sender&);
 					sender& operator=(const sender&);
@@ -305,7 +305,7 @@ namespace liblec {
 
 				private:
 					class receiver_impl;
-					receiver_impl* d_;
+					receiver_impl* _d;
 
 					receiver(const receiver&);
 					receiver& operator=(const receiver&);
@@ -500,7 +500,7 @@ namespace liblec {
 
 				private:
 					class sender_impl;
-					sender_impl* d_;
+					sender_impl* _d;
 
 					sender(const sender&);
 					sender& operator=(const sender&);
@@ -641,7 +641,7 @@ namespace liblec {
 
 				private:
 					class receiver_impl;
-					receiver_impl* d_;
+					receiver_impl* _d;
 
 					receiver(const receiver&);
 					receiver& operator=(const receiver&);

@@ -25,7 +25,7 @@ namespace liblec {
 	private:
 		friend auto_mutex;
 		class mutex_impl;
-		mutex_impl* d_;
+		mutex_impl* _d;
 	};
 
 	/// <summary>
@@ -53,6 +53,6 @@ namespace liblec {
 
 	private:
 		class auto_mutex_impl;
-		auto_mutex_impl* d_;
+		auto_mutex_impl* _d;
 	};
 }

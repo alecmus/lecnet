@@ -71,44 +71,44 @@
 // actor completes.
 //
 
-class client_ {
+class _client {
 public:
-	client_(boost::asio::io_service& io_service,
+	_client(boost::asio::io_service& io_service,
 		const boost::asio::ip::address& listen_address,
 		const boost::asio::ip::address& multicast_address,
 		unsigned short multicast_port,
 		long long timeout_milliseconds) :
 
-		listen_address_(listen_address),
-		multicast_address_(multicast_address),
-		multicast_port_(multicast_port),
-		timeout_milliseconds_(timeout_milliseconds),
-		io_service_(&io_service),
-		socket_(io_service),
-		deadline_(io_service) {}
+		_listen_address(listen_address),
+		_multicast_address(multicast_address),
+		_multicast_port(multicast_port),
+		_timeout_milliseconds(timeout_milliseconds),
+		_io_service(&io_service),
+		_socket(io_service),
+		_deadline(io_service) {}
 
 	bool receive(std::string& message, std::string& error) {
 		// Create the socket so that multiple may be bound to the same address.
-		boost::asio::ip::udp::endpoint listen_endpoint(listen_address_,
-			multicast_port_);
-		socket_.open(listen_endpoint.protocol());
-		socket_.set_option(boost::asio::ip::udp::socket::reuse_address(true));
-		socket_.bind(listen_endpoint);
+		boost::asio::ip::udp::endpoint listen_endpoint(_listen_address,
+			_multicast_port);
+		_socket.open(listen_endpoint.protocol());
+		_socket.set_option(boost::asio::ip::udp::socket::reuse_address(true));
+		_socket.bind(listen_endpoint);
 
 		// Join the multicast group.
-		socket_.set_option(boost::asio::ip::multicast::join_group(multicast_address_));
+		_socket.set_option(boost::asio::ip::multicast::join_group(_multicast_address));
 
 		// No deadline is required until the first socket operation is started. We
 		// set the deadline to positive infinity so that the actor takes no action
 		// until a specific deadline is set.
-		deadline_.expires_at(boost::posix_time::pos_infin);
+		_deadline.expires_at(boost::posix_time::pos_infin);
 
 		// Start the persistent actor that checks for deadline expiry.
 		check_deadline();
 
 		boost::system::error_code ec;
-		std::size_t n = do_receive(boost::asio::buffer(data_),
-			boost::posix_time::milliseconds(timeout_milliseconds_),
+		std::size_t n = do_receive(boost::asio::buffer(_data),
+			boost::posix_time::milliseconds(_timeout_milliseconds),
 			ec);
 
 		bool result;
@@ -119,17 +119,17 @@ public:
 		}
 		else {
 			std::stringstream ss;
-			ss.write(data_, n);
+			ss.write(_data, n);
 			message = ss.str();
 			result = true;
 		}
 
 		try {
 			// close the socket if it's still open
-			if (socket_.is_open()) {
-				socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+			if (_socket.is_open()) {
+				_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
 
-				socket_.close();
+				_socket.close();
 			}
 		}
 		catch (const std::exception&) {
@@ -137,15 +137,15 @@ public:
 		}
 
 		// stop the service, if it's still running
-		if (!io_service_->stopped())
-			io_service_->stop();
+		if (!_io_service->stopped())
+			_io_service->stop();
 
 		return result;
 	}
 
 	void stop() {
-		if (socket_.is_open())
-			deadline_.expires_from_now(boost::posix_time::milliseconds(0));
+		if (_socket.is_open())
+			_deadline.expires_from_now(boost::posix_time::milliseconds(0));
 	}
 
 private:
@@ -153,7 +153,7 @@ private:
 		boost::posix_time::time_duration timeout,
 		boost::system::error_code& ec) {
 		// Set a deadline for the asynchronous operation.
-		deadline_.expires_from_now(timeout);
+		_deadline.expires_from_now(timeout);
 
 		// Set up the variables that receive the result of the asynchronous
 		// operation. The error code is set to would_block to signal that the
@@ -165,11 +165,11 @@ private:
 
 		// Start the asynchronous operation itself. The handle_receive function
 		// used as a callback will update the ec and length variables.
-		socket_.async_receive(boost::asio::buffer(buffer),
-			boost::bind(&client_::handle_receive, _1, _2, &ec, &length));
+		_socket.async_receive(boost::asio::buffer(buffer),
+			boost::bind(&_client::handle_receive, _1, _2, &ec, &length));
 
 		// Block until the asynchronous operation has completed.
-		do io_service_->run_one(); while (ec == boost::asio::error::would_block);
+		do _io_service->run_one(); while (ec == boost::asio::error::would_block);
 
 		return length;
 	}
@@ -184,37 +184,37 @@ private:
 		// Check whether the deadline has passed. We compare the deadline against
 		// the current time since a new asynchronous operation may have moved the
 		// deadline before this actor had a chance to run.
-		if (deadline_.expires_at() <= boost::asio::deadline_timer::traits_type::now()) {
+		if (_deadline.expires_at() <= boost::asio::deadline_timer::traits_type::now()) {
 			// The deadline has passed. The outstanding asynchronous operation needs
 			// to be cancelled so that the blocked receive() function will return.
 			//
 			// Please note that cancel() has portability issues on some versions of
 			// Microsoft Windows, and it may be necessary to use close() instead.
 			// Consult the documentation for cancel() for further information.
-			socket_.cancel();
+			_socket.cancel();
 
 			// There is no longer an active deadline. The expiry is set to positive
 			// infinity so that the actor takes no action until a new deadline is set.
-			deadline_.expires_at(boost::posix_time::pos_infin);
+			_deadline.expires_at(boost::posix_time::pos_infin);
 		}
 
 		// Put the actor back to sleep.
-		deadline_.async_wait(boost::bind(&client_::check_deadline, this));
+		_deadline.async_wait(boost::bind(&_client::check_deadline, this));
 	}
 
 private:
-	boost::asio::deadline_timer deadline_;
-	boost::asio::io_service* io_service_;
-	boost::asio::ip::address listen_address_;
-	boost::asio::ip::address multicast_address_;
-	unsigned short multicast_port_;
-	long long timeout_milliseconds_;
+	boost::asio::deadline_timer _deadline;
+	boost::asio::io_service* _io_service;
+	boost::asio::ip::address _listen_address;
+	boost::asio::ip::address _multicast_address;
+	unsigned short _multicast_port;
+	long long _timeout_milliseconds;
 
 private:
-	boost::asio::ip::udp::socket socket_;
-	boost::asio::ip::udp::endpoint sender_endpoint_;
+	boost::asio::ip::udp::socket _socket;
+	boost::asio::ip::udp::endpoint _sender_endpoint;
 	enum { max_length = 1024 };
-	char data_[max_length];
+	char _data[max_length];
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -245,26 +245,26 @@ public:
 		std::string multicast_address,
 		std::string listen_address) :
 
-		port_(port),
-		multicast_address_(multicast_address),
-		listen_address_(listen_address),
-		p_current_client_(nullptr) {}
+		_port(port),
+		_multicast_address(multicast_address),
+		_listen_address(listen_address),
+		_p_current_client(nullptr) {}
 
 	~receiver_impl() {}
 
 	static void receiver_func(receiver* p_current);
 
 private:
-	std::future<void> fut_;
-	client_* p_current_client_;
-	unsigned short port_;
-	std::string multicast_address_;
-	std::string listen_address_;
-	long long timeout_milliseconds_;
+	std::future<void> _fut;
+	_client* _p_current_client;
+	unsigned short _port;
+	std::string _multicast_address;
+	std::string _listen_address;
+	long long _timeout_milliseconds;
 
 	// for capturing the result of the the receiver thread
-	receive_result result_;
-	liblec::mutex result_lock_;
+	receive_result _result;
+	liblec::mutex _result_lock;
 
 	friend receiver;
 };
@@ -272,7 +272,7 @@ private:
 liblec::lecnet::udp::multicast::receiver::receiver(unsigned short multicast_port,
 	std::string multicast_address,
 	std::string listen_address) {
-	d_ = new receiver_impl(multicast_port,
+	_d = new receiver_impl(multicast_port,
 		multicast_address,
 		listen_address);
 }
@@ -281,40 +281,40 @@ liblec::lecnet::udp::multicast::receiver::~receiver() {
 	stop();
 
 	// ensure the async operation is completed before deleting
-	if (d_->fut_.valid())
-		d_->fut_.get();
+	if (_d->_fut.valid())
+		_d->_fut.get();
 
-	delete d_;
-	d_ = nullptr;
+	delete _d;
+	_d = nullptr;
 }
 
 void liblec::lecnet::udp::multicast::receiver::receiver_impl::receiver_func(receiver* p_current) {
 	try {
 		boost::asio::io_service io_service;
-		client_ client(io_service,
-			boost::asio::ip::address::from_string(p_current->d_->listen_address_),
-			boost::asio::ip::address::from_string(p_current->d_->multicast_address_),
-			p_current->d_->port_, p_current->d_->timeout_milliseconds_);
+		_client client(io_service,
+			boost::asio::ip::address::from_string(p_current->_d->_listen_address),
+			boost::asio::ip::address::from_string(p_current->_d->_multicast_address),
+			p_current->_d->_port, p_current->_d->_timeout_milliseconds);
 
-		p_current->d_->p_current_client_ = &client;
+		p_current->_d->_p_current_client = &client;
 
 		// run the client
 		std::string message, error;
 		bool result = client.receive(message, error);
 
-		p_current->d_->p_current_client_ = nullptr;
+		p_current->_d->_p_current_client = nullptr;
 
-		// only here can result_ be changed to true. Only here. This is absolutely important.
-		liblec::auto_mutex lock(p_current->d_->result_lock_);
-		p_current->d_->result_.result = result;
-		p_current->d_->result_.error = error;
-		p_current->d_->result_.message = message;
+		// only here can _result be changed to true. Only here. This is absolutely important.
+		liblec::auto_mutex lock(p_current->_d->_result_lock);
+		p_current->_d->_result.result = result;
+		p_current->_d->_result.error = error;
+		p_current->_d->_result.message = message;
 	}
 	catch (std::exception& e) {
-		liblec::auto_mutex lock(p_current->d_->result_lock_);
-		p_current->d_->result_.result = false;
-		p_current->d_->result_.error = e.what();
-		p_current->d_->result_.message.clear();
+		liblec::auto_mutex lock(p_current->_d->_result_lock);
+		p_current->_d->_result.result = false;
+		p_current->_d->_result.error = e.what();
+		p_current->_d->_result.message.clear();
 	}
 }
 
@@ -325,12 +325,12 @@ bool liblec::lecnet::udp::multicast::receiver::run(long long timeout_millisecond
 		return true;
 	}
 
-	d_->timeout_milliseconds_ = timeout_milliseconds;
+	_d->_timeout_milliseconds = timeout_milliseconds;
 
 	try {
 		// run receiver task asynchronously
-		d_->fut_ = std::async(std::launch::async,
-			d_->receiver_func, this);
+		_d->_fut = std::async(std::launch::async,
+			_d->receiver_func, this);
 	}
 	catch (std::exception& e) {
 		error = e.what();
@@ -341,25 +341,25 @@ bool liblec::lecnet::udp::multicast::receiver::run(long long timeout_millisecond
 }
 
 bool liblec::lecnet::udp::multicast::receiver::running() {
-	if (d_->fut_.valid())
-		return d_->fut_.wait_for(std::chrono::seconds{ 0 }) != std::future_status::ready;
+	if (_d->_fut.valid())
+		return _d->_fut.wait_for(std::chrono::seconds{ 0 }) != std::future_status::ready;
 	else
 		return false;
 }
 
 bool liblec::lecnet::udp::multicast::receiver::get(std::string& message,
 	std::string& error) {
-	liblec::auto_mutex lock(d_->result_lock_);
+	liblec::auto_mutex lock(_d->_result_lock);
 
 	// capture the result
-	bool result = d_->result_.result;
-	error = d_->result_.error;
-	message = d_->result_.message;
+	bool result = _d->_result.result;
+	error = _d->_result.error;
+	message = _d->_result.message;
 
 	// reset the result
-	d_->result_.result = false;
-	d_->result_.error.clear();
-	d_->result_.message.clear();
+	_d->_result.result = false;
+	_d->_result.error.clear();
+	_d->_result.message.clear();
 
 	return result;
 }
@@ -367,8 +367,8 @@ bool liblec::lecnet::udp::multicast::receiver::get(std::string& message,
 void liblec::lecnet::udp::multicast::receiver::stop() {
 	try {
 		if (running()) {
-			if (d_->p_current_client_)
-				d_->p_current_client_->stop();	// to-do: make this safer
+			if (_d->_p_current_client)
+				_d->_p_current_client->stop();	// to-do: make this safer
 
 			// wait for receiver to stop running
 			while (running())

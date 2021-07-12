@@ -48,12 +48,12 @@ EVP_PKEY* generate_key(int bits,
 	{
 		error = "Unable to create EVP_PKEY structure";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (error_.empty())
+		if (_error.empty())
 			error += ".";
 		else
-			error += ": " + error_;
+			error += ": " + _error;
 
 		return NULL;
 	}
@@ -64,12 +64,12 @@ EVP_PKEY* generate_key(int bits,
 	{
 		error = "Unable to generate 2048-bit RSA key";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (error_.empty())
+		if (_error.empty())
 			error += ".";
 		else
-			error += ": " + error_;
+			error += ": " + _error;
 
 		EVP_PKEY_free(pkey);
 		return NULL;

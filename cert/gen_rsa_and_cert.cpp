@@ -36,12 +36,12 @@ X509* generate_x509(EVP_PKEY* pkey,
 	{
 		error = "Unable to create X509 structure";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (error_.empty())
+		if (_error.empty())
 			error += ".";
 		else
-			error += ": " + error_;
+			error += ": " + _error;
 
 		return NULL;
 	}
@@ -53,10 +53,10 @@ X509* generate_x509(EVP_PKEY* pkey,
 	{
 		error = "Unable to generate random serial number";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (!error_.empty())
-			error += ": " + error_;
+		if (!_error.empty())
+			error += ": " + _error;
 
 		return NULL;
 	}
@@ -94,12 +94,12 @@ X509* generate_x509(EVP_PKEY* pkey,
 	{
 		error = "Error signing certificate";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (error_.empty())
+		if (_error.empty())
 			error += ".";
 		else
-			error += ": " + error_;
+			error += ": " + _error;
 
 		X509_free(x509);
 		return NULL;
@@ -123,10 +123,10 @@ bool write_to_disk(EVP_PKEY* pkey,
 	{
 		error = "Unable to open PEM certificate file for writing";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (!error_.empty())
-			error += ": " + error_;
+		if (!_error.empty())
+			error += ": " + _error;
 
 		BIO_free_all(x509_file);
 		return false;
@@ -137,10 +137,10 @@ bool write_to_disk(EVP_PKEY* pkey,
 		{
 			error = "Unable to open PEM certificate file for writing";
 
-			std::string error_ = openssl_error();
+			std::string _error = openssl_error();
 
-			if (!error_.empty())
-				error += ": " + error_;
+			if (!_error.empty())
+				error += ": " + _error;
 
 			BIO_free_all(x509_file);
 			return false;
@@ -152,10 +152,10 @@ bool write_to_disk(EVP_PKEY* pkey,
 	{
 		error = "Unable to write certificate to disk";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (!error_.empty())
-			error += ": " + error_;
+		if (!_error.empty())
+			error += ": " + _error;
 
 		BIO_free_all(x509_file);
 		return false;
@@ -173,10 +173,10 @@ bool write_to_disk(EVP_PKEY* pkey,
 	{
 		error = "Unable to open PEM key file for writing.";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (!error_.empty())
-			error += ": " + error_;
+		if (!_error.empty())
+			error += ": " + _error;
 
 		BIO_free_all(x509_file);
 		BIO_free_all(pkey_file);
@@ -199,10 +199,10 @@ bool write_to_disk(EVP_PKEY* pkey,
 	{
 		error = "Unable to write private key to disk";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (!error_.empty())
-			error += ": " + error_;
+		if (!_error.empty())
+			error += ": " + _error;
 
 		BIO_free_all(x509_file);
 		BIO_free_all(pkey_file);

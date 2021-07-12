@@ -400,10 +400,10 @@ bool liblec::lecnet::cert::sign_csr(const std::string& ca_cert_file,
 	{
 		error = "Unable to create X509 structure";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (!error_.empty())
-			error += ": " + error_;
+		if (!_error.empty())
+			error += ": " + _error;
 
 		goto end;
 	}
@@ -415,10 +415,10 @@ bool liblec::lecnet::cert::sign_csr(const std::string& ca_cert_file,
 	{
 		error = "Unable to generate random serial number";
 
-		std::string error_ = openssl_error();
+		std::string _error = openssl_error();
 
-		if (!error_.empty())
-			error += ": " + error_;
+		if (!_error.empty())
+			error += ": " + _error;
 
 		goto end;
 	}

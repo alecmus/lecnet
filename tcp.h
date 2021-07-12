@@ -357,7 +357,7 @@ namespace liblec {
 
 			private:
 				class impl;
-				impl& d_;
+				impl& _d;
 
 				class client_async;
 				class client_async_ssl;
@@ -775,10 +775,10 @@ namespace liblec {
 
 			private:
 				class impl;
-				impl& d_;
+				impl& _d;
 
-				class session_async_;
-				class server_async_;
+				class _session_async;
+				class _server_async;
 
 				server_async(const server_async&) = delete;
 				server_async& operator=(const server_async&) = delete;
@@ -928,10 +928,10 @@ namespace liblec {
 
 			private:
 				class impl;
-				impl& d_;
+				impl& _d;
 
-				class session_async_ssl_;
-				class server_async_ssl_;
+				class _session_async_ssl;
+				class _server_async_ssl;
 
 				server_async_ssl(const server_async_ssl&) = delete;
 				server_async_ssl& operator=(const server_async_ssl&) = delete;

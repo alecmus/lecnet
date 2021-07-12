@@ -35,56 +35,56 @@
 	#include <boost/date_time/posix_time/posix_time_types.hpp>
 #endif
 
-class sender_ {
+class _sender {
 public:
-	sender_(boost::asio::io_service& io_service,
+	_sender(boost::asio::io_service& io_service,
 		const boost::asio::ip::address& multicast_address,
 		unsigned short multicast_port, std::string message,
 		unsigned long max_count, long long timeout_milliseconds) :
 
-		endpoint_(multicast_address, multicast_port),
-		socket_(io_service, endpoint_.protocol()),
-		timer_(io_service),
-		message_count_(0),
-		message_(message),
-		max_count_(max_count),
-		timeout_milliseconds_(timeout_milliseconds) {
+		_endpoint(multicast_address, multicast_port),
+		_socket(io_service, _endpoint.protocol()),
+		_timer(io_service),
+		_message_count(0),
+		_message(message),
+		_max_count(max_count),
+		_timeout_milliseconds(timeout_milliseconds) {
 
-		message_count_++;
+		_message_count++;
 
-		socket_.async_send_to(boost::asio::buffer(message_), endpoint_,
-			boost::bind(&sender_::handle_send_to, this, boost::asio::placeholders::error));
+		_socket.async_send_to(boost::asio::buffer(_message), _endpoint,
+			boost::bind(&_sender::handle_send_to, this, boost::asio::placeholders::error));
 	}
 
 	void handle_send_to(const boost::system::error_code& error) {
-		if (!error && message_count_ < max_count_) {
-			timer_.expires_from_now(boost::posix_time::milliseconds(timeout_milliseconds_));
-			timer_.async_wait(
-				boost::bind(&sender_::handle_timeout, this, boost::asio::placeholders::error));
+		if (!error && _message_count < _max_count) {
+			_timer.expires_from_now(boost::posix_time::milliseconds(_timeout_milliseconds));
+			_timer.async_wait(
+				boost::bind(&_sender::handle_timeout, this, boost::asio::placeholders::error));
 		}
 	}
 
 	void handle_timeout(const boost::system::error_code& error) {
 		if (!error) {
-			message_count_++;
+			_message_count++;
 
-			socket_.async_send_to(boost::asio::buffer(message_), endpoint_,
-				boost::bind(&sender_::handle_send_to, this, boost::asio::placeholders::error));
+			_socket.async_send_to(boost::asio::buffer(_message), _endpoint,
+				boost::bind(&_sender::handle_send_to, this, boost::asio::placeholders::error));
 		}
 	}
 
 	int getmessagecount() {
-		return message_count_;
+		return _message_count;
 	}
 
 private:
-	boost::asio::ip::udp::endpoint endpoint_;
-	boost::asio::ip::udp::socket socket_;
-	boost::asio::deadline_timer timer_;
-	const std::string message_;
-	long long timeout_milliseconds_;
-	unsigned long message_count_;
-	unsigned long max_count_;
+	boost::asio::ip::udp::endpoint _endpoint;
+	boost::asio::ip::udp::socket _socket;
+	boost::asio::deadline_timer _timer;
+	const std::string _message;
+	long long _timeout_milliseconds;
+	unsigned long _message_count;
+	unsigned long _max_count;
 };
 
 class liblec::lecnet::udp::multicast::sender::sender_impl {
@@ -92,15 +92,15 @@ public:
 	sender_impl(unsigned short multicast_port,
 		std::string multicast_address) :
 
-		multicast_port_(multicast_port),
-		multicast_address_(multicast_address) {}
+		_multicast_port(multicast_port),
+		_multicast_address(multicast_address) {}
 
 	~sender_impl() {}
 
 private:
 	friend sender;
-	unsigned short multicast_port_;
-	std::string multicast_address_;
+	unsigned short _multicast_port;
+	std::string _multicast_address;
 
 	struct send_info {
 		std::string message;
@@ -108,33 +108,33 @@ private:
 		long long timeout_milliseconds = 0;
 	};
 
-	send_info send_info_;
+	send_info _send_info;
 
-	std::future<void> fut_;
+	std::future<void> _fut;
 	static void sender_func(sender* p_current);
 
 	struct result {
-		bool result_ = false;
-		unsigned long result_count_ = 0;
-		std::string result_error_;
+		bool _result = false;
+		unsigned long _result_count = 0;
+		std::string _result_error;
 	};
 
-	result result_;
-	liblec::mutex result_lock_;
+	result _result;
+	liblec::mutex _result_lock;
 };
 
 liblec::lecnet::udp::multicast::sender::sender(unsigned short multicast_port,
 	std::string multicast_address) {
-	d_ = new sender_impl(multicast_port, multicast_address);
+	_d = new sender_impl(multicast_port, multicast_address);
 }
 
 liblec::lecnet::udp::multicast::sender::~sender() {
 	// ensure the async operation is completed before deleting
-	if (d_->fut_.valid())
-		d_->fut_.get();
+	if (_d->_fut.valid())
+		_d->_fut.get();
 
-	delete d_;
-	d_ = nullptr;
+	delete _d;
+	_d = nullptr;
 }
 
 bool liblec::lecnet::udp::multicast::sender::send(const std::string& message,
@@ -147,9 +147,9 @@ bool liblec::lecnet::udp::multicast::sender::send(const std::string& message,
 	try {
 		boost::asio::io_service io_service;
 
-		sender_ s(io_service,
-			boost::asio::ip::address::from_string(d_->multicast_address_),
-			d_->multicast_port_,
+		_sender s(io_service,
+			boost::asio::ip::address::from_string(_d->_multicast_address),
+			_d->_multicast_port,
 			message, max_count,
 			timeout_milliseconds);
 
@@ -171,8 +171,8 @@ void liblec::lecnet::udp::multicast::sender::sender_impl::sender_func(sender* p_
 
 	try {
 		// send multicast (blocking call)
-		result = p_current->send(p_current->d_->send_info_.message,
-			p_current->d_->send_info_.max_count, p_current->d_->send_info_.timeout_milliseconds,
+		result = p_current->send(p_current->_d->_send_info.message,
+			p_current->_d->_send_info.max_count, p_current->_d->_send_info.timeout_milliseconds,
 			actual_count, error);
 	}
 	catch (std::exception& e) {
@@ -180,10 +180,10 @@ void liblec::lecnet::udp::multicast::sender::sender_impl::sender_func(sender* p_
 	}
 
 	{
-		liblec::auto_mutex lock(p_current->d_->result_lock_);
-		p_current->d_->result_.result_ = result;
-		p_current->d_->result_.result_count_ = actual_count;
-		p_current->d_->result_.result_error_ = error;
+		liblec::auto_mutex lock(p_current->_d->_result_lock);
+		p_current->_d->_result._result = result;
+		p_current->_d->_result._result_count = actual_count;
+		p_current->_d->_result._result_error = error;
 	}
 }
 
@@ -197,20 +197,20 @@ bool liblec::lecnet::udp::multicast::sender::send_async(const std::string& messa
 	}
 
 	try {
-		d_->send_info_.message = message;
-		d_->send_info_.max_count = max_count;
-		d_->send_info_.timeout_milliseconds = timeout_milliseconds;
+		_d->_send_info.message = message;
+		_d->_send_info.max_count = max_count;
+		_d->_send_info.timeout_milliseconds = timeout_milliseconds;
 
 		{
-			liblec::auto_mutex lock(d_->result_lock_);
-			d_->result_.result_ = false;
-			d_->result_.result_count_ = 0;
-			d_->result_.result_error_.clear();
+			liblec::auto_mutex lock(_d->_result_lock);
+			_d->_result._result = false;
+			_d->_result._result_count = 0;
+			_d->_result._result_error.clear();
 		}
 
 		// run sender task asynchronously
-		d_->fut_ = std::async(std::launch::async,
-			d_->sender_func, this);
+		_d->_fut = std::async(std::launch::async,
+			_d->sender_func, this);
 	}
 	catch (std::exception& e) {
 		error = e.what();
@@ -221,23 +221,23 @@ bool liblec::lecnet::udp::multicast::sender::send_async(const std::string& messa
 }
 
 bool liblec::lecnet::udp::multicast::sender::sending() {
-	if (d_->fut_.valid())
-		return d_->fut_.wait_for(std::chrono::seconds{ 0 }) != std::future_status::ready;
+	if (_d->_fut.valid())
+		return _d->_fut.wait_for(std::chrono::seconds{ 0 }) != std::future_status::ready;
 	else
 		return false;
 }
 
 bool liblec::lecnet::udp::multicast::sender::result(unsigned long& actual_count,
 	std::string& error) {
-	liblec::auto_mutex lock(d_->result_lock_);
+	liblec::auto_mutex lock(_d->_result_lock);
 
-	bool result = d_->result_.result_;
-	actual_count = d_->result_.result_count_;
-	error = d_->result_.result_error_;
+	bool result = _d->_result._result;
+	actual_count = _d->_result._result_count;
+	error = _d->_result._result_error;
 
-	d_->result_.result_ = false;
-	d_->result_.result_count_ = 0;
-	d_->result_.result_error_.clear();
+	_d->_result._result = false;
+	_d->_result._result_count = 0;
+	_d->_result._result_error.clear();
 
 	return result;
 }
