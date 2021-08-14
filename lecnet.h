@@ -41,7 +41,7 @@ namespace liblec {
 		/// </summary>
 		///
 		/// <returns>
-		/// Returns the version number as a string in the form "lecnet 1.0.0 07 Nov 2018"
+		/// Returns the version number as a string in the form "lecnet 1.0.0, 07 Nov 2018"
 		/// </returns>
 		std::string lecnet_api version();
 

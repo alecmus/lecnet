@@ -37,6 +37,6 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 }
 
 std::string liblec::lecnet::version() {
-	return lecnetname + std::string(" ") + lecnetversion + std::string(" ") + lecnetdate;
+	return lecnetname + std::string(" ") + lecnetversion + std::string(", ") + lecnetdate;
 }
 
