@@ -1,136 +1,125 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
+    <Filter Include="lecnet">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Source Files\auto_mutex">
+    <Filter Include="lecnet\auto_mutex">
       <UniqueIdentifier>{e6cbb51a-c727-4557-a6e9-af3eaac99903}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\tcp">
+    <Filter Include="lecnet\tcp">
       <UniqueIdentifier>{d5b801b8-bdcd-49b6-8add-bca296ed2002}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\helper_fxns">
-      <UniqueIdentifier>{61cac0bb-39c8-4a52-91fd-37e1a00bbde4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\cert">
-      <UniqueIdentifier>{074c69b0-322e-4af8-9645-614d035874f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\cert\openssl_helper">
-      <UniqueIdentifier>{582fbaa4-1469-47a4-9067-6fb0ef04ef97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\udp">
-      <UniqueIdentifier>{a052da21-6424-4136-a578-acb4924865de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\tcp\server">
+    <Filter Include="lecnet\tcp\server">
       <UniqueIdentifier>{6b130f9e-4d77-461f-a484-1953272ae2f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\tcp\client">
+    <Filter Include="lecnet\tcp\client">
       <UniqueIdentifier>{2f65ff18-7e8a-4e18-a3ea-712918e8e386}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\udp\multicast">
+    <Filter Include="lecnet\helper_fxns">
+      <UniqueIdentifier>{61cac0bb-39c8-4a52-91fd-37e1a00bbde4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lecnet\cert">
+      <UniqueIdentifier>{074c69b0-322e-4af8-9645-614d035874f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lecnet\cert\openssl_helper">
+      <UniqueIdentifier>{582fbaa4-1469-47a4-9067-6fb0ef04ef97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lecnet\udp">
+      <UniqueIdentifier>{a052da21-6424-4136-a578-acb4924865de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lecnet\udp\multicast">
       <UniqueIdentifier>{ef887687-c5b2-4773-aa71-cf9b9c6a7077}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\udp\broadcast">
+    <Filter Include="lecnet\udp\broadcast">
       <UniqueIdentifier>{816a3619-d5e4-47ee-9d5d-ad432d94bf7a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="lecnet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="auto_mutex\auto_mutex.cpp">
-      <Filter>Source Files\auto_mutex</Filter>
+      <Filter>lecnet\auto_mutex</Filter>
     </ClCompile>
     <ClCompile Include="tcp\tcp.cpp">
-      <Filter>Source Files\tcp</Filter>
+      <Filter>lecnet\tcp</Filter>
     </ClCompile>
     <ClCompile Include="tcp\client\tcp_client.cpp">
-      <Filter>Source Files\tcp\client</Filter>
+      <Filter>lecnet\tcp\client</Filter>
     </ClCompile>
     <ClCompile Include="tcp\server\server_log.cpp">
-      <Filter>Source Files\tcp\server</Filter>
+      <Filter>lecnet\tcp\server</Filter>
     </ClCompile>
     <ClCompile Include="tcp\server\tcp_server_async.cpp">
-      <Filter>Source Files\tcp\server</Filter>
+      <Filter>lecnet\tcp\server</Filter>
     </ClCompile>
     <ClCompile Include="tcp\server\tcp_server_async_ssl.cpp">
-      <Filter>Source Files\tcp\server</Filter>
+      <Filter>lecnet\tcp\server</Filter>
     </ClCompile>
     <ClCompile Include="udp\broadcast\udp_broadcast_receiver.cpp">
-      <Filter>Source Files\udp\broadcast</Filter>
+      <Filter>lecnet\udp\broadcast</Filter>
     </ClCompile>
     <ClCompile Include="udp\broadcast\udp_broadcast_sender.cpp">
-      <Filter>Source Files\udp\broadcast</Filter>
+      <Filter>lecnet\udp\broadcast</Filter>
     </ClCompile>
     <ClCompile Include="udp\multicast\udp_multicast_receiver.cpp">
-      <Filter>Source Files\udp\multicast</Filter>
+      <Filter>lecnet\udp\multicast</Filter>
     </ClCompile>
     <ClCompile Include="udp\multicast\udp_multicast_sender.cpp">
-      <Filter>Source Files\udp\multicast</Filter>
+      <Filter>lecnet\udp\multicast</Filter>
     </ClCompile>
     <ClCompile Include="cert\gen_rsa_and_cert.cpp">
-      <Filter>Source Files\cert</Filter>
+      <Filter>lecnet\cert</Filter>
     </ClCompile>
     <ClCompile Include="cert\gen_rsa_and_csr.cpp">
-      <Filter>Source Files\cert</Filter>
+      <Filter>lecnet\cert</Filter>
     </ClCompile>
     <ClCompile Include="cert\sign_csr.cpp">
-      <Filter>Source Files\cert</Filter>
+      <Filter>lecnet\cert</Filter>
     </ClCompile>
     <ClCompile Include="cert\openssl_helper\openssl_helper.cpp">
-      <Filter>Source Files\cert\openssl_helper</Filter>
+      <Filter>lecnet\cert\openssl_helper</Filter>
     </ClCompile>
     <ClCompile Include="helper_fxns\helper_fxns.cpp">
-      <Filter>Source Files\helper_fxns</Filter>
+      <Filter>lecnet\helper_fxns</Filter>
     </ClCompile>
+    <ClCompile Include="lecnet.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lecnet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="versioninfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tcp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cert.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="udp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="auto_mutex\auto_mutex.h">
-      <Filter>Source Files\auto_mutex</Filter>
+      <Filter>lecnet\auto_mutex</Filter>
     </ClInclude>
     <ClInclude Include="tcp\server\server_log.h">
-      <Filter>Source Files\tcp\server</Filter>
+      <Filter>lecnet\tcp\server</Filter>
     </ClInclude>
     <ClInclude Include="cert\openssl_helper\openssl_helper.h">
-      <Filter>Source Files\cert\openssl_helper</Filter>
+      <Filter>lecnet\cert\openssl_helper</Filter>
     </ClInclude>
     <ClInclude Include="helper_fxns\helper_fxns.h">
-      <Filter>Source Files\helper_fxns</Filter>
+      <Filter>lecnet\helper_fxns</Filter>
     </ClInclude>
+    <ClInclude Include="lecnet.h" />
+    <ClInclude Include="versioninfo.h">
+      <Filter>lecnet</Filter>
+    </ClInclude>
+    <ClInclude Include="cert.h">
+      <Filter>lecnet</Filter>
+    </ClInclude>
+    <ClInclude Include="tcp.h">
+      <Filter>lecnet</Filter>
+    </ClInclude>
+    <ClInclude Include="udp.h">
+      <Filter>lecnet</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="versioninfo.rc">
-      <Filter>Resource Files</Filter>
+      <Filter>lecnet</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="LICENSE.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
+    <None Include="README.md" />
   </ItemGroup>
 </Project>
