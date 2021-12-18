@@ -4,8 +4,8 @@
 // lecnet network library, part of the liblec library
 // Copyright (c) 2018 Alec Musasa (alecmus at live dot com)
 //
-// Released under the CC-BY-NC 2.0 license. For full details see the file
-// LICENSE.txt or go to https://github.com/alecmus/liblec/blob/master/LICENSE.md
+// Released under the MIT license. For full details see the
+// file LICENSE.txt
 //
 
 #pragma once
@@ -13,7 +13,7 @@
 #define lecnetname			"lecnet"
 #define lecnetdescription	"lecnet network library"
 #define lecnetcomments		"This file is part of the liblec library"
-#define lecnetcopyright		"(c) 2019 Alec Musasa"
+#define lecnetcopyright		"(c) 2018 Alec Musasa"
 #define lecnetcompany		"Alec Musasa"
 #define lecnetfilename		"lecnet.dll"
 
