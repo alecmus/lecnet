@@ -6,6 +6,6 @@ To generate Doxygen documentation that includes only files in the public interfa
 	Doxyfile
 	lecnet.h
 4. Go to the commandline and run "doxygen Doxyfile" (C:\Program Files\doxygen\bin needs to have already been added to the user account's PATH environment variable).
-5. Copy the folders "html" and "latex" from the folder and replace the older ones in the docs folder in the repo (delete the older one first, don't overwrite ... replace).
+5. Copy the folders "html" and "latex" from the docs folder and replace the older ones in the same location in the repo (delete the older one first, don't overwrite ... replace).
 
 This process mimicks the file structure in the repo, but excludes those files that are not in the public interface.
