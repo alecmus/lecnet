@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['impl_91',['impl',['../classliblec_1_1lecnet_1_1tcp_1_1client_1_1impl.html',1,'liblec::lecnet::tcp::client::impl'],['../classliblec_1_1lecnet_1_1tcp_1_1server__async_1_1impl.html',1,'liblec::lecnet::tcp::server_async::impl'],['../classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_1_1impl.html',1,'liblec::lecnet::tcp::server_async_ssl::impl']]]
+  ['receiver_0',['receiver',['../classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver.html',1,'liblec::lecnet::udp::broadcast::receiver'],['../classliblec_1_1lecnet_1_1udp_1_1multicast_1_1receiver.html',1,'liblec::lecnet::udp::multicast::receiver']]]
 ];

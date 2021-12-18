@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['magic_5fnumber_33',['magic_number',['../structliblec_1_1lecnet_1_1tcp_1_1client_1_1client__params.html#a2841c3a2aee5d43652cf9404d1f93262',1,'liblec::lecnet::tcp::client::client_params::magic_number()'],['../structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params.html#a21ce9b32d10be398123fdef31368b7b1',1,'liblec::lecnet::tcp::server::server_params::magic_number()']]],
-  ['max_5fclients_34',['max_clients',['../structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params.html#abb2552fa2575ab2f6bc83f7feba57545',1,'liblec::lecnet::tcp::server::server_params']]],
-  ['message_35',['message',['../structreceive__result.html#ae528b36f3d78623e1247fba07f797d24',1,'receive_result']]],
-  ['mutex_36',['mutex',['../classliblec_1_1mutex.html',1,'liblec']]],
-  ['mutex_5fimpl_37',['mutex_impl',['../classliblec_1_1mutex_1_1mutex__impl.html',1,'liblec::mutex']]]
+  ['on_5freceive_0',['on_receive',['../classliblec_1_1lecnet_1_1tcp_1_1server.html#a7e50e52a836724c8a63fd301d7a92991',1,'liblec::lecnet::tcp::server::on_receive()'],['../classliblec_1_1lecnet_1_1tcp_1_1server__async.html#a80c64f31871d2f1d7e556f1eda49c44c',1,'liblec::lecnet::tcp::server_async::on_receive()'],['../classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl.html#a11f7541ab36431fb02287ee8d5c41eb3',1,'liblec::lecnet::tcp::server_async_ssl::on_receive()']]]
 ];

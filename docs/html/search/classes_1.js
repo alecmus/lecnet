@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['broadcast_5fclient_5f_80',['broadcast_client_',['../classbroadcast__client__.html',1,'']]]
+  ['network_5ftraffic_0',['network_traffic',['../structliblec_1_1lecnet_1_1network__traffic.html',1,'liblec::lecnet']]]
 ];

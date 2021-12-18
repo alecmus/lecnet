@@ -12,13 +12,7 @@ TCP client.
 \doxysubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-class \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_1_1client__async}{client\+\_\+async}}
-\item 
-class \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_1_1client__async__ssl}{client\+\_\+async\+\_\+ssl}}
-\item 
 struct \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1client_1_1client__params}{client\+\_\+params}}
-\item 
-class \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_1_1impl}{impl}}
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -39,7 +33,8 @@ bool \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_a97c7433b1adf7375a9
 \begin{DoxyCompactList}\small\item\em Check if the data is still being sent. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_a52fe1ac3112404c25fbd5e7abb414903}{get\+\_\+response}} (const unsigned long \&data\+\_\+id, std\+::string \&received, std\+::string \&error)
 \begin{DoxyCompactList}\small\item\em Get the server response. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_a1ddac5a61167c8814acb12a2b806e9e1}{disconnect}} ()
+\mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1client_a1ddac5a61167c8814acb12a2b806e9e1}\label{classliblec_1_1lecnet_1_1tcp_1_1client_a1ddac5a61167c8814acb12a2b806e9e1}} 
+void {\bfseries disconnect} ()
 \begin{DoxyCompactList}\small\item\em Disconnect from server. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_aec4d7eef51df5ecdc83fb105b6151e63}{traffic}} (\mbox{\hyperlink{structliblec_1_1lecnet_1_1network__traffic}{liblec\+::lecnet\+::network\+\_\+traffic}} \&traffic)
 \begin{DoxyCompactList}\small\item\em Get the total network traffic for this client. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -47,8 +42,6 @@ void \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_aec4d7eef51df5ecdc8
 
 \doxysubsection{Detailed Description}
 TCP client. 
-
-
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1client_aa3b873f3beaf09f0f4644e5a8a327595}\label{classliblec_1_1lecnet_1_1tcp_1_1client_aa3b873f3beaf09f0f4644e5a8a327595}} 
@@ -117,17 +110,7 @@ Returns true if the client is in the process of trying to connect to a server, e
 \end{DoxyReturn}
 
 
-After true is returned by \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_aa3b873f3beaf09f0f4644e5a8a327595}{connect}}, wait until false is returned by this function, then call \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_ade06041f0c07108aa5fae8f76693948d}{connected}} to establish if the connection was successful. \mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1client_a1ddac5a61167c8814acb12a2b806e9e1}\label{classliblec_1_1lecnet_1_1tcp_1_1client_a1ddac5a61167c8814acb12a2b806e9e1}} 
-\index{liblec::lecnet::tcp::client@{liblec::lecnet::tcp::client}!disconnect@{disconnect}}
-\index{disconnect@{disconnect}!liblec::lecnet::tcp::client@{liblec::lecnet::tcp::client}}
-\doxysubsubsection{\texorpdfstring{disconnect()}{disconnect()}}
-{\footnotesize\ttfamily void liblec\+::lecnet\+::tcp\+::client\+::disconnect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
-
-
-
-Disconnect from server. 
-
-\mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1client_a52fe1ac3112404c25fbd5e7abb414903}\label{classliblec_1_1lecnet_1_1tcp_1_1client_a52fe1ac3112404c25fbd5e7abb414903}} 
+After true is returned by \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_aa3b873f3beaf09f0f4644e5a8a327595}{connect}}, wait until false is returned by this function, then call \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_ade06041f0c07108aa5fae8f76693948d}{connected}} to establish if the connection was successful. \mbox{\Hypertarget{classliblec_1_1lecnet_1_1tcp_1_1client_a52fe1ac3112404c25fbd5e7abb414903}\label{classliblec_1_1lecnet_1_1tcp_1_1client_a52fe1ac3112404c25fbd5e7abb414903}} 
 \index{liblec::lecnet::tcp::client@{liblec::lecnet::tcp::client}!get\_response@{get\_response}}
 \index{get\_response@{get\_response}!liblec::lecnet::tcp::client@{liblec::lecnet::tcp::client}}
 \doxysubsubsection{\texorpdfstring{get\_response()}{get\_response()}}
@@ -308,7 +291,6 @@ Get the total network traffic for this client.
 \end{DoxyParams}
 
 
-The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-tcp.\+h\item 
-tcp/client/tcp\+\_\+client.\+cpp\end{DoxyCompactItemize}
+tcp.\+h\end{DoxyCompactItemize}

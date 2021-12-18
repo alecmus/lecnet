@@ -1,0 +1,51 @@
+\hypertarget{lecnet_8h_source}{}\doxysection{lecnet.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// lecnet.h -\/ lecnet interface}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 \textcolor{comment}{// lecnet network library, part of the liblec library}}
+\DoxyCodeLine{5 \textcolor{comment}{// Copyright (c) 2018 Alec Musasa (alecmus at live dot com)}}
+\DoxyCodeLine{6 \textcolor{comment}{//}}
+\DoxyCodeLine{7 \textcolor{comment}{// Released under the MIT license. For full details see the}}
+\DoxyCodeLine{8 \textcolor{comment}{// file LICENSE.txt}}
+\DoxyCodeLine{9 \textcolor{comment}{//}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#if defined(LECNET\_EXPORTS)}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{    \#define lecnet\_api \_\_declspec(dllexport)}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{    \#include "{}lecnet.h"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{    \#define lecnet\_api \_\_declspec(dllimport)}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{    \#include <liblec/lecnet.h>}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{preprocessor}{    \#if defined(\_WIN64)}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{        \#if defined(\_DEBUG)}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{            \#pragma comment(lib, "{}lecnet64d.lib"{}})}
+\DoxyCodeLine{23 \textcolor{preprocessor}{        \#else}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{            \#pragma comment(lib, "{}lecnet64.lib"{}})}
+\DoxyCodeLine{25 \textcolor{preprocessor}{        \#endif}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{    \#else}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{        \#if defined(\_DEBUG)}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{            \#pragma comment(lib, "{}lecnet32d.lib"{}})}
+\DoxyCodeLine{29 \textcolor{preprocessor}{        \#else}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{            \#pragma comment(lib, "{}lecnet32.lib"{}})}
+\DoxyCodeLine{31 \textcolor{preprocessor}{        \#endif}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{keyword}{namespace }liblec \{}
+\DoxyCodeLine{38     \textcolor{keyword}{namespace }lecnet \{}
+\DoxyCodeLine{46         std::string lecnet\_api version();}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{51         \textcolor{keyword}{struct }\mbox{\hyperlink{structliblec_1_1lecnet_1_1network__traffic}{network\_traffic}} \{}
+\DoxyCodeLine{52             \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} in = 0;}
+\DoxyCodeLine{53             \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} out = 0;}
+\DoxyCodeLine{54         \};}
+\DoxyCodeLine{55     \}}
+\DoxyCodeLine{56 \}}
+
+\end{DoxyCode}

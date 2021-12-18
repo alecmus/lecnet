@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['error_21',['error',['../structconnect__result.html#a404a19ca97d5c58b0d53bffa7cb2491f',1,'connect_result::error()'],['../structreceive__result.html#a6ebf0c427d3c00acdbe5bdde42c103f2',1,'receive_result::error()']]]
+  ['ip_0',['ip',['../structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params.html#a15010758e2f66a0796892eea2f550a56',1,'liblec::lecnet::tcp::server::server_params']]]
 ];

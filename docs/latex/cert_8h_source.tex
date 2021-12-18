@@ -1,0 +1,110 @@
+\hypertarget{cert_8h_source}{}\doxysection{cert.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// cert.h -\/ digital certificates interface}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 \textcolor{comment}{// lecnet network library, part of the liblec library}}
+\DoxyCodeLine{5 \textcolor{comment}{// Copyright (c) 2018 Alec Musasa (alecmus at live dot com)}}
+\DoxyCodeLine{6 \textcolor{comment}{//}}
+\DoxyCodeLine{7 \textcolor{comment}{// Released under the MIT license. For full details see the}}
+\DoxyCodeLine{8 \textcolor{comment}{// file LICENSE.txt}}
+\DoxyCodeLine{9 \textcolor{comment}{//}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#if defined(LECNET\_EXPORTS)}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{    \#include "{}lecnet.h"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{    \#include <liblec/lecnet.h>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{keyword}{namespace }liblec \{}
+\DoxyCodeLine{22     \textcolor{keyword}{namespace }lecnet \{}
+\DoxyCodeLine{23         \textcolor{comment}{// Correct usage of the members of liblec::lecnet::cert to make a pair of digital}}
+\DoxyCodeLine{24         \textcolor{comment}{// certificates for use in a tcp server/client ssl connection is as follows:}}
+\DoxyCodeLine{25         \textcolor{comment}{//}}
+\DoxyCodeLine{26         \textcolor{comment}{// 1. Make CA certificate}}
+\DoxyCodeLine{27         \textcolor{comment}{//}}
+\DoxyCodeLine{28         \textcolor{comment}{// liblec::lecnet::cert::certificate ca\_cert;}}
+\DoxyCodeLine{29         \textcolor{comment}{// ca\_cert.file\_name = "{}ca.crt"{};}}
+\DoxyCodeLine{30         \textcolor{comment}{//}}
+\DoxyCodeLine{31         \textcolor{comment}{// liblec::lecnet::cert::private\_key ca\_key;}}
+\DoxyCodeLine{32         \textcolor{comment}{// ca\_key.file\_name = "{}ca.crt"{}; // make it a single file}}
+\DoxyCodeLine{33         \textcolor{comment}{// ca\_key.password = "{}ca\_password123"{};}}
+\DoxyCodeLine{34         \textcolor{comment}{//}}
+\DoxyCodeLine{35         \textcolor{comment}{// if (!liblec::lecnet::cert::gen\_rsa\_and\_cert(ca\_key, ca\_cert)) \{}}
+\DoxyCodeLine{36         \textcolor{comment}{//      // error}}
+\DoxyCodeLine{37         \textcolor{comment}{// \}}}
+\DoxyCodeLine{38         \textcolor{comment}{//}}
+\DoxyCodeLine{39         \textcolor{comment}{// 2. Make Server certificate request}}
+\DoxyCodeLine{40         \textcolor{comment}{//}}
+\DoxyCodeLine{41         \textcolor{comment}{// liblec::lecnet::cert::certificate\_request server\_cert\_request;}}
+\DoxyCodeLine{42         \textcolor{comment}{// server\_cert\_request.file\_name = "{}server.csr"{};}}
+\DoxyCodeLine{43         \textcolor{comment}{//}}
+\DoxyCodeLine{44         \textcolor{comment}{// liblec::lecnet::cert::private\_key server\_key;}}
+\DoxyCodeLine{45         \textcolor{comment}{// server\_key.file\_name = "{}server.key"{};}}
+\DoxyCodeLine{46         \textcolor{comment}{// server\_key.password = "{}server\_password123"{};}}
+\DoxyCodeLine{47         \textcolor{comment}{//}}
+\DoxyCodeLine{48         \textcolor{comment}{// if (!liblec::lecnet::cert::gen\_rsa\_and\_csr(server\_key, server\_cert\_request)) \{}}
+\DoxyCodeLine{49         \textcolor{comment}{//      // error}}
+\DoxyCodeLine{50         \textcolor{comment}{// \}}}
+\DoxyCodeLine{51         \textcolor{comment}{//}}
+\DoxyCodeLine{52         \textcolor{comment}{// 3. Sign the server certificate request using the CA certificate}}
+\DoxyCodeLine{53         \textcolor{comment}{// (this creates the server certificate)}}
+\DoxyCodeLine{54         \textcolor{comment}{//}}
+\DoxyCodeLine{55         \textcolor{comment}{// if (!liblec::lecnet::cert::sign\_csr("{}ca.crt"{},}}
+\DoxyCodeLine{56         \textcolor{comment}{//      "{}ca\_password123"{}, "{}server.csr"{}, "{}server.crt"{})) \{}}
+\DoxyCodeLine{57         \textcolor{comment}{//      // error}}
+\DoxyCodeLine{58         \textcolor{comment}{// \}}}
+\DoxyCodeLine{59         \textcolor{comment}{//}}
+\DoxyCodeLine{60         \textcolor{comment}{// 4. Append the contents of server.key to server.crt then delete server.key}}
+\DoxyCodeLine{61         \textcolor{comment}{// 5. Delete the server certificate request}}
+\DoxyCodeLine{62         \textcolor{comment}{//}}
+\DoxyCodeLine{63         \textcolor{comment}{// The file ca.crt is used by the tcp client while server.crt together with the password}}
+\DoxyCodeLine{64         \textcolor{comment}{// to the embedded server private key "{}server\_password123"{} are used by the tcp server.}}
+\DoxyCodeLine{65         \textcolor{comment}{//}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67         \textcolor{keyword}{namespace }cert \{}
+\DoxyCodeLine{71             \textcolor{keyword}{struct }\mbox{\hyperlink{structliblec_1_1lecnet_1_1cert_1_1private__key}{private\_key}} \{}
+\DoxyCodeLine{72                 std::string file\_name = \textcolor{stringliteral}{"{}rsa.key"{}};}
+\DoxyCodeLine{73                 std::string password;}
+\DoxyCodeLine{74                 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} bits = 2048;}
+\DoxyCodeLine{75             \};}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{80             \textcolor{keyword}{struct }\mbox{\hyperlink{structliblec_1_1lecnet_1_1cert_1_1certificate}{certificate}} \{}
+\DoxyCodeLine{81                 std::string file\_name = \textcolor{stringliteral}{"{}cert.crt"{}};}
+\DoxyCodeLine{82                 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} days = 365 * 3;}
+\DoxyCodeLine{83                 std::string country = \textcolor{stringliteral}{"{}ZW"{}};}
+\DoxyCodeLine{84                 std::string issuer = \textcolor{stringliteral}{"{}liblec"{}};}
+\DoxyCodeLine{85             \};}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{90             \textcolor{keyword}{struct }\mbox{\hyperlink{structliblec_1_1lecnet_1_1cert_1_1certificate__request}{certificate\_request}} \{}
+\DoxyCodeLine{91                 std::string file\_name = \textcolor{stringliteral}{"{}certreq.csr"{}};}
+\DoxyCodeLine{92                 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} days = 365;}
+\DoxyCodeLine{93                 std::string country = \textcolor{stringliteral}{"{}ZW"{}};}
+\DoxyCodeLine{94                 std::string issuer = \textcolor{stringliteral}{"{}lecnet"{}};}
+\DoxyCodeLine{95             \};}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{123             \textcolor{keywordtype}{bool} lecnet\_api gen\_rsa\_and\_cert(\textcolor{keyword}{const} \mbox{\hyperlink{structliblec_1_1lecnet_1_1cert_1_1private__key}{private\_key}}\& key,}
+\DoxyCodeLine{124                 \textcolor{keyword}{const} \mbox{\hyperlink{structliblec_1_1lecnet_1_1cert_1_1certificate}{certificate}}\& cert,}
+\DoxyCodeLine{125                 std::string\& error);}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{151             \textcolor{keywordtype}{bool} lecnet\_api gen\_rsa\_and\_csr(\textcolor{keyword}{const} \mbox{\hyperlink{structliblec_1_1lecnet_1_1cert_1_1private__key}{private\_key}}\& key,}
+\DoxyCodeLine{152                 \textcolor{keyword}{const} \mbox{\hyperlink{structliblec_1_1lecnet_1_1cert_1_1certificate__request}{certificate\_request}}\& csr\_req,}
+\DoxyCodeLine{153                 std::string\& error);}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{195             \textcolor{keywordtype}{bool} lecnet\_api sign\_csr(\textcolor{keyword}{const} std::string\& ca\_cert\_file,}
+\DoxyCodeLine{196                 \textcolor{keyword}{const} std::string\& ca\_key\_file,}
+\DoxyCodeLine{197                 \textcolor{keyword}{const} std::string\& ca\_key\_password,}
+\DoxyCodeLine{198                 \textcolor{keyword}{const} std::string\& csr\_file,}
+\DoxyCodeLine{199                 \textcolor{keyword}{const} std::string\& certificate\_file,}
+\DoxyCodeLine{200                 \textcolor{keywordtype}{short} days,}
+\DoxyCodeLine{201                 std::string\& error);}
+\DoxyCodeLine{202         \}}
+\DoxyCodeLine{203     \}}
+\DoxyCodeLine{204 \}}
+
+\end{DoxyCode}

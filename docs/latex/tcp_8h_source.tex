@@ -1,0 +1,341 @@
+\hypertarget{tcp_8h_source}{}\doxysection{tcp.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// tcp.h -\/ tcp/ip interface}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 \textcolor{comment}{// lecnet network library, part of the liblec library}}
+\DoxyCodeLine{5 \textcolor{comment}{// Copyright (c) 2018 Alec Musasa (alecmus at live dot com)}}
+\DoxyCodeLine{6 \textcolor{comment}{//}}
+\DoxyCodeLine{7 \textcolor{comment}{// Released under the MIT license. For full details see the}}
+\DoxyCodeLine{8 \textcolor{comment}{// file LICENSE.txt}}
+\DoxyCodeLine{9 \textcolor{comment}{//}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#if defined(LECNET\_EXPORTS)}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{    \#include "{}lecnet.h"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{    \#include <liblec/lecnet.h>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include <functional>}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{keyword}{namespace }liblec \{}
+\DoxyCodeLine{24     \textcolor{keyword}{namespace }lecnet \{}
+\DoxyCodeLine{28         \textcolor{keyword}{namespace }tcp \{}
+\DoxyCodeLine{40             \textcolor{keywordtype}{void} lecnet\_api \mbox{\hyperlink{namespaceliblec_1_1lecnet_1_1tcp_a155d91d94758039d641923a2e5d9b406}{get\_host\_ips}}(std::vector<std::string>\& ips);}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42             \textcolor{comment}{// Correct usage of the liblec::lecnet::tcp::client class is as follows:}}
+\DoxyCodeLine{43             \textcolor{comment}{//}}
+\DoxyCodeLine{44             \textcolor{comment}{// if (connect()) \{}}
+\DoxyCodeLine{45             \textcolor{comment}{//      while (connecting()) \{}}
+\DoxyCodeLine{46             \textcolor{comment}{//          // wait}}
+\DoxyCodeLine{47             \textcolor{comment}{//      \}}}
+\DoxyCodeLine{48             \textcolor{comment}{//}}
+\DoxyCodeLine{49             \textcolor{comment}{//      if (connected()) \{}}
+\DoxyCodeLine{50             \textcolor{comment}{//          while (running()) \{}}
+\DoxyCodeLine{51             \textcolor{comment}{//              // use server-\/client connection}}
+\DoxyCodeLine{52             \textcolor{comment}{//          \}}}
+\DoxyCodeLine{53             \textcolor{comment}{//      \}}}
+\DoxyCodeLine{54             \textcolor{comment}{//      else \{}}
+\DoxyCodeLine{55             \textcolor{comment}{//          // connection error}}
+\DoxyCodeLine{56             \textcolor{comment}{//      \}}}
+\DoxyCodeLine{57             \textcolor{comment}{// \}}}
+\DoxyCodeLine{58             \textcolor{comment}{// else \{}}
+\DoxyCodeLine{59             \textcolor{comment}{//      // connection error}}
+\DoxyCodeLine{60             \textcolor{comment}{// \}}}
+\DoxyCodeLine{61             \textcolor{comment}{//}}
+\DoxyCodeLine{62             \textcolor{comment}{// While running() is true, there are two ways of using the server-\/client connection}}
+\DoxyCodeLine{63             \textcolor{comment}{//}}
+\DoxyCodeLine{64             \textcolor{comment}{// 1. Blocking method (faster)}}
+\DoxyCodeLine{65             \textcolor{comment}{//}}
+\DoxyCodeLine{66             \textcolor{comment}{// auto busy\_function = []() \{}}
+\DoxyCodeLine{67             \textcolor{comment}{//      // wait}}
+\DoxyCodeLine{68             \textcolor{comment}{//      return true;}}
+\DoxyCodeLine{69             \textcolor{comment}{// \};}}
+\DoxyCodeLine{70             \textcolor{comment}{//}}
+\DoxyCodeLine{71             \textcolor{comment}{// std::string send, received;}}
+\DoxyCodeLine{72             \textcolor{comment}{// if (send\_data(send, received, busy\_function)) \{}}
+\DoxyCodeLine{73             \textcolor{comment}{//      // use received data}}
+\DoxyCodeLine{74             \textcolor{comment}{// \}}}
+\DoxyCodeLine{75             \textcolor{comment}{// else \{}}
+\DoxyCodeLine{76             \textcolor{comment}{//      // send/receive error}}
+\DoxyCodeLine{77             \textcolor{comment}{// \}}}
+\DoxyCodeLine{78             \textcolor{comment}{//}}
+\DoxyCodeLine{79             \textcolor{comment}{// 2. Non-\/blocking method (slower)}}
+\DoxyCodeLine{80             \textcolor{comment}{//}}
+\DoxyCodeLine{81             \textcolor{comment}{// std::string send, received;}}
+\DoxyCodeLine{82             \textcolor{comment}{// unsigned long data\_id;}}
+\DoxyCodeLine{83             \textcolor{comment}{// if (send\_data\_async(send, received, data\_id) \{}}
+\DoxyCodeLine{84             \textcolor{comment}{//      while (sending(data\_id)) \{}}
+\DoxyCodeLine{85             \textcolor{comment}{//          // wait}}
+\DoxyCodeLine{86             \textcolor{comment}{//      \}}}
+\DoxyCodeLine{87             \textcolor{comment}{//}}
+\DoxyCodeLine{88             \textcolor{comment}{//      if (get\_response(data\_id, received)) \{}}
+\DoxyCodeLine{89             \textcolor{comment}{//          // use received data}}
+\DoxyCodeLine{90             \textcolor{comment}{//      \}}}
+\DoxyCodeLine{91             \textcolor{comment}{//      else \{}}
+\DoxyCodeLine{92             \textcolor{comment}{//          // send/receive error}}
+\DoxyCodeLine{93             \textcolor{comment}{//      \}}}
+\DoxyCodeLine{94             \textcolor{comment}{// \}}}
+\DoxyCodeLine{95             \textcolor{comment}{//}}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{100             \textcolor{keyword}{class }lecnet\_api \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client}{client}} \{}
+\DoxyCodeLine{101             \textcolor{keyword}{public}:}
+\DoxyCodeLine{102                 \textcolor{keyword}{struct }\mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1client_1_1client__params}{client\_params}} \{}
+\DoxyCodeLine{106                     std::string address = \textcolor{stringliteral}{"{}127.0.0.1"{}};}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{111                     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} port = 50001;}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{116                     \textcolor{keywordtype}{long} timeout\_seconds = 10;}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{121                     \textcolor{keywordtype}{bool} use\_ssl = \textcolor{keyword}{true};}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{126                     std::string ca\_cert\_path = \textcolor{stringliteral}{"{}ca.crt"{}};}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{132                     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} magic\_number = 0;}
+\DoxyCodeLine{133                 \};}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135                 \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client}{client}}();}
+\DoxyCodeLine{136                 \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client}{\string~client}}();}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{162                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_aa3b873f3beaf09f0f4644e5a8a327595}{connect}}(\textcolor{keyword}{const} \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1client_1_1client__params}{client\_params}}\& params,}
+\DoxyCodeLine{163                     std::string\& error);}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{179                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_aa8eab73965c798930da04329097719e6}{connecting}}();}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{206                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_ade06041f0c07108aa5fae8f76693948d}{connected}}(std::string\& error);}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{222                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_a3713b6e0fd2a49a37071e87fb9d02e64}{running}}();}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{256                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_a603288e251fdb18eb28f22ad91a12e84}{send\_data}}(\textcolor{keyword}{const} std::string\& data,}
+\DoxyCodeLine{257                     std::string\& received,}
+\DoxyCodeLine{258                     \textcolor{keyword}{const} \textcolor{keywordtype}{long}\& timeout\_seconds,}
+\DoxyCodeLine{259                     std::function<\textcolor{keywordtype}{bool}()> busy\_function,}
+\DoxyCodeLine{260                     std::string\& error);}
+\DoxyCodeLine{261 }
+\DoxyCodeLine{293                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_aeac75b22e169eafe881ad8ecaa7db21d}{send\_data\_async}}(\textcolor{keyword}{const} std::string\& data,}
+\DoxyCodeLine{294                     \textcolor{keyword}{const} \textcolor{keywordtype}{long}\& timeout\_seconds,}
+\DoxyCodeLine{295                     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}\& data\_id,}
+\DoxyCodeLine{296                     std::string\& error);}
+\DoxyCodeLine{297 }
+\DoxyCodeLine{309                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_a97c7433b1adf7375a96cecc7e1cfebb5}{sending}}(\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}\& data\_id);}
+\DoxyCodeLine{310 }
+\DoxyCodeLine{340                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_a52fe1ac3112404c25fbd5e7abb414903}{get\_response}}(\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}\& data\_id,}
+\DoxyCodeLine{341                     std::string\& received,}
+\DoxyCodeLine{342                     std::string\& error);}
+\DoxyCodeLine{343 }
+\DoxyCodeLine{347                 \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_a1ddac5a61167c8814acb12a2b806e9e1}{disconnect}}();}
+\DoxyCodeLine{348 }
+\DoxyCodeLine{356                 \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client_aec4d7eef51df5ecdc83fb105b6151e63}{traffic}}(\mbox{\hyperlink{structliblec_1_1lecnet_1_1network__traffic}{liblec::lecnet::network\_traffic}}\& traffic);}
+\DoxyCodeLine{357 }
+\DoxyCodeLine{358             \textcolor{keyword}{private}:}
+\DoxyCodeLine{359                 \textcolor{keyword}{class }impl;}
+\DoxyCodeLine{360                 impl\& \_d;}
+\DoxyCodeLine{361 }
+\DoxyCodeLine{362                 \textcolor{keyword}{class }client\_async;}
+\DoxyCodeLine{363                 \textcolor{keyword}{class }client\_async\_ssl;}
+\DoxyCodeLine{364 }
+\DoxyCodeLine{365                 \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client}{client}}(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client}{client}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{366                 \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client}{client}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1client}{client}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{367             \};}
+\DoxyCodeLine{368 }
+\DoxyCodeLine{369             \textcolor{comment}{// Correct usage of the liblec::lecnet::tcp::server class is as follows:}}
+\DoxyCodeLine{370             \textcolor{comment}{//}}
+\DoxyCodeLine{371             \textcolor{comment}{// 1. Make a new class and inherit from liblec::lecnet::tcp::server\_async and}}
+\DoxyCodeLine{372             \textcolor{comment}{// liblec::lecnet::tcp::server\_async\_ssl. In the inherited classes provide}}
+\DoxyCodeLine{373             \textcolor{comment}{// implementations for the log() and on\_receive() virtual functions}}
+\DoxyCodeLine{374             \textcolor{comment}{//}}
+\DoxyCodeLine{375             \textcolor{comment}{// class my\_server\_class : public liblec::lecnet::tcp::server\_async \{}}
+\DoxyCodeLine{376             \textcolor{comment}{// public:}}
+\DoxyCodeLine{377             \textcolor{comment}{//      my\_server\_class() \{\};}}
+\DoxyCodeLine{378             \textcolor{comment}{//      \string~my\_server\_class() \{\};}}
+\DoxyCodeLine{379             \textcolor{comment}{//}}
+\DoxyCodeLine{380             \textcolor{comment}{//      void log(const std::string\& time\_stamp,}}
+\DoxyCodeLine{381             \textcolor{comment}{//          const std::string\& event) \{}}
+\DoxyCodeLine{382             \textcolor{comment}{//          // implementation for log member. Below is a simple example}}
+\DoxyCodeLine{383             \textcolor{comment}{//          std::cout << time\_stamp << "{}\(\backslash\)t"{} << event << std::endl;}}
+\DoxyCodeLine{384             \textcolor{comment}{//      \}}}
+\DoxyCodeLine{385             \textcolor{comment}{//}}
+\DoxyCodeLine{386             \textcolor{comment}{//      std::string on\_receive(const client\_address\& address,}}
+\DoxyCodeLine{387             \textcolor{comment}{//          const std::string\& data\_received) \{}}
+\DoxyCodeLine{388             \textcolor{comment}{//          // implementation for on\_receive member. Below is a simple example}}
+\DoxyCodeLine{389             \textcolor{comment}{//          return data\_received;   // simple echo server}}
+\DoxyCodeLine{390             \textcolor{comment}{//      \}}}
+\DoxyCodeLine{391             \textcolor{comment}{// \}}}
+\DoxyCodeLine{392             \textcolor{comment}{//}}
+\DoxyCodeLine{393             \textcolor{comment}{// class my\_server\_class\_ssl : public liblec::lecnet::tcp::server\_async\_ssl \{}}
+\DoxyCodeLine{394             \textcolor{comment}{//      ...}}
+\DoxyCodeLine{395             \textcolor{comment}{// \}}}
+\DoxyCodeLine{396             \textcolor{comment}{//}}
+\DoxyCodeLine{397             \textcolor{comment}{// 2. Declare a pointer to the server base class and use it as follows}}
+\DoxyCodeLine{398             \textcolor{comment}{//}}
+\DoxyCodeLine{399             \textcolor{comment}{// liblec::lecnet::tcp::server* p\_server = nullptr;}}
+\DoxyCodeLine{400             \textcolor{comment}{//}}
+\DoxyCodeLine{401             \textcolor{comment}{// bool use\_ssl = ...;}}
+\DoxyCodeLine{402             \textcolor{comment}{//}}
+\DoxyCodeLine{403             \textcolor{comment}{// if (use\_ssl)}}
+\DoxyCodeLine{404             \textcolor{comment}{//      p\_server = new my\_server\_class\_ssl();}}
+\DoxyCodeLine{405             \textcolor{comment}{// else}}
+\DoxyCodeLine{406             \textcolor{comment}{//      p\_server = new my\_server\_class();}}
+\DoxyCodeLine{407             \textcolor{comment}{//}}
+\DoxyCodeLine{408             \textcolor{comment}{// 3. Proceed as follows}}
+\DoxyCodeLine{409             \textcolor{comment}{//}}
+\DoxyCodeLine{410             \textcolor{comment}{// if (p\_server-\/>start()) \{}}
+\DoxyCodeLine{411             \textcolor{comment}{//      while (p\_server-\/>starting()) \{}}
+\DoxyCodeLine{412             \textcolor{comment}{//          // wait}}
+\DoxyCodeLine{413             \textcolor{comment}{//      \}}}
+\DoxyCodeLine{414             \textcolor{comment}{//}}
+\DoxyCodeLine{415             \textcolor{comment}{//      while (p\_server-\/>running()) \{}}
+\DoxyCodeLine{416             \textcolor{comment}{//          // main server loop}}
+\DoxyCodeLine{417             \textcolor{comment}{//      \}}}
+\DoxyCodeLine{418             \textcolor{comment}{// \}}}
+\DoxyCodeLine{419             \textcolor{comment}{// else \{}}
+\DoxyCodeLine{420             \textcolor{comment}{//      // error}}
+\DoxyCodeLine{421             \textcolor{comment}{// \}}}
+\DoxyCodeLine{422             \textcolor{comment}{//}}
+\DoxyCodeLine{423             \textcolor{comment}{// if (p\_server) \{}}
+\DoxyCodeLine{424             \textcolor{comment}{//      delete p\_server;}}
+\DoxyCodeLine{425             \textcolor{comment}{//      p\_server = nullptr;}}
+\DoxyCodeLine{426             \textcolor{comment}{// \}}}
+\DoxyCodeLine{427             \textcolor{comment}{//}}
+\DoxyCodeLine{428 }
+\DoxyCodeLine{432             \textcolor{keyword}{class }lecnet\_api \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server}{server}} \{}
+\DoxyCodeLine{433             \textcolor{keyword}{public}:}
+\DoxyCodeLine{434                 \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server}{server}}() \{\}}
+\DoxyCodeLine{435                 \textcolor{keyword}{virtual} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server}{\string~server}}() \{\}}
+\DoxyCodeLine{436 }
+\DoxyCodeLine{440                 \textcolor{keyword}{typedef} std::string \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_aa93e1f7ad96c217b115062fd714a8c3e}{client\_address}};}
+\DoxyCodeLine{441 }
+\DoxyCodeLine{445                 \textcolor{keyword}{struct }\mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1client__info}{client\_info}} \{}
+\DoxyCodeLine{449                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_aa93e1f7ad96c217b115062fd714a8c3e}{client\_address}} \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1client__info_a678309de17bbd4ec857e0bf6b8ac197d}{address}};}
+\DoxyCodeLine{450 }
+\DoxyCodeLine{454                     \mbox{\hyperlink{structliblec_1_1lecnet_1_1network__traffic}{liblec::lecnet::network\_traffic}} \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1client__info_a6f012dadd9e0a42e817907ad330e3611}{traffic}};}
+\DoxyCodeLine{455                 \};}
+\DoxyCodeLine{456 }
+\DoxyCodeLine{460                 \textcolor{keyword}{struct }\mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params}{server\_params}} \{}
+\DoxyCodeLine{464                     std::string ip = \textcolor{stringliteral}{"{}0.0.0.0"{}};}
+\DoxyCodeLine{465 }
+\DoxyCodeLine{469                     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} port = 50001;}
+\DoxyCodeLine{470 }
+\DoxyCodeLine{474                     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} max\_clients = 1000;}
+\DoxyCodeLine{475 }
+\DoxyCodeLine{479                     std::string server\_cert = \textcolor{stringliteral}{"{}server.crt"{}};}
+\DoxyCodeLine{480 }
+\DoxyCodeLine{484                     std::string server\_cert\_key = \textcolor{stringliteral}{"{}server.crt"{}};}
+\DoxyCodeLine{485 }
+\DoxyCodeLine{489                     std::string server\_cert\_key\_password = \textcolor{stringliteral}{"{}password"{}};}
+\DoxyCodeLine{490 }
+\DoxyCodeLine{495                     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} magic\_number = 0;}
+\DoxyCodeLine{496                 \};}
+\DoxyCodeLine{497 }
+\DoxyCodeLine{513                 \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a17f6621d1db6d3ccec37be90dc58346e}{start}}(\textcolor{keyword}{const} \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params}{server\_params}}\& params) = 0;}
+\DoxyCodeLine{514 }
+\DoxyCodeLine{522                 \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a7c87d9a229204e40c9078dc0eeaf7083}{starting}}() = 0;}
+\DoxyCodeLine{523 }
+\DoxyCodeLine{531                 \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a124e5ac8841f2d4f6a88e0ab939d838a}{running}}() = 0;}
+\DoxyCodeLine{532 }
+\DoxyCodeLine{544                 \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a8fe725d7708253ca16a24e910d95931a}{close}}(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_aa93e1f7ad96c217b115062fd714a8c3e}{client\_address}}\& address) = 0;}
+\DoxyCodeLine{545 }
+\DoxyCodeLine{553                 \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_acad2de891b0a5326c124fd98eac29fb7}{close}}() = 0;}
+\DoxyCodeLine{554 }
+\DoxyCodeLine{567                 \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a73c7bf5ff992bc89727a3c517b4d4cf3}{stop}}() = 0;}
+\DoxyCodeLine{568 }
+\DoxyCodeLine{576                 \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a25e4f306ecd176f03ffb5d90896b725a}{get\_client\_info}}(std::vector<client\_info>\& clients\_info) = 0;}
+\DoxyCodeLine{577 }
+\DoxyCodeLine{585                 \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_ae16d27512800603c2bf9f5f4ab6ac7b0}{traffic}}(\mbox{\hyperlink{structliblec_1_1lecnet_1_1network__traffic}{liblec::lecnet::network\_traffic}}\& traffic) = 0;}
+\DoxyCodeLine{586 }
+\DoxyCodeLine{603                 \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a5c6d19a09c209babe559fcf5c2285287}{log}}(\textcolor{keyword}{const} std::string\& time\_stamp,}
+\DoxyCodeLine{604                     \textcolor{keyword}{const} std::string\& event) = 0;}
+\DoxyCodeLine{605 }
+\DoxyCodeLine{625                 \textcolor{keyword}{virtual} std::string \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_a7e50e52a836724c8a63fd301d7a92991}{on\_receive}}(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_aa93e1f7ad96c217b115062fd714a8c3e}{client\_address}}\& address,}
+\DoxyCodeLine{626                     \textcolor{keyword}{const} std::string\& data\_received) = 0;}
+\DoxyCodeLine{627 }
+\DoxyCodeLine{628             \textcolor{keyword}{private}:}
+\DoxyCodeLine{629                 \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server}{server}}(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server}{server}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{630                 \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server}{server}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server}{server}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{631             \};}
+\DoxyCodeLine{632 }
+\DoxyCodeLine{641             \textcolor{keyword}{class }lecnet\_api \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async}{server\_async}} : \textcolor{keyword}{public} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server}{server}} \{}
+\DoxyCodeLine{642             \textcolor{keyword}{public}:}
+\DoxyCodeLine{643                 \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async}{server\_async}}();}
+\DoxyCodeLine{644                 \textcolor{keyword}{virtual} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async}{\string~server\_async}}();}
+\DoxyCodeLine{645 }
+\DoxyCodeLine{661                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async_a91c288e5eca1a4797a47db7d12a9d991}{start}}(\textcolor{keyword}{const} \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params}{server\_params}}\& params);}
+\DoxyCodeLine{662 }
+\DoxyCodeLine{670                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async_aa701b686bcf0af4c57db264e5b68fcef}{starting}}();}
+\DoxyCodeLine{671 }
+\DoxyCodeLine{679                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async_a6dc023dbebade208883d865060de988e}{running}}();}
+\DoxyCodeLine{680 }
+\DoxyCodeLine{692                 \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async_a608838e6eb1778c5e7a198d26f0cc5bb}{close}}(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_aa93e1f7ad96c217b115062fd714a8c3e}{client\_address}}\& address);}
+\DoxyCodeLine{693 }
+\DoxyCodeLine{701                 \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async_a7b56a7cfd566243af774f0ed714591a4}{close}}();}
+\DoxyCodeLine{702 }
+\DoxyCodeLine{715                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async_ac06e91060745542105f374b4dcf5fd2e}{stop}}();}
+\DoxyCodeLine{716 }
+\DoxyCodeLine{724                 \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async_aaf5a8a8f0009efc24d692a7fac799262}{get\_client\_info}}(std::vector<client\_info>\& \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1client__info}{client\_info}});}
+\DoxyCodeLine{725 }
+\DoxyCodeLine{733                 \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async_a3556e4df27e9f1daeea8ca8ce7eb55d1}{traffic}}(\mbox{\hyperlink{structliblec_1_1lecnet_1_1network__traffic}{liblec::lecnet::network\_traffic}}\& traffic);}
+\DoxyCodeLine{734 }
+\DoxyCodeLine{751                 \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async_a581f15d5d75d49fc18ba5354a234c2ac}{log}}(\textcolor{keyword}{const} std::string\& time\_stamp,}
+\DoxyCodeLine{752                     \textcolor{keyword}{const} std::string\& event) \{ \textcolor{keywordflow}{return}; \};}
+\DoxyCodeLine{753 }
+\DoxyCodeLine{773                 \textcolor{keyword}{virtual} std::string \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async_a80c64f31871d2f1d7e556f1eda49c44c}{on\_receive}}(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_aa93e1f7ad96c217b115062fd714a8c3e}{client\_address}}\& address,}
+\DoxyCodeLine{774                     \textcolor{keyword}{const} std::string\& data\_received) \{ \textcolor{keywordflow}{return} std::string(); \};}
+\DoxyCodeLine{775 }
+\DoxyCodeLine{776             \textcolor{keyword}{private}:}
+\DoxyCodeLine{777                 \textcolor{keyword}{class }impl;}
+\DoxyCodeLine{778                 impl\& \_d;}
+\DoxyCodeLine{779 }
+\DoxyCodeLine{780                 \textcolor{keyword}{class }\_session\_async;}
+\DoxyCodeLine{781                 \textcolor{keyword}{class }\_server\_async;}
+\DoxyCodeLine{782 }
+\DoxyCodeLine{783                 \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async}{server\_async}}(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async}{server\_async}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{784                 \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async}{server\_async}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async}{server\_async}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{785             \};}
+\DoxyCodeLine{786 }
+\DoxyCodeLine{794             \textcolor{keyword}{class }lecnet\_api \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl}{server\_async\_ssl}} : \textcolor{keyword}{public} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server}{server}} \{}
+\DoxyCodeLine{795             \textcolor{keyword}{public}:}
+\DoxyCodeLine{796                 \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl}{server\_async\_ssl}}();}
+\DoxyCodeLine{797                 \textcolor{keyword}{virtual} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl}{\string~server\_async\_ssl}}();}
+\DoxyCodeLine{798 }
+\DoxyCodeLine{814                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_ab8b5f63c3c220085569a39c2cb254b8a}{start}}(\textcolor{keyword}{const} \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1server__params}{server\_params}}\& params);}
+\DoxyCodeLine{815 }
+\DoxyCodeLine{823                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_aba8d1174d0bd13d40e750400ba5aa3a2}{starting}}();}
+\DoxyCodeLine{824 }
+\DoxyCodeLine{832                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_ab73ec38efb67abfbad18f6f8f5a653ea}{running}}();}
+\DoxyCodeLine{833 }
+\DoxyCodeLine{845                 \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_acfb5d5a7898ce8cf0d954153aa367974}{close}}(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_aa93e1f7ad96c217b115062fd714a8c3e}{client\_address}}\& address);}
+\DoxyCodeLine{846 }
+\DoxyCodeLine{854                 \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a34f6dffd7e9ce84b7d649574b44e2f9f}{close}}();}
+\DoxyCodeLine{855 }
+\DoxyCodeLine{868                 \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a20c6f42140cfca10820ff70c1b41ead7}{stop}}();}
+\DoxyCodeLine{869 }
+\DoxyCodeLine{877                 \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_af6a9dfc4dad946168309265464444c1b}{get\_client\_info}}(std::vector<client\_info>\& \mbox{\hyperlink{structliblec_1_1lecnet_1_1tcp_1_1server_1_1client__info}{client\_info}});}
+\DoxyCodeLine{878 }
+\DoxyCodeLine{886                 \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a96d4b22f5f501e5f836474d9335866cf}{traffic}}(\mbox{\hyperlink{structliblec_1_1lecnet_1_1network__traffic}{liblec::lecnet::network\_traffic}}\& traffic);}
+\DoxyCodeLine{887 }
+\DoxyCodeLine{904                 \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a7c13f990066231598dffd599d9c36214}{log}}(\textcolor{keyword}{const} std::string\& time\_stamp,}
+\DoxyCodeLine{905                     \textcolor{keyword}{const} std::string\& event) \{ \textcolor{keywordflow}{return}; \};}
+\DoxyCodeLine{906 }
+\DoxyCodeLine{926                 \textcolor{keyword}{virtual} std::string \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl_a11f7541ab36431fb02287ee8d5c41eb3}{on\_receive}}(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server_aa93e1f7ad96c217b115062fd714a8c3e}{client\_address}}\& address,}
+\DoxyCodeLine{927                     \textcolor{keyword}{const} std::string\& data\_received) \{ \textcolor{keywordflow}{return} std::string(); \};}
+\DoxyCodeLine{928 }
+\DoxyCodeLine{929             \textcolor{keyword}{private}:}
+\DoxyCodeLine{930                 \textcolor{keyword}{class }impl;}
+\DoxyCodeLine{931                 impl\& \_d;}
+\DoxyCodeLine{932 }
+\DoxyCodeLine{933                 \textcolor{keyword}{class }\_session\_async\_ssl;}
+\DoxyCodeLine{934                 \textcolor{keyword}{class }\_server\_async\_ssl;}
+\DoxyCodeLine{935 }
+\DoxyCodeLine{936                 \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl}{server\_async\_ssl}}(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl}{server\_async\_ssl}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{937                 \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl}{server\_async\_ssl}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1tcp_1_1server__async__ssl}{server\_async\_ssl}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{938             \};}
+\DoxyCodeLine{939         \}}
+\DoxyCodeLine{940     \}}
+\DoxyCodeLine{941 \}}
+
+\end{DoxyCode}

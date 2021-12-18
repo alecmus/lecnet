@@ -1,0 +1,274 @@
+\hypertarget{udp_8h_source}{}\doxysection{udp.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// udp.h -\/ udp interface}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 \textcolor{comment}{// lecnet network library, part of the liblec library}}
+\DoxyCodeLine{5 \textcolor{comment}{// Copyright (c) 2018 Alec Musasa (alecmus at live dot com)}}
+\DoxyCodeLine{6 \textcolor{comment}{//}}
+\DoxyCodeLine{7 \textcolor{comment}{// Released under the MIT license. For full details see the}}
+\DoxyCodeLine{8 \textcolor{comment}{// file LICENSE.txt}}
+\DoxyCodeLine{9 \textcolor{comment}{//}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#if defined(LECNET\_EXPORTS)}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{    \#include "{}lecnet.h"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{    \#include <liblec/lecnet.h>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{keyword}{namespace }liblec \{}
+\DoxyCodeLine{22     \textcolor{keyword}{namespace }lecnet \{}
+\DoxyCodeLine{23         \textcolor{keyword}{namespace }udp \{}
+\DoxyCodeLine{24             \textcolor{keyword}{namespace }broadcast \{}
+\DoxyCodeLine{25                 \textcolor{comment}{// Correct usage of the liblec::lecnet::udp::broadcast::sender class is as follows:}}
+\DoxyCodeLine{26                 \textcolor{comment}{//}}
+\DoxyCodeLine{27                 \textcolor{comment}{// 1. Blocking method}}
+\DoxyCodeLine{28                 \textcolor{comment}{//}}
+\DoxyCodeLine{29                 \textcolor{comment}{// liblec::lecnet::udp::broadcast::sender* p\_sender =}}
+\DoxyCodeLine{30                 \textcolor{comment}{//      new liblec::lecnet::udp::broadcast::sender();}}
+\DoxyCodeLine{31                 \textcolor{comment}{//}}
+\DoxyCodeLine{32                 \textcolor{comment}{// if (p\_sender) \{}}
+\DoxyCodeLine{33                 \textcolor{comment}{//      if (p\_sender-\/>do\_send()) \{}}
+\DoxyCodeLine{34                 \textcolor{comment}{//          // sending successful}}
+\DoxyCodeLine{35                 \textcolor{comment}{//      \}}}
+\DoxyCodeLine{36                 \textcolor{comment}{//      else \{}}
+\DoxyCodeLine{37                 \textcolor{comment}{//          // error}}
+\DoxyCodeLine{38                 \textcolor{comment}{//      \}}}
+\DoxyCodeLine{39                 \textcolor{comment}{// \}}}
+\DoxyCodeLine{40                 \textcolor{comment}{//}}
+\DoxyCodeLine{41                 \textcolor{comment}{// if (p\_sender) \{}}
+\DoxyCodeLine{42                 \textcolor{comment}{//      delete p\_sender;}}
+\DoxyCodeLine{43                 \textcolor{comment}{//      p\_sender = nullptr;}}
+\DoxyCodeLine{44                 \textcolor{comment}{// \}}}
+\DoxyCodeLine{45                 \textcolor{comment}{//}}
+\DoxyCodeLine{46                 \textcolor{comment}{// 2. Non-\/blocking method}}
+\DoxyCodeLine{47                 \textcolor{comment}{//}}
+\DoxyCodeLine{48                 \textcolor{comment}{// liblec::lecnet::udp::broadcast::sender* p\_sender =}}
+\DoxyCodeLine{49                 \textcolor{comment}{//      new liblec::lecnet::udp::broadcast::sender();}}
+\DoxyCodeLine{50                 \textcolor{comment}{//}}
+\DoxyCodeLine{51                 \textcolor{comment}{// if (p\_sender) \{}}
+\DoxyCodeLine{52                 \textcolor{comment}{//      if (p\_sender-\/>send()) \{}}
+\DoxyCodeLine{53                 \textcolor{comment}{//          while (p\_sender-\/>sending()) \{}}
+\DoxyCodeLine{54                 \textcolor{comment}{//              // wait}}
+\DoxyCodeLine{55                 \textcolor{comment}{//          \}}}
+\DoxyCodeLine{56                 \textcolor{comment}{//}}
+\DoxyCodeLine{57                 \textcolor{comment}{//          if (p\_sender-\/>result()) \{}}
+\DoxyCodeLine{58                 \textcolor{comment}{//              // sending successful}}
+\DoxyCodeLine{59                 \textcolor{comment}{//          \}}}
+\DoxyCodeLine{60                 \textcolor{comment}{//          else \{}}
+\DoxyCodeLine{61                 \textcolor{comment}{//              // error}}
+\DoxyCodeLine{62                 \textcolor{comment}{//          \}}}
+\DoxyCodeLine{63                 \textcolor{comment}{//      \}}}
+\DoxyCodeLine{64                 \textcolor{comment}{//      else \{}}
+\DoxyCodeLine{65                 \textcolor{comment}{//          // error}}
+\DoxyCodeLine{66                 \textcolor{comment}{//      \}}}
+\DoxyCodeLine{67                 \textcolor{comment}{// \}}}
+\DoxyCodeLine{68                 \textcolor{comment}{//}}
+\DoxyCodeLine{69                 \textcolor{comment}{// if (p\_sender) \{}}
+\DoxyCodeLine{70                 \textcolor{comment}{//      delete p\_sender;}}
+\DoxyCodeLine{71                 \textcolor{comment}{//      p\_sender = nullptr;}}
+\DoxyCodeLine{72                 \textcolor{comment}{// \}}}
+\DoxyCodeLine{73                 \textcolor{comment}{//}}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{78                 \textcolor{keyword}{class }lecnet\_api \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender}{sender}} \{}
+\DoxyCodeLine{79                 \textcolor{keyword}{public}:}
+\DoxyCodeLine{87                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_a44495fb1c1adb7d59d7b23179e9852fa}{sender}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} broadcast\_port);}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender}{\string~sender}}();}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{123                     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_a1c4e4404a0a707d7aca634f4b73e810b}{send}}(\textcolor{keyword}{const} std::string\& message,}
+\DoxyCodeLine{124                         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} max\_count,}
+\DoxyCodeLine{125                         \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} timeout\_milliseconds,}
+\DoxyCodeLine{126                         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}\& actual\_count,}
+\DoxyCodeLine{127                         std::string\& error);}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{159                     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_afab1bdf05e03916abc26d886213f0e3d}{send\_async}}(\textcolor{keyword}{const} std::string\& message,}
+\DoxyCodeLine{160                         \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}\& max\_count,}
+\DoxyCodeLine{161                         \textcolor{keyword}{const} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}\& timeout\_milliseconds,}
+\DoxyCodeLine{162                         std::string\& error);}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{176                     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_a549d63417904801d4c41d84737c5962a}{sending}}();}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{199                     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender_ace2217e9dbc36d3bd46fa89fe46816eb}{result}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}\& actual\_count,}
+\DoxyCodeLine{200                         std::string\& error);}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202                 \textcolor{keyword}{private}:}
+\DoxyCodeLine{203                     \textcolor{keyword}{class }sender\_impl;}
+\DoxyCodeLine{204                     sender\_impl* \_d;}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender}{sender}}(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender}{sender}}\&);}
+\DoxyCodeLine{207                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender}{sender}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1sender}{sender}}\&);}
+\DoxyCodeLine{208                 \};}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{213                 \textcolor{keyword}{class }lecnet\_api \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver}{receiver}} \{}
+\DoxyCodeLine{214                 \textcolor{keyword}{public}:}
+\DoxyCodeLine{226                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a85a8eb4fff6325c7b9ac3ebfe0d41cd5}{receiver}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} broadcast\_port,}
+\DoxyCodeLine{227                         std::string listen\_address);}
+\DoxyCodeLine{228                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver}{\string~receiver}}();}
+\DoxyCodeLine{229 }
+\DoxyCodeLine{253                     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a71f96220145fb1bb3f7b825cfcb3d505}{run}}(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} timeout\_milliseconds,}
+\DoxyCodeLine{254                         std::string\& error);}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{264                     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_aca3cf6791b83bf8e15a467dff8d0732a}{running}}();}
+\DoxyCodeLine{265 }
+\DoxyCodeLine{291                     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a07317f64597461ca9998e84650bcd862}{get}}(std::string\& message,}
+\DoxyCodeLine{292                         std::string\& error);}
+\DoxyCodeLine{293 }
+\DoxyCodeLine{304                     \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver_a1db6ee28e4df5fb12b9858075ba6028a}{stop}}();}
+\DoxyCodeLine{305 }
+\DoxyCodeLine{306                 \textcolor{keyword}{private}:}
+\DoxyCodeLine{307                     \textcolor{keyword}{class }receiver\_impl;}
+\DoxyCodeLine{308                     receiver\_impl* \_d;}
+\DoxyCodeLine{309 }
+\DoxyCodeLine{310                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver}{receiver}}(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver}{receiver}}\&);}
+\DoxyCodeLine{311                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver}{receiver}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1broadcast_1_1receiver}{receiver}}\&);}
+\DoxyCodeLine{312                 \};}
+\DoxyCodeLine{313             \}}
+\DoxyCodeLine{314 }
+\DoxyCodeLine{318             \textcolor{keyword}{namespace }multicast \{}
+\DoxyCodeLine{319                 \textcolor{comment}{// Correct usage of the liblec::lecnet::udp::multicast::sender class is as follows:}}
+\DoxyCodeLine{320                 \textcolor{comment}{//}}
+\DoxyCodeLine{321                 \textcolor{comment}{// 1. Blocking method}}
+\DoxyCodeLine{322                 \textcolor{comment}{//}}
+\DoxyCodeLine{323                 \textcolor{comment}{// liblec::lecnet::udp::multicast::sender* p\_sender =}}
+\DoxyCodeLine{324                 \textcolor{comment}{//      new liblec::lecnet::udp::multicast::sender();}}
+\DoxyCodeLine{325                 \textcolor{comment}{//}}
+\DoxyCodeLine{326                 \textcolor{comment}{// if (p\_sender) \{}}
+\DoxyCodeLine{327                 \textcolor{comment}{//      if (p\_sender-\/>do\_send()) \{}}
+\DoxyCodeLine{328                 \textcolor{comment}{//          // sending successful}}
+\DoxyCodeLine{329                 \textcolor{comment}{//      \}}}
+\DoxyCodeLine{330                 \textcolor{comment}{//      else \{}}
+\DoxyCodeLine{331                 \textcolor{comment}{//          // error}}
+\DoxyCodeLine{332                 \textcolor{comment}{//      \}}}
+\DoxyCodeLine{333                 \textcolor{comment}{// \}}}
+\DoxyCodeLine{334                 \textcolor{comment}{//}}
+\DoxyCodeLine{335                 \textcolor{comment}{// if (p\_sender) \{}}
+\DoxyCodeLine{336                 \textcolor{comment}{//      delete p\_sender;}}
+\DoxyCodeLine{337                 \textcolor{comment}{//      p\_sender = nullptr;}}
+\DoxyCodeLine{338                 \textcolor{comment}{// \}}}
+\DoxyCodeLine{339                 \textcolor{comment}{//}}
+\DoxyCodeLine{340                 \textcolor{comment}{// 2. Non-\/blocking method}}
+\DoxyCodeLine{341                 \textcolor{comment}{//}}
+\DoxyCodeLine{342                 \textcolor{comment}{// liblec::lecnet::udp::multicast::sender* p\_sender =}}
+\DoxyCodeLine{343                 \textcolor{comment}{//      new liblec::lecnet::udp::multicast::sender();}}
+\DoxyCodeLine{344                 \textcolor{comment}{//}}
+\DoxyCodeLine{345                 \textcolor{comment}{// if (p\_sender) \{}}
+\DoxyCodeLine{346                 \textcolor{comment}{//      if (p\_sender-\/>send()) \{}}
+\DoxyCodeLine{347                 \textcolor{comment}{//          while (p\_sender-\/>sending()) \{}}
+\DoxyCodeLine{348                 \textcolor{comment}{//              // wait}}
+\DoxyCodeLine{349                 \textcolor{comment}{//          \}}}
+\DoxyCodeLine{350                 \textcolor{comment}{//}}
+\DoxyCodeLine{351                 \textcolor{comment}{//          if (p\_sender-\/>result()) \{}}
+\DoxyCodeLine{352                 \textcolor{comment}{//              // sending successful}}
+\DoxyCodeLine{353                 \textcolor{comment}{//          \}}}
+\DoxyCodeLine{354                 \textcolor{comment}{//          else \{}}
+\DoxyCodeLine{355                 \textcolor{comment}{//              // error}}
+\DoxyCodeLine{356                 \textcolor{comment}{//          \}}}
+\DoxyCodeLine{357                 \textcolor{comment}{//      \}}}
+\DoxyCodeLine{358                 \textcolor{comment}{//      else \{}}
+\DoxyCodeLine{359                 \textcolor{comment}{//          // error}}
+\DoxyCodeLine{360                 \textcolor{comment}{//      \}}}
+\DoxyCodeLine{361                 \textcolor{comment}{// \}}}
+\DoxyCodeLine{362                 \textcolor{comment}{//}}
+\DoxyCodeLine{363                 \textcolor{comment}{// if (p\_sender) \{}}
+\DoxyCodeLine{364                 \textcolor{comment}{//      delete p\_sender;}}
+\DoxyCodeLine{365                 \textcolor{comment}{//      p\_sender = nullptr;}}
+\DoxyCodeLine{366                 \textcolor{comment}{// \}}}
+\DoxyCodeLine{367                 \textcolor{comment}{//}}
+\DoxyCodeLine{368 }
+\DoxyCodeLine{372                 \textcolor{keyword}{class }lecnet\_api \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1sender}{sender}} \{}
+\DoxyCodeLine{373                 \textcolor{keyword}{public}:}
+\DoxyCodeLine{386                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1sender_a350d12d654af8561adea9858a700a515}{sender}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} multicast\_port,}
+\DoxyCodeLine{387                         std::string multicast\_address);}
+\DoxyCodeLine{388                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1sender}{\string~sender}}();}
+\DoxyCodeLine{389 }
+\DoxyCodeLine{422                     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1sender_a8d7dbfd897657dcfabb2c8bd8dacda6b}{send}}(\textcolor{keyword}{const} std::string\& message,}
+\DoxyCodeLine{423                         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} max\_count,}
+\DoxyCodeLine{424                         \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} timeout\_milliseconds,}
+\DoxyCodeLine{425                         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}\& actual\_count,}
+\DoxyCodeLine{426                         std::string\& error);}
+\DoxyCodeLine{427 }
+\DoxyCodeLine{458                     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1sender_ab48159719c5ab3eee443ccdf0a5647a8}{send\_async}}(\textcolor{keyword}{const} std::string\& message,}
+\DoxyCodeLine{459                         \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}\& max\_count,}
+\DoxyCodeLine{460                         \textcolor{keyword}{const} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}\& timeout\_milliseconds,}
+\DoxyCodeLine{461                         std::string\& error);}
+\DoxyCodeLine{462 }
+\DoxyCodeLine{475                     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1sender_aa4194229d75cf58d0c9f36e74f48c1df}{sending}}();}
+\DoxyCodeLine{476 }
+\DoxyCodeLine{498                     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1sender_ab77837ea53f6dd23d761f181987c8bb6}{result}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}\& actual\_count,}
+\DoxyCodeLine{499                         std::string\& error);}
+\DoxyCodeLine{500 }
+\DoxyCodeLine{501                 \textcolor{keyword}{private}:}
+\DoxyCodeLine{502                     \textcolor{keyword}{class }sender\_impl;}
+\DoxyCodeLine{503                     sender\_impl* \_d;}
+\DoxyCodeLine{504 }
+\DoxyCodeLine{505                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1sender}{sender}}(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1sender}{sender}}\&);}
+\DoxyCodeLine{506                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1sender}{sender}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1sender}{sender}}\&);}
+\DoxyCodeLine{507                 \};}
+\DoxyCodeLine{508 }
+\DoxyCodeLine{509                 \textcolor{comment}{// Correct usage of the liblec::lecnet::udp::multicast::receiver class is as}}
+\DoxyCodeLine{510                 \textcolor{comment}{// follows:}}
+\DoxyCodeLine{511                 \textcolor{comment}{//}}
+\DoxyCodeLine{512                 \textcolor{comment}{// liblec::lecnet::udp::multicast::receiver* p\_receiver =}}
+\DoxyCodeLine{513                 \textcolor{comment}{//      new liblec::lecnet::udp::multicast::receiver();}}
+\DoxyCodeLine{514                 \textcolor{comment}{//}}
+\DoxyCodeLine{515                 \textcolor{comment}{// if (p\_receiver) \{}}
+\DoxyCodeLine{516                 \textcolor{comment}{//      if (p\_receiver-\/>run()) \{}}
+\DoxyCodeLine{517                 \textcolor{comment}{//          while (p\_receiver-\/>running()) \{}}
+\DoxyCodeLine{518                 \textcolor{comment}{//              // wait}}
+\DoxyCodeLine{519                 \textcolor{comment}{//          \}}}
+\DoxyCodeLine{520                 \textcolor{comment}{//}}
+\DoxyCodeLine{521                 \textcolor{comment}{//          std::string message;}}
+\DoxyCodeLine{522                 \textcolor{comment}{//          if (p\_receiver-\/>get(message)) \{}}
+\DoxyCodeLine{523                 \textcolor{comment}{//              // message received}}
+\DoxyCodeLine{524                 \textcolor{comment}{//          \}}}
+\DoxyCodeLine{525                 \textcolor{comment}{//          else \{}}
+\DoxyCodeLine{526                 \textcolor{comment}{//              // error}}
+\DoxyCodeLine{527                 \textcolor{comment}{//          \}}}
+\DoxyCodeLine{528                 \textcolor{comment}{//      \}}}
+\DoxyCodeLine{529                 \textcolor{comment}{//      else \{}}
+\DoxyCodeLine{530                 \textcolor{comment}{//          // error}}
+\DoxyCodeLine{531                 \textcolor{comment}{//      \}}}
+\DoxyCodeLine{532                 \textcolor{comment}{// \}}}
+\DoxyCodeLine{533                 \textcolor{comment}{//}}
+\DoxyCodeLine{534                 \textcolor{comment}{// if (p\_receiver) \{}}
+\DoxyCodeLine{535                 \textcolor{comment}{//      delete p\_receiver;}}
+\DoxyCodeLine{536                 \textcolor{comment}{//      p\_receiver = nullptr;}}
+\DoxyCodeLine{537                 \textcolor{comment}{// \}}}
+\DoxyCodeLine{538                 \textcolor{comment}{//}}
+\DoxyCodeLine{539 }
+\DoxyCodeLine{543                 \textcolor{keyword}{class }lecnet\_api \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1receiver}{receiver}} \{}
+\DoxyCodeLine{544                 \textcolor{keyword}{public}:}
+\DoxyCodeLine{561                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1receiver_aae53cf6d0c0dfd51b00176b5aeecebe4}{receiver}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} multicast\_port,}
+\DoxyCodeLine{562                         std::string multicast\_address,}
+\DoxyCodeLine{563                         std::string listen\_address);}
+\DoxyCodeLine{564                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1receiver}{\string~receiver}}();}
+\DoxyCodeLine{565 }
+\DoxyCodeLine{589                     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1receiver_a019f86f1396cddb752a309122fea46f5}{run}}(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} timeout\_milliseconds,}
+\DoxyCodeLine{590                         std::string\& error);}
+\DoxyCodeLine{591 }
+\DoxyCodeLine{600                     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1receiver_a91610ea6b8d6165cd4bb2162df96938e}{running}}();}
+\DoxyCodeLine{601 }
+\DoxyCodeLine{627                     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1receiver_a7e99778af3b4e92078e1081f592d78ba}{get}}(std::string\& message,}
+\DoxyCodeLine{628                         std::string\& error);}
+\DoxyCodeLine{629 }
+\DoxyCodeLine{640                     \textcolor{keywordtype}{void} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1receiver_ac1c64dac341c72ac43ee56d1e4991136}{stop}}();}
+\DoxyCodeLine{641 }
+\DoxyCodeLine{642                 \textcolor{keyword}{private}:}
+\DoxyCodeLine{643                     \textcolor{keyword}{class }receiver\_impl;}
+\DoxyCodeLine{644                     receiver\_impl* \_d;}
+\DoxyCodeLine{645 }
+\DoxyCodeLine{646                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1receiver}{receiver}}(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1receiver}{receiver}}\&);}
+\DoxyCodeLine{647                     \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1receiver}{receiver}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classliblec_1_1lecnet_1_1udp_1_1multicast_1_1receiver}{receiver}}\&);}
+\DoxyCodeLine{648                 \};}
+\DoxyCodeLine{649             \}}
+\DoxyCodeLine{650         \}}
+\DoxyCodeLine{651     \}}
+\DoxyCodeLine{652 \}}
+
+\end{DoxyCode}
