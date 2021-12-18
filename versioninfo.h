@@ -17,9 +17,9 @@
 #define lecnetcompany		"Alec Musasa"
 #define lecnetfilename		"lecnet.dll"
 
-#define lecnetversion		"1.0.1"
+#define lecnetversion		"1.0.2"
 #define lecnetmajor			1
 #define lecnetminor			0
-#define lecnetrevision		1
+#define lecnetrevision		2
 
 #define lecnetdate			"18 Dec 2021"
