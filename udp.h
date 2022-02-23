@@ -268,7 +268,7 @@ namespace liblec {
 					/// </summary>
 					///
 					/// <param name="message">
-					/// The message will be written here, if available. A maximum of 1024
+					/// The message will be written here, if available. A maximum of 65535
 					/// characters will be acquired.
 					/// </param>
 					///
@@ -604,7 +604,7 @@ namespace liblec {
 					/// </summary>
 					///
 					/// <param name="message">
-					/// The message will be written here, if available. A maximum of 1024
+					/// The message will be written here, if available. A maximum of 65535
 					/// characters will be acquired.
 					/// </param>
 					///

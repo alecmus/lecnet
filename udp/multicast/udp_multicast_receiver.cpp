@@ -213,7 +213,7 @@ private:
 private:
 	boost::asio::ip::udp::socket _socket;
 	boost::asio::ip::udp::endpoint _sender_endpoint;
-	enum { max_length = 1024 };
+	enum { max_length = 65535 };
 	char _data[max_length];
 };
 

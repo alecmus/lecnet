@@ -22,4 +22,4 @@
 #define lecnetminor			0
 #define lecnetrevision		2
 
-#define lecnetdate			"18 Dec 2021"
+#define lecnetdate			"23 Feb 2022"
