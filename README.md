@@ -26,6 +26,9 @@ The lecnet library is a networking library designed for the rapid development of
 ### Documentation
 The library uses embedded XML-style documentation. An HTML version of this documentation is available [here](https://alecmus.github.io/lecnet).
 
+### Usage Examples
+The library is used in the [collab](https://github.com/alecmus/collab) and [StudentSync](https://github.com/alecmus/StudentSync_Server) apps.
+
 ### Prebuilt Binaries
 Prebuild binaries of the library can be found under releases: https://github.com/alecmus/lecnet/releases.
 
