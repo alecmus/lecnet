@@ -678,14 +678,23 @@ bool liblec::lecnet::tcp::client::connect(const client_params& params,
 	_d._magic_number = params.magic_number;
 
 	try {
+		// it's essential to limit the scope of this mutex
+		{
+			liblec::auto_mutex lock(_d._connecting_lock);
+			_d._connecting = true;
+		}
+
 		// run client task asynchronously
 		_d._fut = std::async(std::launch::async,
 			_d.client_func, this);
-
-		liblec::auto_mutex lock(_d._connecting_lock);
-		_d._connecting = true;
 	}
 	catch (std::exception& e) {
+		// it's essential to limit the scope of this mutex
+		{
+			liblec::auto_mutex lock(_d._connecting_lock);
+			_d._connecting = false;
+		}
+
 		error = e.what();
 		return false;
 	}
