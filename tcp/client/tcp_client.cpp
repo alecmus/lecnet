@@ -643,11 +643,20 @@ void liblec::lecnet::tcp::client::impl::client_func(
 		p_current->_d._error = "Exception: " + std::string(e.what());
 	}
 
+	// make local copy of error
+	std::string cached_error;
+
+	// it's essential to limit the scope of this mutex
+	{
+		auto_mutex lock(p_current->_d._error_lock);
+		cached_error = p_current->_d._error;
+	}
+
 	// it's essential to limit the scope of this mutex
 	{
 		liblec::auto_mutex lock(p_current->_d._result_lock);
 		p_current->_d._result.connected = false;
-		p_current->_d._result.error = p_current->_d._error;
+		p_current->_d._result.error = cached_error;
 	}
 
 	// it's essential to limit the scope of this mutex
