@@ -11,7 +11,6 @@ lecnet C++ network library
 <p>
   <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/alecmus/lecnet">
   <img alt="GitHub Release Date" src="https://img.shields.io/github/release-date/alecmus/lecnet">
-  <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/alecmus/lecnet/total">
 </p>
 
 #### Commit Info
